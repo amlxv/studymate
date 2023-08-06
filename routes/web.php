@@ -14,6 +14,6 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render("Index");
-});
+Route::get('/', fn() => Inertia::render('Guest/Index'));
+
+Route::get('/home', fn() => Inertia::render('Home/Index'))->middleware('verified');

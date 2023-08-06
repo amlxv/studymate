@@ -44,16 +44,9 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
 
-        Fortify::registerView(function () {
-            return Inertia::render("Auth/Register");
-        });
-
-        Fortify::loginView(function () {
-            return Inertia::render("Auth/Login");
-        });
-
-        Fortify::resetPasswordView(function () {
-            return Inertia::render("Auth/ResetPassword");
-        });
+        Fortify::registerView(fn() => Inertia::render('Auth/Register'));
+        Fortify::verifyEmailView(fn() => Inertia::render('Auth/VerifyEmail'));
+        Fortify::loginView(fn() => Inertia::render('Auth/Login'));
+        Fortify::resetPasswordView(fn() => Inertia::render('Auth/ResetPassword'));
     }
 }
