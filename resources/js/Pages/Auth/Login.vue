@@ -40,8 +40,25 @@ const loginForm = useForm({
             </button>
         </div>
 
+        <!--        Create component for flash message checking for the status entries      -->
         <p class="text-green-500" v-if="$page.props.flash.status">
             {{ $page.props.flash.status }}
         </p>
+
+        <hr />
+
+        <div>
+            <a
+                :href="
+                    $route('social-provider.redirect', {
+                        provider: 'google',
+                    })
+                "
+                type="button"
+                class="rounded border border-gray-700 px-3 py-1.5"
+            >
+                Sign in with Google
+            </a>
+        </div>
     </form>
 </template>
