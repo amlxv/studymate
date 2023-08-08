@@ -5,6 +5,8 @@ import { router } from "@inertiajs/vue3";
 <template>
     <div>Dashboard (Verified User)</div>
 
+    <div>You're now logged as: {{ $page.props.auth.user.role }}</div>
+
     <button
         v-if="$page.props.auth.user"
         @click="router.post($route('logout'))"

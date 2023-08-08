@@ -12,7 +12,8 @@ return new class extends Migration {
     {
         Schema::create('timetables', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained();
+            $table->string('student_id')->unique();
+            $table->foreign('student_id')->references('id')->on('students');
             $table->foreignId('preference_id')->constrained();
             $table->string('title');
             $table->string('description');

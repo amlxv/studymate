@@ -48,6 +48,17 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
+    public function isAdmin(): bool
+    {
+        return $this->role == 'admin';
+    }
+
+    public function isStudent(): bool
+    {
+        // return $this->role == 'student';
+        return $this->role == 'student' && Student::where('user_id', $this->id)->exists();
+    }
+
     public function admin(): HasOne
     {
         return $this->hasOne(Admin::class);
