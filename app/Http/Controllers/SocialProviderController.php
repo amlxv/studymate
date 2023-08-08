@@ -45,7 +45,7 @@ class SocialProviderController extends Controller
             return redirect()->route('home');
 
         } catch (Exception $e) {
-            info($e);
+            if (!$e->getMessage()) abort('403');
             return redirect()->route('login')->with('status', ['error' => $e->getMessage()]);
         }
     }
@@ -74,7 +74,7 @@ class SocialProviderController extends Controller
      */
     public function collectUserAndSocialData()
     {
-        if (empty($this->provider) || empty($this->socialUser)) {
+        if (empty($this->socialUser)) {
             throw new  Exception("Something went wrong. Please try again later.");
         }
 
@@ -97,9 +97,31 @@ class SocialProviderController extends Controller
     }
 
     /**
+     * Check the user's social provider id(s) to log in with.
+     * It can be multiple types of login. However, an existing
+     * account cannot be bind with a new social provider on the
+     * login screen. Auth session is required to do so.
+     *
+     * @param User $user
+     * @param array $data
+     * @return User
+     * @throws Exception
+     */
+    public function checkExistingUserWithDifferentSocialProvider(User $user, array $data)
+    {
+        $status = in_array($data['provider']['id'], $user->socialProviders()->get()->map(fn($item) => $item['id'])->toArray());
+
+        if (!$status) {
+            throw new Exception("This account is registered using another method.");
+        }
+
+        return $user;
+    }
+
+    /**
      * Verify the user is not duplicate.
      *
-     * @return boolean|User
+     * @return true|User $user | boolean
      * @throws Exception
      */
     public function verifyUnregisteredUser()
@@ -114,11 +136,7 @@ class SocialProviderController extends Controller
             throw new Exception('Please sign in using another method.');
         };
 
-        if ($user && in_array($this->data['provider']['id'], $user->socialProviders()->get()->map(fn($item) => $item['id'])->toArray())) {
-            return $user;
-        }
-
-        return true;
+        return $this->checkExistingUserWithDifferentSocialProvider($user, $this->data) ?? true;
     }
 
     /**
@@ -160,16 +178,12 @@ class SocialProviderController extends Controller
     /**
      * Log the user into the current session.
      *
-     * @param $user
+     * @param User $user
      * @return User
      * @throws Exception
      */
-    public function logUserIn($user)
+    public function logUserIn(User $user)
     {
-        if (empty($user)) {
-            throw new Exception("Something went wrong when logging the user.");
-        }
-
         Auth::login($user);
         return $user;
     }
