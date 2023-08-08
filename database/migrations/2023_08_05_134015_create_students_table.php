@@ -11,10 +11,10 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id();
+            $table->string('id')->primary();
             $table->foreignId('user_id')->constrained();
-            $table->enum('gender', ['male', 'female']);
-            $table->text('address');
+            $table->enum('gender', ['male', 'female'])->nullable();
+            $table->text('address')->nullable();
             $table->string('faculty');
             $table->string('program');
             $table->string('campus');

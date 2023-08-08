@@ -13,6 +13,7 @@ class Student extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'user_id',
         'gender',
         'address',
@@ -20,6 +21,10 @@ class Student extends Model
         'program',
         'campus',
     ];
+
+    protected $keyType = 'string';
+    
+    public $incrementing = false;
 
     public function user(): BelongsTo
     {
