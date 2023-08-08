@@ -132,11 +132,15 @@ class SocialProviderController extends Controller
 
         $user = User::where('email', $this->data['user']['email'])->first();
 
-        if ($user && !$user->socialProviders()->exists()) {
+        if (!$user) {
+            return true;
+        }
+
+        if (!$user->socialProviders()->exists()) {
             throw new Exception('Please sign in using another method.');
         };
 
-        return $this->checkExistingUserWithDifferentSocialProvider($user, $this->data) ?? true;
+        return $this->checkExistingUserWithDifferentSocialProvider($user, $this->data);
     }
 
     /**
