@@ -45,7 +45,12 @@ class SocialProviderController extends Controller
             return redirect()->route('home');
 
         } catch (Exception $e) {
-            if (!$e->getMessage()) abort('403');
+            if ($e->getCode() == '401')
+                abort('401');
+
+            if (!$e->getMessage())
+                abort('403');
+
             return redirect()->route('login')->with('status', ['error' => $e->getMessage()]);
         }
     }
