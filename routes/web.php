@@ -16,9 +16,7 @@ use Laravel\Socialite\Facades\Socialite;
 |
 */
 
-Route::get('/', fn() => Inertia::render('Guest/Index'));
-
-Route::get('/home', fn() => Inertia::render('Home/Index'))->middleware('verified')->name('home');
+Route::get('/', [\App\Http\Controllers\UserController::class, 'base']);
 
 /** Route for social login */
 Route::get('/auth/{provider}/redirect', [SocialProviderController::class, 'redirect'])->name('social-provider.redirect');
