@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SocialProviderController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
@@ -34,6 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /** Requires complete profile */
     Route::middleware('profile.complete')->group(function () {
         Route::resource('student', StudentController::class)->except('store');
+        Route::resource('course', CourseController::class);
     });
 });
 
