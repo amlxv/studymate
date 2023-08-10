@@ -3,16 +3,11 @@ import { router, Link } from "@inertiajs/vue3";
 </script>
 
 <template>
-    <div>Home screen for Student</div>
-
-    <div>Hi, {{ $page.props.auth.user.name }}</div>
+    <div>Your Courses</div>
 
     <ul class="mt-10 border border-gray-700">
         <li>
-            <Link href="/"> Timetable</Link>
-        </li>
-        <li>
-            <Link :href="$route('course.index')"> Course</Link>
+            <Link :href="$route('course.index')">Manage Course</Link>
         </li>
     </ul>
 
