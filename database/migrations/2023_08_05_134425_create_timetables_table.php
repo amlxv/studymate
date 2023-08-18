@@ -18,8 +18,10 @@ return new class extends Migration {
             $table->string('title');
             $table->string('description');
             $table->foreignId('day_id')->constrained();
+            $table->date('date')->nullable();
             $table->time('time_start');
             $table->time('time_end');
+//            $table->boolean('repeat')->default('false');
             $table->timestamps();
         });
     }
