@@ -6,6 +6,9 @@
         "build": "vite build"
     },
     "devDependencies": {
+        "@tailwindcss/aspect-ratio": "^0.4.2",
+        "@tailwindcss/forms": "^0.5.5",
+        "@tailwindcss/typography": "^0.5.9",
         "@vitejs/plugin-vue": "^4.2.3",
         "autoprefixer": "^10.4.14",
         "axios": "^1.1.2",
@@ -17,6 +20,8 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@headlessui/vue": "^1.7.16",
+        "@heroicons/vue": "^2.0.18",
         "@inertiajs/vue3": "^1.0.9",
         "@vueuse/core": "^10.3.0",
         "pinia": "^2.1.6",

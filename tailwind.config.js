@@ -1,6 +1,6 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
-/** @type {import('tailwindcss').Config} */
+/** @type {import("tailwindcss").Config} */
 export default {
     content: [
         "./resources/**/*.blade.php",
@@ -10,9 +10,13 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+                sans: ["Inter", ...defaultTheme.fontFamily.sans],
             },
         },
     },
-    plugins: [],
+    plugins: [
+        require("@tailwindcss/forms"),
+        require("@tailwindcss/aspect-ratio"),
+        require("@tailwindcss/typography"),
+    ],
 };
