@@ -1,5 +1,6 @@
-import "../css/app.css";
 import "./bootstrap";
+import "../fonts/Inter/inter.css";
+import "../css/app.css";
 
 import { createInertiaApp } from "@inertiajs/vue3";
 import { createPinia } from "pinia";
