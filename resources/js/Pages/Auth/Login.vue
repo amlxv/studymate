@@ -54,6 +54,7 @@ const form = useForm({
                                 label="Email address"
                                 placeholder="studymate@amlxv.com"
                                 :model="form"
+                                :error="form.errors.email"
                             />
 
                             <FormInput
@@ -61,6 +62,7 @@ const form = useForm({
                                 label="Password"
                                 placeholder="********"
                                 :model="form"
+                                :error="form.errors.password"
                             />
 
                             <div class="flex items-center justify-between">
