@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Link, useForm } from "@inertiajs/vue3";
+import FormInput from "../../components/FormInput.vue";
 
 const form = useForm({
     email: null,
@@ -44,41 +45,19 @@ const form = useForm({
                             @submit.prevent="form.post($route('login'))"
                             class="space-y-6"
                         >
-                            <div>
-                                <label
-                                    for="email"
-                                    class="block text-sm font-medium leading-6 text-gray-900"
-                                    >Email address</label
-                                >
-                                <div class="mt-2">
-                                    <input
-                                        id="email"
-                                        v-model="form.email"
-                                        type="email"
-                                        autocomplete="email"
-                                        required
-                                        class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    />
-                                </div>
-                            </div>
+                            <FormInput
+                                id="email"
+                                label="Email address"
+                                placeholder="studymate@amlxv.com"
+                                :model="form"
+                            />
 
-                            <div>
-                                <label
-                                    for="password"
-                                    class="block text-sm font-medium leading-6 text-gray-900"
-                                    >Password</label
-                                >
-                                <div class="mt-2">
-                                    <input
-                                        id="password"
-                                        v-model="form.password"
-                                        type="password"
-                                        autocomplete="current-password"
-                                        required
-                                        class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    />
-                                </div>
-                            </div>
+                            <FormInput
+                                id="password"
+                                label="Password"
+                                placeholder="********"
+                                :model="form"
+                            />
 
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center">
