@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
-import BaseIcon from "@/components/BaseIcon.vue";
+import BaseIcon from "@/components/common/BaseIcon.vue";
 
 const props = defineProps<{
     id: string;

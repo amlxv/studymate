@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Link, useForm } from "@inertiajs/vue3";
-import FormInput from "@/components/FormInput.vue";
-import SocialButton from "@/components/SocialButton.vue";
+import FormInput from "@/components/common/forms/FormInput.vue";
+import SocialButton from "@/components/common/buttons/SocialButton.vue";
 
 const form = useForm({
     email: null,
