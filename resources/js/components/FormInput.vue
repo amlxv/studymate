@@ -38,15 +38,17 @@ const commonInputs: CommonInput[] = [
 ];
 
 const getInputType = (): InputType => {
-    return <InputType>(
-        (commonInputs.find((input) => id.value === input.id)?.type ??
-            (type?.value || "text"))
+    return (
+        <InputType>(
+            _.find(commonInputs, (input) => input.id === id.value)?.type
+        ) ??
+        (type?.value || "text")
     );
 };
 
 const getInputIcon = (): FunctionalComponent | null => {
     const iconComponent =
-        commonInputs.find((input) => id.value === input.id)?.icon ??
+        _.find(commonInputs, (input) => input.id === id.value)?.icon ??
         (icon?.value || null);
 
     return iconComponent ? iconComponent({}, undefined) : icon.value;
@@ -87,7 +89,7 @@ const getInputIcon = (): FunctionalComponent | null => {
                 :aria-invalid="!!error"
                 :aria-describedby="error ? id + '-error' : id"
                 v-model="model[id]"
-                @input="model?.clearErrors()"
+                @input="model?.clearErrors(<never>id)"
             />
             <div
                 v-if="error"
