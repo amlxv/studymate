@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { useForm } from "@inertiajs/vue3";
+import InputText from "@/components/common/forms/InputText.vue";
+import SubmitButton from "@/components/common/buttons/SubmitButton.vue";
+import AuthSimpleLayout from "@/components/layouts/auth/AuthSimpleLayout.vue";
 
 const form = useForm({
     email: null,
@@ -7,69 +10,35 @@ const form = useForm({
 </script>
 
 <template>
-    <div
-        class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
-    >
-        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img
-                class="mx-auto h-10 w-auto"
-                src="https://i.imgur.com/Lgce8Ha.png"
-                alt="StudyMate"
-            />
-            <h2
-                class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
-            >
-                Account Recovery
-            </h2>
-        </div>
-
-        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <AuthSimpleLayout label="Account Recovery">
+        <template v-slot:form>
             <form
-                @submit.prevent="form.post($route('password.request'))"
+                @submit.prevent="
+                    form.post($route('password.request'), {
+                        preserveScroll: true,
+                    })
+                "
                 class="space-y-6"
             >
-                <div>
-                    <label
-                        for="email"
-                        class="block text-sm font-medium leading-6 text-gray-900"
-                        >Email address</label
-                    >
-                    <div class="mt-2">
-                        <input
-                            id="email"
-                            v-model="form.email"
-                            type="email"
-                            autocomplete="email"
-                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            required
-                        />
-                    </div>
-                </div>
+                <InputText
+                    id="email"
+                    :model="form"
+                    placeholder="studymate@amlxv.com"
+                    :error="form.errors.email"
+                />
 
-                <div>
-                    <button
-                        type="submit"
-                        class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    >
-                        Confirm
-                    </button>
-                </div>
+                <SubmitButton label="Confirm" :disabled="form.processing" />
             </form>
+        </template>
 
-            <p class="mt-10 text-center text-sm text-gray-500">
-                Need help?
-                {{ " " }}
-                <a
-                    target="_blank"
-                    href="mailto:support@amlxv.com?subject=StudyMate: Account Recovery"
-                    class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-                    >Contact us</a
-                >
-            </p>
-        </div>
-    </div>
-
-    <!--    <div v-if="$page.props.flash.status">-->
-    <!--        {{ $page.props.flash.status }}-->
-    <!--    </div>-->
+        <template v-slot:details>
+            If you cannot find the reset link email in your
+            <a
+                target="_blank"
+                href="#"
+                class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+                >inbox</a
+            >, it is worth checking in your spam or junk mail section.
+        </template>
+    </AuthSimpleLayout>
 </template>

@@ -1,69 +1,41 @@
 <script setup lang="ts">
-import { router } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
+import InputText from "@/components/common/forms/InputText.vue";
+import SubmitButton from "@/components/common/buttons/SubmitButton.vue";
+import AuthSimpleLayout from "@/components/layouts/auth/AuthSimpleLayout.vue";
+
+const page = usePage();
+
+const form = useForm({
+    email: page.props.auth.user.email,
+});
 </script>
 
 <template>
-    <div
-        class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
-    >
-        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img
-                class="mx-auto h-10 w-auto"
-                src="https://i.imgur.com/Lgce8Ha.png"
-                alt="StudyMate"
-            />
-            <h2
-                class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
+    <AuthSimpleLayout label="Verify your email">
+        <template v-slot:form>
+            <form
+                class="space-y-6"
+                @submit.prevent="
+                    form.post($route('verification.send'), {
+                        preserveScroll: true,
+                    })
+                "
             >
-                Please confirm your email
-            </h2>
-        </div>
+                <InputText id="email" :model="form" disabled="disabled" />
 
-        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form class="space-y-6">
-                <div>
-                    <label
-                        for="email"
-                        class="block text-sm font-medium leading-6 text-gray-900"
-                        >Email address</label
-                    >
-                    <div class="mt-2">
-                        <input
-                            id="email"
-                            type="email"
-                            autocomplete="email"
-                            required=""
-                            class="disabled block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            :value="$page.props.auth.user.email"
-                            disabled
-                        />
-                    </div>
-                </div>
-
-                <div>
-                    <button
-                        @click="router.post($route('verification.send'))"
-                        type="button"
-                        class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    >
-                        Resend
-                    </button>
-                </div>
+                <SubmitButton label="Resend" :disabled="form.processing" />
             </form>
+        </template>
 
-            <p class="mt-10 text-center text-sm text-gray-500">
-                Go to your
-                {{ " " }}
-                <a
-                    href="#"
-                    class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-                    >inbox</a
-                >
-            </p>
-        </div>
-    </div>
-
-    <!--    <div v-if="$page.props.flash.status == 'verification-link-sent'">-->
-    <!--        A new email has been sent to your inbox.-->
-    <!--    </div>-->
+        <template v-slot:details>
+            If you cannot find the reset link email in your
+            <a
+                target="_blank"
+                href="#"
+                class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+                >inbox</a
+            >, it is worth checking in your spam or junk mail section.
+        </template>
+    </AuthSimpleLayout>
 </template>

@@ -22,12 +22,12 @@ const form = useForm({
     >
         <template v-slot:form>
             <form
+                class="space-y-6"
                 @submit.prevent="
                     form.post($route('login'), {
                         preserveScroll: true,
                     })
                 "
-                class="space-y-6"
             >
                 <InputText
                     id="email"
