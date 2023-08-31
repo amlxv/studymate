@@ -2,6 +2,7 @@
 import { Link, useForm } from "@inertiajs/vue3";
 import FormInput from "@/components/common/forms/FormInput.vue";
 import SocialButton from "@/components/common/buttons/SocialButton.vue";
+import BaseIcon from "@/components/common/BaseIcon.vue";
 
 const form = useForm({
     email: null,
@@ -125,14 +126,22 @@ const form = useForm({
                                 :href="
                                     $route('social-provider.redirect', 'github')
                                 "
-                            />
+                            >
+                                <template v-slot:icon>
+                                    <BaseIcon name="github" />
+                                </template>
+                            </SocialButton>
 
                             <SocialButton
                                 id="google"
                                 :href="
                                     $route('social-provider.redirect', 'google')
                                 "
-                            />
+                            >
+                                <template v-slot:icon>
+                                    <BaseIcon name="google" />
+                                </template>
+                            </SocialButton>
                         </div>
                     </div>
                 </div>
