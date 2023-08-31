@@ -1,15 +1,21 @@
 <script setup lang="ts">
 import { defineProps, FunctionalComponent, toRefs } from "vue";
+import { InertiaForm } from "@inertiajs/vue3";
 import {
     EnvelopeIcon,
     ExclamationCircleIcon,
     KeyIcon,
     LockClosedIcon,
+    IdentificationIcon,
 } from "@heroicons/vue/20/solid";
-import { InertiaForm } from "@inertiajs/vue3";
 
 type InputType = "text" | "password" | "email" | "number";
-type CommonInput = { id: string; icon: FunctionalComponent; type: string };
+type CommonInput = {
+    id: string;
+    icon: FunctionalComponent;
+    type: string;
+    label: string;
+};
 
 const props = defineProps<{
     id: string;
@@ -24,16 +30,24 @@ const props = defineProps<{
 const { id, label, type, icon, placeholder, model, error } = toRefs(props);
 
 const commonInputs: CommonInput[] = [
-    { id: "email", icon: EnvelopeIcon, type: "email" },
+    { id: "email", icon: EnvelopeIcon, type: "email", label: "Email address" },
     {
         id: "password",
         icon: KeyIcon,
         type: "password",
+        label: "Password",
     },
     {
         id: "password_confirmation",
         icon: LockClosedIcon,
         type: "password",
+        label: "Confirm Password",
+    },
+    {
+        id: "name",
+        icon: IdentificationIcon,
+        type: "text",
+        label: "Name",
     },
 ];
 
@@ -53,14 +67,22 @@ const getInputIcon = (): FunctionalComponent | null => {
 
     return iconComponent ? iconComponent({}, undefined) : icon.value;
 };
+
+const getInputLabel = () => {
+    return (
+        _.find(commonInputs, (input) => input.id === id.value)?.label ??
+        (label?.value || null)
+    );
+};
 </script>
 
 <template>
     <div>
         <label
+            v-if="!!getInputLabel()"
             :for="id"
             class="block text-sm font-medium leading-6 text-gray-900"
-            >{{ label }}</label
+            >{{ getInputLabel() }}</label
         >
         <div class="relative mt-2 rounded-md shadow-sm">
             <div
