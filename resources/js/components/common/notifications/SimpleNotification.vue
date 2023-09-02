@@ -11,14 +11,29 @@ import {
 
 const page = usePage();
 
-type NotificationType = "successful" | "error" | "warning";
-type CommonNotification = { type: NotificationType } & { icon: Icon };
+interface Notification {
+    type: NotificationType;
+    message: string;
+    icon: Icon;
+}
 
 interface Icon {
     component: FunctionalComponent;
     color: string;
 }
 
+type CommonNotification = { type: NotificationType } & { icon: Icon };
+
+/**
+ * 1. The notification type that will be used, eg: successful
+ *    should be included in this type.
+ */
+type NotificationType = "successful" | "error" | "warning";
+
+/**
+ * 2. After adding type for the notification. Specify
+ *    the type's icons specifications in this section.
+ */
 const commonNotifications: CommonNotification[] = [
     {
         type: "successful",
@@ -43,36 +58,66 @@ const commonNotifications: CommonNotification[] = [
     },
 ];
 
+/**
+ * 3. If there are any status message respond by slugs,
+ *    don't forget to include the translation for those
+ *    slugs in this section.
+ */
+const commonSlugMessages = [
+    {
+        slug: "verification-link-sent",
+        message: "We have sent the verification link to your email address!",
+    },
+];
+
+const getMessage = (message: string) => {
+    if (_.find(commonSlugMessages, { slug: message })) {
+        return (<{ slug; message }>(
+            _.find(commonSlugMessages, { slug: message })
+        )).message;
+    }
+
+    return message;
+};
+
 const sanitizeNotification = (status) => {
+    const notification: Notification = {
+        type: undefined,
+        message: undefined,
+        icon: undefined,
+    };
+
     switch (typeof status) {
         case "object": {
-            return !status
-                ? null
-                : {
-                      type: _.keys(status)[0],
-                      message: _.values(status)[0],
-                      icon: _.find(
-                          commonNotifications,
-                          (item) => item.type === _.keys(status)[0],
-                      ).icon,
-                  };
+            if (!status) return;
+
+            notification.type = <NotificationType>_.keys(status)[0];
+            notification.message = getMessage(<string>_.values(status)[0]);
+            notification.icon = _.find(
+                commonNotifications,
+                (item) => item.type === _.keys(status)[0],
+            ).icon;
+
+            break;
         }
 
         case "string": {
-            return {
-                type: "successful",
-                message: status,
-                icon: _.find(
-                    commonNotifications,
-                    (item) => item.type === "successful",
-                ).icon,
-            };
+            notification.type = "successful";
+            notification.message = getMessage(status);
+            notification.icon = _.find(
+                commonNotifications,
+                (item) => item.type === "successful",
+            ).icon;
+
+            break;
         }
 
         default: {
             return null;
         }
     }
+
+    return notification;
 };
 
 const status = computed({
