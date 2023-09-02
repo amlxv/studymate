@@ -5,6 +5,7 @@ import { defineProps } from "vue";
 import { Link } from "@inertiajs/vue3";
 import SocialButton from "@/components/common/buttons/SocialButton.vue";
 import BaseIcon from "@/components/common/BaseIcon.vue";
+import SimpleNotification from "@/components/common/notifications/SimpleNotification.vue";
 
 const props = defineProps<{
     label: string;
@@ -105,4 +106,6 @@ const props = defineProps<{
             />
         </div>
     </div>
+
+    <SimpleNotification />
 </template>

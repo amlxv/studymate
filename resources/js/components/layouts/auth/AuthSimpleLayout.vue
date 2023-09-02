@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
+import SimpleNotification from "@/components/common/notifications/SimpleNotification.vue";
 
 const props = defineProps<{
     label: string;
@@ -31,4 +32,6 @@ const props = defineProps<{
             </p>
         </div>
     </div>
+
+    <SimpleNotification />
 </template>
