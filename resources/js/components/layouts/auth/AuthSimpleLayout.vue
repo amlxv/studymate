@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
-import SimpleNotification from "@/components/common/notifications/SimpleNotification.vue";
+import Toast from "@/components/common/notifications/Toast.vue";
 
 const props = defineProps<{
     label: string;
@@ -33,5 +33,5 @@ const props = defineProps<{
         </div>
     </div>
 
-    <SimpleNotification />
+    <Toast />
 </template>

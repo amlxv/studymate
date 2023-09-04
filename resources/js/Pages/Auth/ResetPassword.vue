@@ -5,6 +5,7 @@ import queryString from "query-string";
 import InputText from "@/components/common/forms/InputText.vue";
 import SubmitButton from "@/components/common/buttons/SubmitButton.vue";
 import AuthSimpleLayout from "@/components/layouts/auth/AuthSimpleLayout.vue";
+import Alert from "@/components/common/notifications/Alert.vue";
 
 const { pathname, search } = new URL(window.location.toString());
 const token = pathname.split("/").reverse()[0];
@@ -41,6 +42,12 @@ const form = useForm({
                     :model="form"
                     placeholder="********"
                     :error="form.errors.password_confirmation"
+                />
+
+                <Alert
+                    v-if="form.errors.email"
+                    :message="form.errors.email"
+                    type="error"
                 />
 
                 <SubmitButton label="Reset" :disabled="form.processing" />

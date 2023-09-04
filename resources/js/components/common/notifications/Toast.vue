@@ -1,114 +1,11 @@
 <script setup lang="ts">
 import _ from "lodash";
-import { computed, FunctionalComponent, watch } from "vue";
+import { computed, watch } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import { XMarkIcon } from "@heroicons/vue/20/solid";
-import {
-    CheckCircleIcon,
-    XCircleIcon,
-    ExclamationCircleIcon,
-} from "@heroicons/vue/24/outline";
+import { sanitizeNotification } from "@/types/notifications";
 
 const page = usePage();
-
-interface Notification {
-    type: NotificationType;
-    message: string;
-    icon: Icon;
-}
-
-interface Icon {
-    component: FunctionalComponent;
-    color: string;
-}
-
-type CommonNotification = { type: NotificationType } & { icon: Icon };
-
-/** Status type for the notification. **/
-type NotificationType = "successful" | "error" | "warning";
-
-/** Icon specifications based types. **/
-const commonNotifications: CommonNotification[] = [
-    {
-        type: "successful",
-        icon: {
-            component: CheckCircleIcon,
-            color: "text-green-400",
-        },
-    },
-    {
-        type: "error",
-        icon: {
-            component: XCircleIcon,
-            color: "text-red-400",
-        },
-    },
-    {
-        type: "warning",
-        icon: {
-            component: ExclamationCircleIcon,
-            color: "text-orange-400",
-        },
-    },
-];
-
-/** Slugs translations **/
-const commonSlugMessages = [
-    {
-        slug: "verification-link-sent",
-        message: "We have sent the verification link to your email address!",
-    },
-];
-
-const getMessage = (message: string) => {
-    if (_.find(commonSlugMessages, { slug: message })) {
-        return (<{ slug; message }>(
-            _.find(commonSlugMessages, { slug: message })
-        )).message;
-    }
-
-    return message;
-};
-
-const sanitizeNotification = (status) => {
-    const notification: Notification = {
-        type: undefined,
-        message: undefined,
-        icon: undefined,
-    };
-
-    switch (typeof status) {
-        case "object": {
-            if (!status) return;
-
-            notification.type = <NotificationType>_.keys(status)[0];
-            notification.message = getMessage(<string>_.values(status)[0]);
-            notification.icon = _.find(
-                commonNotifications,
-                (item) => item.type === _.keys(status)[0],
-            ).icon;
-
-            break;
-        }
-
-        case "string": {
-            notification.type = "successful";
-            notification.message = getMessage(status);
-            notification.icon = _.find(
-                commonNotifications,
-                (item) => item.type === "successful",
-            ).icon;
-
-            break;
-        }
-
-        default: {
-            return null;
-        }
-    }
-
-    return notification;
-};
 
 const status = computed({
     get: () => {
