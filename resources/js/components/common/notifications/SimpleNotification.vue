@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import _ from "lodash";
-import { computed, FunctionalComponent } from "vue";
+import { computed, FunctionalComponent, watch } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import { XMarkIcon } from "@heroicons/vue/20/solid";
 import {
@@ -24,16 +24,10 @@ interface Icon {
 
 type CommonNotification = { type: NotificationType } & { icon: Icon };
 
-/**
- * 1. The notification type that will be used, eg: successful
- *    should be included in this type.
- */
+/** Status type for the notification. **/
 type NotificationType = "successful" | "error" | "warning";
 
-/**
- * 2. After adding type for the notification. Specify
- *    the type's icons specifications in this section.
- */
+/** Icon specifications based types. **/
 const commonNotifications: CommonNotification[] = [
     {
         type: "successful",
@@ -58,11 +52,7 @@ const commonNotifications: CommonNotification[] = [
     },
 ];
 
-/**
- * 3. If there are any status message respond by slugs,
- *    don't forget to include the translation for those
- *    slugs in this section.
- */
+/** Slugs translations **/
 const commonSlugMessages = [
     {
         slug: "verification-link-sent",
@@ -127,6 +117,22 @@ const status = computed({
     },
     set: (value: null) => (page.props.flash.status = value),
 });
+
+/**
+ * Automatically hide the status in X second(s)
+ * when the type is not undefined.
+ */
+watch(
+    status,
+    () => {
+        if (status.value?.type !== undefined) {
+            setTimeout(() => {
+                status.value = null;
+            }, 2800);
+        }
+    },
+    { immediate: true },
+);
 </script>
 
 <template>
