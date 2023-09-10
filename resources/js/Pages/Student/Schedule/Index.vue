@@ -1,23 +1,7 @@
 <script setup lang="ts">
-import { router, Link } from "@inertiajs/vue3";
+import Layout from "@/components/layouts/Layout.vue";
 </script>
 
 <template>
-    <div>Your Timetable</div>
-
-    <ul class="mt-10 border border-gray-700">
-        <li>
-            <Link :href="$route('timetable.index')">Manage Your Timetable</Link>
-        </li>
-    </ul>
-
-    <hr class="mt-5" />
-    <button
-        class="border border-gray-700 bg-red-900 px-3 py-1.5"
-        v-if="$page.props.auth.user"
-        @click="router.post($route('logout'))"
-        type="submit"
-    >
-        Logout
-    </button>
+    <Layout>Schedules</Layout>
 </template>

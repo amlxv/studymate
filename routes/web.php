@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 /** Root */
-Route::get('/', [UserController::class, 'hitBasePath']);
+Route::get('/', [UserController::class, 'hitBasePath'])->name('home');
 
 /** Social Login */
 Route::prefix('/auth/{provider}/')->name('social-provider.')->group(function () {
