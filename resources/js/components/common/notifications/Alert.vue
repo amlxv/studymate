@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
-import { sanitizeNotification, Type } from "@/types/notifications";
+import { sanitizeNotification, Type } from "@/types/notification";
 
 const props = defineProps<{
     type: Type;

@@ -3,7 +3,7 @@ import _ from "lodash";
 import { computed, watch } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import { XMarkIcon } from "@heroicons/vue/20/solid";
-import { sanitizeNotification } from "@/types/notifications";
+import { sanitizeNotification } from "@/types/notification";
 
 const page = usePage();
 
