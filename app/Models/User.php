@@ -55,8 +55,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isStudent(): bool
     {
-        // return $this->role == 'student';
-        return $this->role == 'student' && Student::where('user_id', $this->id)->exists();
+        return $this->role == 'student';
     }
 
     public function admin(): HasOne

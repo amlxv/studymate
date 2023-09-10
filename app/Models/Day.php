@@ -19,8 +19,8 @@ class Day extends Model
         return $this->hasMany(Event::class);
     }
 
-    public function timetables(): HasMany
+    public function schedules(): HasMany
     {
-        return $this->hasMany(Timetable::class);
+        return $this->hasMany(Schedule::class);
     }
 }

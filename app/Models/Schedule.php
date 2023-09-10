@@ -6,23 +6,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Timetable extends Model
+class Schedule extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'student_id',
-        'preference_id',
+        'user_id',
         'title',
         'description',
-        'day_id',
+        'date',
         'time_start',
-        'time_end'
+        'time_end',
+        'preference_id',
+        'day_id',
+        'type',
+        'remind'
     ];
 
-    public function student(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(User::class);
     }
 
     public function preference(): BelongsTo

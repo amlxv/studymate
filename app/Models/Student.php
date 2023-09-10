@@ -23,7 +23,7 @@ class Student extends Model
     ];
 
     protected $keyType = 'string';
-    
+
     public $incrementing = false;
 
     public function user(): BelongsTo
@@ -41,9 +41,9 @@ class Student extends Model
         return $this->hasOne(Preference::class);
     }
 
-    public function timetables(): HasMany
+    public function schedules(): HasMany
     {
-        return $this->hasMany(Timetable::class);
+        return $this->hasMany(Schedule::class);
     }
 
     public function telegram(): HasOne

@@ -37,6 +37,6 @@ class UserController extends Controller
             return Inertia::render('Student/Home/Index');
         }
 
-        return Inertia::render('Student/Home/Welcome');
+        abort(404);
     }
 }

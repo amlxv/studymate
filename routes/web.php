@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SocialProviderController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\TimetableController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,15 +29,8 @@ Route::prefix('/auth/{provider}/')->name('social-provider.')->group(function () 
 
 /** Core */
 Route::middleware(['auth', 'verified'])->group(function () {
-
-    /** Available without completing the profile */
-    Route::post('/student/store', [StudentController::class, 'store'])->name('student.store');
-
-    /** Requires complete profile */
-    Route::middleware('profile.complete')->group(function () {
-        Route::resource('student', StudentController::class)->except('store');
-        Route::resource('course', CourseController::class);
-        Route::resource('timetable', TimetableController::class);
-    });
+    Route::resource('student', StudentController::class);
+    Route::resource('course', CourseController::class);
+    Route::resource('schedule', ScheduleController::class);
 });
 

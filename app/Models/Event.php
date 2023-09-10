@@ -24,9 +24,9 @@ class Event extends Model
         return $this->belongsTo(Student::class);
     }
 
-    public function timetable(): BelongsTo
+    public function schedule(): BelongsTo
     {
-        return $this->belongsTo(Timetable::class);
+        return $this->belongsTo(Schedule::class);
     }
 
     public function preference(): BelongsTo
