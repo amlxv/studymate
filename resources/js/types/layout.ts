@@ -6,3 +6,8 @@ export interface Navigation {
     icon: FunctionalComponent;
     current: boolean;
 }
+
+export interface UserNavigation {
+    name: string;
+    href: string;
+}

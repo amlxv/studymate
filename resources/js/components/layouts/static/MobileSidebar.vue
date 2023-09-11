@@ -8,7 +8,7 @@ import {
     TransitionRoot,
 } from "@headlessui/vue";
 import { Cog6ToothIcon, XMarkIcon } from "@heroicons/vue/24/outline";
-import { Navigation } from "@/types/sidebar";
+import { Navigation } from "@/types/layout";
 
 const props = defineProps<{
     sidebarOpen: boolean;

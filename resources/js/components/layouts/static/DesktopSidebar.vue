@@ -2,7 +2,7 @@
 import { Link } from "@inertiajs/vue3";
 import { defineProps, toRef } from "vue";
 import { Cog6ToothIcon } from "@heroicons/vue/24/outline";
-import { Navigation } from "@/types/sidebar";
+import { Navigation } from "@/types/layout";
 
 const props = defineProps<{
     navigations: Navigation[];
