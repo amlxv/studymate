@@ -30,19 +30,19 @@ const navigations: Navigation[] = [
         name: "Schedules",
         href: "schedule.index",
         icon: CalendarIcon,
-        current: page.url === "/schedule",
+        current: page.url.startsWith("/schedule"),
     },
     {
         name: "Classes",
         href: "home",
         icon: FolderIcon,
-        current: page.url === "/class",
+        current: page.url.startsWith("/class"),
     },
     {
         name: "Courses",
         href: "course.index",
         icon: AcademicCapIcon,
-        current: page.url === "/course",
+        current: page.url.startsWith("/course"),
     },
 ];
 

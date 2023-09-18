@@ -20,7 +20,7 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Student/Schedule/Create');
     }
 
     /**
