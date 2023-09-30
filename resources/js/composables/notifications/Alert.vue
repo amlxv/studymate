@@ -8,7 +8,6 @@ const props = defineProps<{
 }>();
 
 const status = sanitizeNotification(props.message, props.type);
-console.log(status);
 </script>
 
 <template>

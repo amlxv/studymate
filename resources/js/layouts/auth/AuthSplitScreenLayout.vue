@@ -3,9 +3,9 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
 import { Link } from "@inertiajs/vue3";
-import SocialButton from "@/components/common/buttons/SocialButton.vue";
-import BaseIcon from "@/components/common/BaseIcon.vue";
-import Toast from "@/components/common/notifications/Toast.vue";
+import SocialButton from "@/composables/buttons/SocialButton.vue";
+import BaseIcon from "@/composables/BaseIcon.vue";
+import Toast from "@/composables/notifications/Toast.vue";
 
 const props = defineProps<{
     label: string;

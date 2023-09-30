@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
-import Toast from "@/components/common/notifications/Toast.vue";
+import Toast from "@/composables/notifications/Toast.vue";
 
 const props = defineProps<{
     label: string;

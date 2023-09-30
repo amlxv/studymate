@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useForm } from "@inertiajs/vue3";
-import InputText from "@/components/common/forms/InputText.vue";
-import SubmitButton from "@/components/common/buttons/SubmitButton.vue";
-import AuthSplitScreenLayout from "@/components/layouts/auth/AuthSplitScreenLayout.vue";
+import InputText from "@/composables/forms/InputText.vue";
+import SubmitButton from "@/composables/buttons/SubmitButton.vue";
+import AuthSplitScreenLayout from "@/layouts/auth/AuthSplitScreenLayout.vue";
 
 const form = useForm({
     name: null,

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
+import _ from "lodash";
 
 const props = defineProps<{
     id: string;

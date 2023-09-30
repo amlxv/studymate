@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useForm, usePage } from "@inertiajs/vue3";
-import InputText from "@/components/common/forms/InputText.vue";
-import SubmitButton from "@/components/common/buttons/SubmitButton.vue";
-import AuthSimpleLayout from "@/components/layouts/auth/AuthSimpleLayout.vue";
+import InputText from "@/composables/forms/InputText.vue";
+import SubmitButton from "@/composables/buttons/SubmitButton.vue";
+import AuthSimpleLayout from "@/layouts/auth/AuthSimpleLayout.vue";
 
 const page = usePage();
 

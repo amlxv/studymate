@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { defineProps } from "vue";
+import _ from "lodash";
 
 import type {} from "vite/types/importMeta";
 import type {} from "vite/types/importGlob";

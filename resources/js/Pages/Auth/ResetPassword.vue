@@ -2,10 +2,10 @@
 import { useForm } from "@inertiajs/vue3";
 import { Link } from "@inertiajs/vue3";
 import queryString from "query-string";
-import InputText from "@/components/common/forms/InputText.vue";
-import SubmitButton from "@/components/common/buttons/SubmitButton.vue";
-import AuthSimpleLayout from "@/components/layouts/auth/AuthSimpleLayout.vue";
-import Alert from "@/components/common/notifications/Alert.vue";
+import InputText from "@/composables/forms/InputText.vue";
+import SubmitButton from "@/composables/buttons/SubmitButton.vue";
+import AuthSimpleLayout from "@/layouts/auth/AuthSimpleLayout.vue";
+import Alert from "@/composables/notifications/Alert.vue";
 
 const { pathname, search } = new URL(window.location.toString());
 const token = pathname.split("/").reverse()[0];

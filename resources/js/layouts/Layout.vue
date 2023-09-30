@@ -2,9 +2,9 @@
 import { ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import { Navigation, UserNavigation } from "@/types/layout";
-import DesktopSidebar from "@/components/layouts/static/DesktopSidebar.vue";
-import MobileSidebar from "@/components/layouts/static/MobileSidebar.vue";
-import ProfileDropdown from "@/components/layouts/static/ProfileDropdown.vue";
+import DesktopSidebar from "@/layouts/static/DesktopSidebar.vue";
+import MobileSidebar from "@/layouts/static/MobileSidebar.vue";
+import ProfileDropdown from "@/layouts/static/ProfileDropdown.vue";
 import { MagnifyingGlassIcon } from "@heroicons/vue/20/solid";
 import {
     Bars3Icon,

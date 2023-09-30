@@ -8,6 +8,7 @@ import {
     LockClosedIcon,
     IdentificationIcon,
 } from "@heroicons/vue/20/solid";
+import _ from "lodash";
 
 type InputType = "text" | "password" | "email" | "number";
 type CommonInput = {

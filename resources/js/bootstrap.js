@@ -32,9 +32,5 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 //     enabledTransports: ['ws', 'wss'],
 // });
 
-import _ from "lodash";
-
-window._ = _;
-
 import "../fonts/Inter/inter.css";
 import "../css/app.css";
