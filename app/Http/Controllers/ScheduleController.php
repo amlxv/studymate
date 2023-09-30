@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Day;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -20,7 +22,8 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Student/Schedule/Create');
+        $days = Day::all();
+        return Inertia::render('Student/Schedule/Create', ['days' => $days]);
     }
 
     /**
@@ -28,7 +31,30 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = $request->user();
+
+        $validated = $request->validate([
+            "type" => "in:class,activity",
+            "title" => "string",
+            "description" => "string",
+            "date" => "required_if:type,activity",
+            "time_start" => "date_format:H:i",
+            "time_end" => "date_format:H:i|after:time_start",
+            "day_id" => "required_if:type,class",
+            "remind" => "boolean",
+        ]);
+
+        if (!empty($validated['date']) && !empty($validated['day_id'])) {
+            return back()->withErrors(['type' => "Date and day cannot exist at the same time."]);
+        }
+
+        $schedule = Schedule::query()->create(array_merge($validated, ['user_id' => $user->id]));
+
+        if ($schedule) {
+            dd($schedule);
+        }
+
+        return 0;
     }
 
     /**
