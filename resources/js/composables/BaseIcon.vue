@@ -11,8 +11,9 @@ const props = defineProps<{
     name: string;
 }>();
 
-const icons = import.meta.glob("../../../icons/*.svg", { eager: true });
-const iconPattern = /^(..\/){3}icons\/(.+)\.svg$/;
+const icons = import.meta.glob("../../icons/*.svg", { eager: true });
+
+const iconPattern = /^(..\/){2}icons\/(.+)\.svg$/;
 
 const iconList = _.map(_.keys(icons), (m) => {
     return {
