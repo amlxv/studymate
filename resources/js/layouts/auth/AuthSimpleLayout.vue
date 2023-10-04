@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
+import { Link } from "@inertiajs/vue3";
 import Toast from "@/composables/notifications/Toast.vue";
 
 const props = defineProps<{
@@ -12,11 +13,13 @@ const props = defineProps<{
         class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
     >
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img
-                class="mx-auto h-10 w-auto"
-                src="/assets/images/logo.png"
-                alt="StudyMate"
-            />
+            <Link :href="$route('home')">
+                <img
+                    class="mx-auto h-10 w-auto"
+                    src="/assets/images/logo.png"
+                    alt="StudyMate"
+                />
+            </Link>
             <h2
                 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
             >
