@@ -12,7 +12,7 @@ const props = defineProps<{
     callback?: string;
     callbackPreMessage?: string;
     callbackMessage?: string;
-    image: string;
+    image?: string;
 }>();
 </script>
 
@@ -101,7 +101,7 @@ const props = defineProps<{
         <div class="relative hidden w-0 flex-1 lg:block">
             <img
                 class="absolute inset-0 h-full w-full object-cover"
-                :src="image"
+                :src="image ?? '/assets/images/workdesk.png'"
                 alt="An image for illustration"
             />
         </div>
