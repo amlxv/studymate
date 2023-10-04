@@ -26,7 +26,7 @@ const props = defineProps<{
                     <Link href="/">
                         <img
                             class="h-10 w-auto"
-                            src="https://i.imgur.com/Lgce8Ha.png"
+                            src="/assets/images/logo.png"
                             alt="StudyMate"
                         />
                     </Link>

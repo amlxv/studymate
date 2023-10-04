@@ -14,7 +14,7 @@ const props = defineProps<{
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
                 class="mx-auto h-10 w-auto"
-                src="https://i.imgur.com/Lgce8Ha.png"
+                src="/assets/images/logo.png"
                 alt="StudyMate"
             />
             <h2
