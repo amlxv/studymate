@@ -6,8 +6,7 @@ import {
     ExclamationTriangleIcon,
     XCircleIcon,
 } from "@heroicons/vue/24/outline";
-
-export type Type = "successful" | "info" | "warning" | "error";
+import type { Type } from "./common";
 
 interface CommonNotification {
     type: Type;

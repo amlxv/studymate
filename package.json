@@ -27,6 +27,7 @@
         "@inertiajs/vue3": "^1.0.9",
         "@vueuse/core": "^10.3.0",
         "lodash": "^4.17.21",
+        "moment": "^2.29.4",
         "pinia": "^2.1.6",
         "query-string": "^8.1.0",
         "vue": "^3.3.4"

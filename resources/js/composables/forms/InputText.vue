@@ -10,7 +10,7 @@ import {
 } from "@heroicons/vue/20/solid";
 import _ from "lodash";
 
-type InputType = "text" | "password" | "email" | "number";
+type InputType = "text" | "password" | "email" | "number" | "date" | "time";
 type CommonInput = {
     id: string;
     icon: FunctionalComponent;
@@ -117,7 +117,13 @@ const getClassList = () => {
             class="block text-sm font-medium leading-6 text-gray-900"
             >{{ getInputLabel() }}</label
         >
-        <div class="relative mt-2 rounded-md shadow-sm">
+        <div
+            :class="
+                !!getInputIcon()
+                    ? 'relative mt-2 rounded-md shadow-sm'
+                    : 'mt-2 flex rounded-md  shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md'
+            "
+        >
             <div
                 v-if="!!getInputIcon()"
                 class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
@@ -143,7 +149,7 @@ const getClassList = () => {
                 v-bind:disabled="disabled"
             />
             <div
-                v-if="error"
+                v-if="error && !!getInputIcon()"
                 class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3"
             >
                 <ExclamationCircleIcon

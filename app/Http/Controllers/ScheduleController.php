@@ -35,13 +35,13 @@ class ScheduleController extends Controller
 
         $validated = $request->validate([
             "type" => "in:class,activity",
-            "title" => "string",
-            "description" => "string",
+            "title" => "required",
+            "description" => "required",
             "date" => "required_if:type,activity",
             "time_start" => "date_format:H:i",
             "time_end" => "date_format:H:i|after:time_start",
             "day_id" => "required_if:type,class",
-            "remind" => "boolean",
+            "remind" => "required",
         ]);
 
         if (!empty($validated['date']) && !empty($validated['day_id'])) {
