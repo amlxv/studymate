@@ -1,0 +1,64 @@
+<script setup lang="ts">
+import { defineProps, toRefs } from "vue";
+import { InertiaForm } from "@inertiajs/vue3";
+import _ from "lodash";
+
+const props = defineProps<{
+    id: string;
+    label?: string;
+    model: InertiaForm<unknown>;
+    error?: string;
+    disabled?: boolean;
+    readonly?: boolean;
+    classList?: string;
+    options: Array<string>;
+    selected?: string;
+}>();
+
+const { id, label, model, error, disabled, readonly, classList, options } =
+    toRefs(props);
+
+const getClassList = () => {
+    const baseClassList =
+        "block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6";
+    const errorClass =
+        "text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500";
+    const notErrorClass =
+        "text-gray-900 ring-gray-300 placeholder:text-gray-400 focus:ring-indigo-60";
+
+    let result =
+        baseClassList + " " + (error.value ? errorClass : notErrorClass);
+
+    if (classList.value) result = result + " " + classList.value;
+
+    return result;
+};
+</script>
+
+<template>
+    <div>
+        <label
+            v-if="!label"
+            :for="id"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >{{ label }}</label
+        >
+        <div>
+            <select
+                id="day"
+                name="day"
+                autocomplete="day"
+                :class="getClassList()"
+                v-model="model[id]"
+                @change="model?.clearErrors(<never>id)"
+            >
+                <option v-for="option in options" :value="option">
+                    {{ _.capitalize(option) }}
+                </option>
+            </select>
+        </div>
+        <p v-if="error" class="mt-2 text-sm text-red-600" :id="id + '-error'">
+            {{ error }}
+        </p>
+    </div>
+</template>

@@ -40,7 +40,7 @@ class ScheduleController extends Controller
             "date" => "required_if:type,activity",
             "time_start" => "date_format:H:i",
             "time_end" => "date_format:H:i|after:time_start",
-            "day_id" => "required_if:type,class",
+            "day" => "required_if:type,class",
             "remind" => "required",
         ]);
 

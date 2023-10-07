@@ -6,6 +6,7 @@ import Layout from "@/layouts/Layout.vue";
 import Button from "@/composables/buttons/Button.vue";
 import InputText from "@/composables/forms/InputText.vue";
 import SubmitButton from "@/composables/buttons/SubmitButton.vue";
+import SelectOption from "@/composables/forms/SelectOption.vue";
 import TextArea from "@/composables/forms/TextArea.vue";
 import { AcademicCapIcon, CalendarIcon } from "@heroicons/vue/24/outline";
 import {
@@ -151,7 +152,6 @@ const type = computed({
                             />
                         </div>
 
-                        <!-- TODO: Make component for Select -->
                         <div class="sm:col-span-3" v-if="type == 'class'">
                             <label
                                 for="day"
@@ -159,30 +159,22 @@ const type = computed({
                                 >Day</label
                             >
                             <div class="mt-2">
-                                <select
+                                <SelectOption
                                     id="day"
-                                    name="day"
-                                    autocomplete="day"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                    v-model="form.day"
-                                >
-                                    <option value="" disabled>
-                                        When this task will be on?
-                                    </option>
-                                    <option value="monday">Monday</option>
-                                    <option value="tuesday">Tuesday</option>
-                                    <option value="wednesday">Wednesday</option>
-                                    <option value="thursday">Thursday</option>
-                                    <option value="friday">Friday</option>
-                                    <option value="saturday">Saturday</option>
-                                </select>
+                                    :model="form"
+                                    :error="form.errors.day"
+                                    :options="[
+                                        'monday',
+                                        'tuesday',
+                                        'wednesday',
+                                        'thursday',
+                                        'friday',
+                                        'saturday',
+                                        'sunday',
+                                    ]"
+                                    :selected="form.day"
+                                />
                             </div>
-                            <p
-                                class="mt-2 text-sm text-red-500"
-                                v-if="form.errors.day"
-                            >
-                                {{ form.errors.day }}
-                            </p>
                         </div>
 
                         <div
@@ -265,7 +257,7 @@ const type = computed({
 
             <div class="mt-6 flex items-center justify-end gap-x-6">
                 <div>
-                    <SubmitButton label="Submit" />
+                    <SubmitButton />
                 </div>
             </div>
         </form>
