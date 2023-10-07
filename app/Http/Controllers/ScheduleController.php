@@ -22,8 +22,7 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        $days = Day::all();
-        return Inertia::render('Student/Schedule/Create', ['days' => $days]);
+        return Inertia::render('Student/Schedule/Create');
     }
 
     /**

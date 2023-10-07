@@ -16,7 +16,6 @@ return new class extends Migration {
             $table->foreignId('schedule_id')->constrained();
             $table->foreignId('preference_id')->constrained();
             $table->foreignId('telegram_id')->constrained();
-            $table->foreignId('day_id')->constrained();
             $table->time('time_to_send'); // Maybe can be removed in the future.
             $table->timestamps();
         });

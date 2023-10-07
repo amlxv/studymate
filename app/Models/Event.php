@@ -15,7 +15,6 @@ class Event extends Model
         'timetable_id',
         'preference_id',
         'telegram_id',
-        'day_id',
         'time_to_send'
     ];
 
@@ -37,10 +36,5 @@ class Event extends Model
     public function telegram(): BelongsTo
     {
         return $this->belongsTo(Telegram::class);
-    }
-
-    public function day(): BelongsTo
-    {
-        return $this->belongsTo(Day::class);
     }
 }

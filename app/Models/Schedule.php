@@ -14,11 +14,10 @@ class Schedule extends Model
         'user_id',
         'title',
         'description',
+        'day',
         'date',
         'time_start',
         'time_end',
-        'preference_id',
-        'day_id',
         'type',
         'remind'
     ];
@@ -31,10 +30,5 @@ class Schedule extends Model
     public function preference(): BelongsTo
     {
         return $this->belongsTo(Preference::class);
-    }
-
-    public function day(): BelongsTo
-    {
-        return $this->belongsTo(Day::class);
     }
 }

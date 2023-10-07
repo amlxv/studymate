@@ -25,11 +25,11 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained();
             $table->string('title');
             $table->string('description');
+            $table->enum('day', ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'])->nullable();
             $table->date('date')->nullable();
             $table->time('time_start');
             $table->time('time_end');
-            $table->foreignId('preference_id')->constrained();
-            $table->foreignId('day_id')->nullable()->constrained();
+            // $table->foreignId('preference_id')->nullable()->constrained(); // NOTE: REVISE THIS
             $table->enum('type', ['class', 'activity']);
             $table->boolean('remind');
             $table->timestamps();
