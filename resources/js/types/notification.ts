@@ -106,7 +106,7 @@ export const sanitizeNotification = (
             notification.icon = _.find(
                 commonNotifications,
                 (item: CommonNotification) => item?.type === _.keys(status)[0],
-            ).icon;
+            )?.icon;
 
             break;
         }

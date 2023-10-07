@@ -50,7 +50,11 @@ const type = computed({
 
 <template>
     <Layout>
-        <form @submit.prevent="form.post($route('schedule.store'))">
+        <form
+            @submit.prevent="
+                form.post($route('schedule.store'), { preserveScroll: true })
+            "
+        >
             <div class="space-y-12">
                 <div class="">
                     <div class="flex">

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Day;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -30,30 +29,34 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        $user = $request->user();
-
         $validated = $request->validate([
             "type" => "in:class,activity",
             "title" => "required",
             "description" => "required",
+            "day" => "required_if:type,class",
             "date" => "required_if:type,activity",
             "time_start" => "date_format:H:i",
             "time_end" => "date_format:H:i|after:time_start",
-            "day" => "required_if:type,class",
             "remind" => "required",
         ]);
 
-        if (!empty($validated['date']) && !empty($validated['day_id'])) {
-            return back()->withErrors(['type' => "Date and day cannot exist at the same time."]);
+        switch ($validated['type']) {
+            case 'class':
+                $validated = collect($validated)->except('date');
+                break;
+
+            case 'activity':
+                $validated = collect($validated)->except('day');
+                break;
         }
 
-        $schedule = Schedule::query()->create(array_merge($validated, ['user_id' => $user->id]));
+        $additionalData = ['user_id' => $request->user()->id];
 
-        if ($schedule) {
-            dd($schedule);
+        if (Schedule::query()->create($validated->merge($additionalData)->toArray())) {
+            return redirect()->route('schedule.index')->with(["status" => "A new schedule has been created!"]);
         }
 
-        return 0;
+        return back()->with(['status' => ['error' => 'Something went wrong when creating a new schedule.']]);
     }
 
     /**

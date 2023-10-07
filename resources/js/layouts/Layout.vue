@@ -5,6 +5,7 @@ import { Navigation, UserNavigation } from "@/types/layout";
 import DesktopSidebar from "@/layouts/static/DesktopSidebar.vue";
 import MobileSidebar from "@/layouts/static/MobileSidebar.vue";
 import ProfileDropdown from "@/layouts/static/ProfileDropdown.vue";
+import Toast from "@/composables/notifications/Toast.vue";
 import { MagnifyingGlassIcon } from "@heroicons/vue/20/solid";
 import {
     Bars3Icon,
@@ -49,6 +50,8 @@ const navigations: Navigation[] = [
 const userNavigations: UserNavigation[] = [{ name: "Your profile", href: "#" }];
 </script>
 <template>
+    <Toast />
+
     <div>
         <MobileSidebar
             :sidebar-open="sidebarOpen"
