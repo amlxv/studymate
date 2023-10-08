@@ -57,7 +57,7 @@ const type = computed({
         >
             <div class="space-y-12">
                 <div class="">
-                    <div class="flex">
+                    <div class="sm:flex sm:items-center sm:justify-between">
                         <div class="flex-1">
                             <h2
                                 class="text-base font-semibold leading-7 text-gray-900"
@@ -69,8 +69,7 @@ const type = computed({
                                 schedule.
                             </p>
                         </div>
-
-                        <div>
+                        <div class="mt-3 sm:ml-4 sm:mt-0">
                             <Link :href="$route('schedule.index')">
                                 <Button type="warning" label="Cancel" />
                             </Link>
