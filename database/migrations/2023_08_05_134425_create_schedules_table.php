@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
             $table->enum('day', ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'])->nullable();
             $table->date('date')->nullable();
             $table->time('time_start');

@@ -4,19 +4,33 @@ import { computed, ref } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
 import Layout from "@/layouts/Layout.vue";
 import SectionHeading from "@/composables/heading/SectionHeading.vue";
+import InfoModal from "@/components/schedules/InfoModal.vue";
 import { ClockIcon } from "@heroicons/vue/20/solid";
 import {
     calculateDaysDifferenceByDayName,
     days,
 } from "@/composables/etc/utils";
 
-const selectedDay = ref();
 const page = usePage();
+const selectedDay = ref();
+const selectedEvent = ref();
 
 const schedules = computed(() => page.props.schedules);
+
+const isInfoModalOpen = ref(false);
+
+const handleInfoModal = (event) => {
+    selectedEvent.value = event;
+    isInfoModalOpen.value = true;
+};
 </script>
 
 <template>
+    <InfoModal
+        :open="isInfoModalOpen"
+        @close="isInfoModalOpen = false"
+        :event="selectedEvent"
+    />
     <Layout>
         <SectionHeading
             title="Schedules"
@@ -51,7 +65,7 @@ const schedules = computed(() => page.props.schedules);
                         class="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto"
                     >
                         <div
-                            class="hidden min-h-screen w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px"
+                            class="hidden min-h-[65vh] w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px"
                         >
                             <div
                                 v-for="index in calculateDaysDifferenceByDayName(
@@ -92,7 +106,10 @@ const schedules = computed(() => page.props.schedules);
                                         ].slice(0, 2)"
                                         :key="event.id"
                                     >
-                                        <div class="group flex">
+                                        <div
+                                            class="group flex cursor-pointer"
+                                            @click="handleInfoModal(event)"
+                                        >
                                             <p
                                                 class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600"
                                             >
@@ -233,7 +250,9 @@ const schedules = computed(() => page.props.schedules);
                                 <p class="mb-1 font-semibold text-gray-900">
                                     {{ event["title"] }}
                                 </p>
-                                <p class="text-xs font-light text-gray-800">
+                                <p
+                                    class="whitespace-pre-line text-xs font-light text-gray-800"
+                                >
                                     {{ event["description"] }}
                                 </p>
                                 <time
