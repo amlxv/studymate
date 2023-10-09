@@ -8,6 +8,7 @@ import InputText from "@/composables/forms/InputText.vue";
 import SubmitButton from "@/composables/buttons/SubmitButton.vue";
 import SelectOption from "@/composables/forms/SelectOption.vue";
 import TextArea from "@/composables/forms/TextArea.vue";
+import SectionHeading from "@/composables/heading/SectionHeading.vue";
 import { AcademicCapIcon, CalendarIcon } from "@heroicons/vue/24/outline";
 import {
     Switch,
@@ -57,24 +58,15 @@ const type = computed({
         >
             <div class="space-y-12">
                 <div class="">
-                    <div class="sm:flex sm:items-center sm:justify-between">
-                        <div class="flex-1">
-                            <h2
-                                class="text-base font-semibold leading-7 text-gray-900"
-                            >
-                                Schedules
-                            </h2>
-                            <p class="mt-1 text-sm leading-6 text-gray-600">
-                                This information will be added into your
-                                schedule.
-                            </p>
-                        </div>
-                        <div class="mt-3 sm:ml-4 sm:mt-0">
-                            <Link :href="$route('schedule.index')">
-                                <Button type="warning" label="Cancel" />
-                            </Link>
-                        </div>
-                    </div>
+                    <SectionHeading
+                        title="Schedules"
+                        description="This information will be added into your
+                                schedule."
+                    >
+                        <Link :href="$route('schedule.index')">
+                            <Button type="warning" label="Cancel" />
+                        </Link>
+                    </SectionHeading>
 
                     <div class="mt-6">
                         <div class="sm:hidden">

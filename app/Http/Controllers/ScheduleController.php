@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Schedule;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class ScheduleController extends Controller
@@ -13,7 +17,43 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Student/Schedule/Index');
+        $now = Carbon::now();
+
+        $classes = Schedule::query()
+            ->where("type", "=", "class")
+            ->where('user_id', '=', Auth::id())
+            ->get()->toArray();
+
+
+        $activities = Schedule::query()
+            ->where('type', '=', 'activity')
+            ->where("user_id", '=', Auth::id())
+            ->whereMonth('date', '=', $now->month)
+            ->orderBy('date')
+            ->orderBy('time_start')
+            ->get()->toArray();
+
+        $from = Carbon::now()->firstOfMonth();
+        $to = Carbon::now()->endOfMonth();
+        $period = CarbonPeriod::create($from, $to);
+
+        foreach ($period as $date) {
+            $day = Str::lower($date->format('l'));
+
+            $classSchedules = collect($classes)->where('day', '=', $day)->toArray();
+            $activitySchedules = collect($activities)->where('date', '=', $date->format('Y-m-d'))->toArray();
+
+            $todaySchedules = [
+                'date' => $date->format("Y-m-d"),
+                'day' => $day,
+                'events' => collect($classSchedules)->merge($activitySchedules)->sortBy('time_start')->values()->all(),
+                'isToday' => $date->isToday(),
+            ];
+
+            $schedules[] = $todaySchedules;
+        }
+
+        return Inertia::render('Student/Schedule/Index', ["schedules" => $schedules ?? null]);
     }
 
     /**
@@ -57,6 +97,8 @@ class ScheduleController extends Controller
         }
 
         return back()->with(['status' => ['error' => 'Something went wrong when creating a new schedule.']]);
+
+        // TODO: Check if the schedule is today's upcoming event, then add this schedule to the events table too.
     }
 
     /**
