@@ -82,8 +82,15 @@ class ScheduleSeeder extends Seeder
                 "description" => "Android for beginner f2f course.",
                 "day" => "monday",
                 "time_start" => "20:25:00",
-                "time_end" => "14:47:00",
+                "time_end" => "23:47:00",
                 "type" => "class",
+            ], [
+                "title" => "Quick Test",
+                "description" => "Lecturer: Bob\nChapter: 2 - 5\nCarry Mark: 40\n\nDuration: 30 Minutes only",
+                "date" => "2023/10/10",
+                "time_start" => "20:25:00",
+                "time_end" => "23:47:00",
+                "type" => "activity",
             ],
             [
                 "title" => "Project Formulation",
