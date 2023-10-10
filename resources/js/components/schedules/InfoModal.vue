@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineProps, toRefs } from "vue";
+import { Link } from "@inertiajs/vue3";
 import {
     Dialog,
     DialogPanel,
@@ -104,13 +105,6 @@ const { open, event } = toRefs(props);
                                 class="mt-5 justify-between pl-4 sm:flex sm:flex-row-reverse"
                             >
                                 <div class="sm:flex sm:flex-row-reverse">
-                                    <button
-                                        type="button"
-                                        class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                                        @click="$emit('close')"
-                                    >
-                                        Close
-                                    </button>
                                     <Link
                                         :href="
                                             $route(

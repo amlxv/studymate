@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import moment from "moment";
 import { computed } from "vue";
-import { useForm, Link } from "@inertiajs/vue3";
+import { useForm, Link, usePage } from "@inertiajs/vue3";
 import Layout from "@/layouts/Layout.vue";
 import Button from "@/composables/buttons/Button.vue";
 import SubmitButton from "@/composables/buttons/SubmitButton.vue";
@@ -9,15 +9,18 @@ import SectionHeading from "@/composables/heading/SectionHeading.vue";
 import DetailsForm from "@/components/schedules/DetailsForm.vue";
 import TypeTabs from "@/components/schedules/TypeTabs.vue";
 
+const page = usePage();
+const schedule = page.props.schedule;
+
 const form = useForm({
-    type: "class",
-    title: "",
-    description: "",
-    date: moment().format("YYYY-MM-DD"),
-    time_start: moment().format("HH:00"),
-    time_end: moment().add(1, "hour").format("HH:00"),
-    day: moment().format("dddd").toLowerCase(),
-    remind: false,
+    type: schedule?.type,
+    title: schedule?.title,
+    description: schedule?.description,
+    date: schedule?.date ?? moment().format("YYYY-MM-DD"),
+    time_start: schedule?.time_start ?? moment().format("HH:00"),
+    time_end: schedule?.time_end ?? moment().add(1, "hour").format("HH:00"),
+    day: schedule?.day ?? moment().format("dddd").toLowerCase(),
+    remind: !!schedule?.remind,
 });
 
 const type = computed({
@@ -32,15 +35,16 @@ const type = computed({
     <Layout>
         <form
             @submit.prevent="
-                form.post($route('schedule.store'), { preserveScroll: true })
+                form.put($route('schedule.update', schedule?.id), {
+                    preserveScroll: true,
+                })
             "
         >
             <div class="space-y-12">
                 <div class="">
                     <SectionHeading
-                        title="New Schedule"
-                        description="This information will be added into your
-                                schedule."
+                        title="Edit Schedule"
+                        description="The new information will be updated."
                     >
                         <Link :href="$route('schedule.index')">
                             <Button type="warning" label="Cancel" />
@@ -58,7 +62,7 @@ const type = computed({
 
             <div class="mt-6 flex items-center justify-end gap-x-6">
                 <div>
-                    <SubmitButton />
+                    <SubmitButton label="Update" />
                 </div>
             </div>
         </form>

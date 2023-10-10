@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreScheduleRequest;
 use App\Models\Schedule;
 use Carbon\CarbonPeriod;
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -67,32 +67,12 @@ class ScheduleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreScheduleRequest $request)
     {
-        $validated = $request->validate([
-            "type" => "in:class,activity",
-            "title" => "required",
-            "description" => "required",
-            "day" => "required_if:type,class",
-            "date" => "required_if:type,activity",
-            "time_start" => "date_format:H:i",
-            "time_end" => "date_format:H:i|after:time_start",
-            "remind" => "required",
-        ]);
+        $userId = ['user_id' => $request->user()->id];
+        $schedule = $this->filterRequest($request);
 
-        switch ($validated['type']) {
-            case 'class':
-                $validated = collect($validated)->except('date');
-                break;
-
-            case 'activity':
-                $validated = collect($validated)->except('day');
-                break;
-        }
-
-        $additionalData = ['user_id' => $request->user()->id];
-
-        if (Schedule::query()->create($validated->merge($additionalData)->toArray())) {
+        if (Schedule::query()->create($schedule->merge($userId)->toArray())) {
             return redirect()->route('schedule.index')->with(["status" => "A new schedule has been created!"]);
         }
 
@@ -112,17 +92,32 @@ class ScheduleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Schedule $schedule)
     {
-        //
+        if ($schedule['user_id'] != Auth::id()) {
+            return redirect()->route('schedule.index')
+                ->with(["status" => ["warning" => "The schedule is not belongs to you."]]);
+        }
+
+        return Inertia::render("Student/Schedule/Edit", ["schedule" => $schedule]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreScheduleRequest $request, Schedule $schedule)
     {
-        //
+        if ($schedule['user_id'] != Auth::id()) abort('403');
+
+        $data = $this->filterRequest($request)->all();
+
+        if ($schedule->update($data)) {
+            return redirect()->route('schedule.index')->with(["status" => "The schedule has been updated!"]);
+        }
+
+        return back()->with(['status' => ['error' => 'Something went wrong when updating the schedule.']]);
+
+        // TODO: Check if the schedule is today's upcoming event, then add this schedule to the events table too.
     }
 
     /**
@@ -131,5 +126,21 @@ class ScheduleController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * Filter the required information based on the type.
+     */
+    public function filterRequest(StoreScheduleRequest $request): \Illuminate\Support\Collection
+    {
+        switch ($request['type']) {
+            case 'class':
+                return collect($request)->except('date');
+
+            case 'activity':
+                return collect($request)->except('day');
+        }
+
+        abort('422');
     }
 }
