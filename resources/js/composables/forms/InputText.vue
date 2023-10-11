@@ -80,7 +80,7 @@ const getInputIcon = (): FunctionalComponent | null => {
         _.find(commonInputs, (input) => input.id === id.value)?.icon ??
         (icon?.value || null);
 
-    return iconComponent ? iconComponent({}, undefined) : icon.value;
+    return iconComponent ?? iconComponent?.({}, undefined);
 };
 
 const getInputLabel = () => {
