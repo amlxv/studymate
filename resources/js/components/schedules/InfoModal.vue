@@ -9,7 +9,11 @@ import {
     TransitionRoot,
 } from "@headlessui/vue";
 import { XMarkIcon, TrashIcon } from "@heroicons/vue/24/outline";
-import { ClockIcon } from "@heroicons/vue/24/solid";
+import {
+    ClockIcon,
+    BellAlertIcon,
+    BellSlashIcon,
+} from "@heroicons/vue/24/solid";
 
 const props = defineProps<{
     open: boolean;
@@ -78,16 +82,32 @@ const { open, event } = toRefs(props);
                                         {{ event?.["title"] }}
                                     </DialogTitle>
 
-                                    <p class="mt-1 block text-xs text-gray-500">
-                                        <ClockIcon
-                                            class="inline h-4 w-4"
-                                        ></ClockIcon>
-                                        {{
-                                            event?.["time_start"]
-                                                .toString()
-                                                .slice(0, 5)
-                                        }}
-                                    </p>
+                                    <div class="flex space-x-3">
+                                        <p
+                                            class="mt-1 block text-xs text-gray-500"
+                                        >
+                                            <ClockIcon
+                                                class="inline h-4 w-4"
+                                            ></ClockIcon>
+                                            {{
+                                                event?.["time_start"]
+                                                    .toString()
+                                                    .slice(0, 5)
+                                            }}
+                                        </p>
+                                        <p
+                                            class="mt-1 block text-xs text-gray-500"
+                                        >
+                                            <BellAlertIcon
+                                                v-if="event?.remind"
+                                                class="inline h-4 w-4"
+                                            ></BellAlertIcon>
+                                            <BellSlashIcon
+                                                v-if="!event?.remind"
+                                                class="inline h-4 w-4"
+                                            ></BellSlashIcon>
+                                        </p>
+                                    </div>
                                     <div class="mt-4">
                                         <div
                                             class="whitespace-pre-line text-sm text-gray-500"
