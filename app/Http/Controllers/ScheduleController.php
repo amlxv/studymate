@@ -123,9 +123,13 @@ class ScheduleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Schedule $schedule)
     {
-        //
+        if (!$schedule->delete()) {
+            return back()->with(["status" => ["error" => "Something went wrong when deleting the schedule."]]);
+        }
+
+        return back()->with(['status' => "The schedule has been deleted."]);
     }
 
     /**
