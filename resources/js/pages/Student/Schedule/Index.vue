@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import _ from "lodash";
-import { computed, ref } from "vue";
-import { Link, usePage } from "@inertiajs/vue3";
+import { computed, onMounted, ref } from "vue";
+import { Link, usePage, router } from "@inertiajs/vue3";
 import Layout from "@/layouts/Layout.vue";
 import SectionHeading from "@/composables/heading/SectionHeading.vue";
 import InfoModal from "@/components/schedules/InfoModal.vue";
@@ -10,6 +10,8 @@ import {
     calculateDaysDifferenceByDayName,
     days,
 } from "@/composables/etc/utils";
+import DeleteConfirmation from "@/composables/modals/DeleteConfirmation.vue";
+import { TrashIcon } from "@heroicons/vue/24/outline";
 
 const page = usePage();
 const selectedDay = ref();
@@ -18,10 +20,27 @@ const selectedEvent = ref();
 const schedules = computed(() => page.props.schedules);
 
 const isInfoModalOpen = ref(false);
+const isDeleteConfirmationModalOpen = ref(false);
+
+onMounted(() => {
+    selectedDay.value = schedules.value.find(
+        (schedule) => schedule["isToday"] == true,
+    )?.["events"];
+});
 
 const handleInfoModal = (event) => {
     selectedEvent.value = event;
     isInfoModalOpen.value = true;
+};
+
+const handleDelete = (path) => {
+    router.delete(path);
+    isDeleteConfirmationModalOpen.value = false;
+};
+
+const handleDeleteConfirmationModal = () => {
+    isInfoModalOpen.value = false;
+    isDeleteConfirmationModalOpen.value = true;
 };
 </script>
 
@@ -30,13 +49,19 @@ const handleInfoModal = (event) => {
         :open="isInfoModalOpen"
         @close="isInfoModalOpen = false"
         :event="selectedEvent"
+        @delete="handleDeleteConfirmationModal"
+    />
+    <DeleteConfirmation
+        :open="isDeleteConfirmationModalOpen"
+        @close="isDeleteConfirmationModalOpen = false"
+        @delete="handleDelete(route('schedule.destroy', selectedEvent.id))"
     />
     <Layout>
         <SectionHeading
             title="Schedules"
             description="Where all the schedules are being managed."
         >
-            <Link :href="$route('schedule.create')">
+            <Link :href="route('schedule.create')">
                 <button
                     type="button"
                     class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -73,6 +98,7 @@ const handleInfoModal = (event) => {
                                     _.capitalize(schedules[0].day),
                                     days,
                                 )"
+                                :key="index"
                                 v-if="schedules.day !== 'monday'"
                                 class="relative bg-slate-50 px-3 py-2"
                             />
@@ -145,10 +171,13 @@ const handleInfoModal = (event) => {
                                     'Sunday',
                                     days,
                                 )"
+                                :key="index"
                                 v-if="schedules[0].day !== 'monday'"
                                 class="relative bg-slate-50 px-3 py-2"
                             />
                         </div>
+
+                        <!-- Mobile -->
                         <div
                             class="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden"
                         >
@@ -158,6 +187,7 @@ const handleInfoModal = (event) => {
                                     _.capitalize(schedules[0].day),
                                     days,
                                 )"
+                                :key="index"
                                 v-if="schedules[0].day !== 'monday'"
                                 type="button"
                                 class="flex h-14 cursor-default flex-col bg-slate-50 px-3 py-2 focus:z-10"
@@ -228,6 +258,7 @@ const handleInfoModal = (event) => {
                                     'Sunday',
                                     days,
                                 )"
+                                :key="index"
                                 v-if="schedules[0].day !== 'monday'"
                                 type="button"
                                 class="flex h-14 cursor-default flex-col bg-slate-100 px-3 py-2 focus:z-10"
@@ -269,12 +300,23 @@ const handleInfoModal = (event) => {
                                     }}
                                 </time>
                             </div>
-                            <a
-                                href="#"
-                                class="ml-6 flex-none self-center rounded-md bg-white px-3 py-2 font-semibold text-gray-900 opacity-0 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400 focus:opacity-100 group-hover:opacity-100"
+
+                            <div
+                                class="ml-6 flex-none cursor-pointer self-center rounded-md bg-white px-3 py-2 font-semibold text-gray-900 opacity-0 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400 focus:opacity-100 group-hover:opacity-100"
+                                @click="
+                                    selectedEvent = event;
+                                    handleDeleteConfirmationModal();
+                                "
+                            >
+                                <TrashIcon class="h-5" />
+                            </div>
+
+                            <Link
+                                :href="route('schedule.edit', event.id)"
+                                class="ml-1 flex-none self-center rounded-md bg-white px-3 py-2 font-semibold text-gray-900 opacity-0 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400 focus:opacity-100 group-hover:opacity-100"
                                 >Edit<span class="sr-only"
                                     >, {{ event["title"] }}</span
-                                ></a
+                                ></Link
                             >
                         </li>
                     </ol>
