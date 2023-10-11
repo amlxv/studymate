@@ -79,7 +79,7 @@ const { sidebarOpen, navigations } = toRefs(props);
                             class="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4"
                         >
                             <div class="flex h-16 shrink-0 items-center">
-                                <Link :href="$route('home')">
+                                <Link :href="route('home')">
                                     <img
                                         class="h-8 w-auto"
                                         src="/assets/images/logo.png"
@@ -99,7 +99,7 @@ const { sidebarOpen, navigations } = toRefs(props);
                                                 :key="item.name"
                                             >
                                                 <Link
-                                                    :href="$route(item.href)"
+                                                    :href="route(item.href)"
                                                     :class="[
                                                         item.current
                                                             ? 'bg-gray-50 text-indigo-600'

@@ -58,10 +58,10 @@ const props = defineProps<{
                 </MenuItem>
 
                 <Link
-                    :href="$route('logout')"
+                    :href="route('logout')"
                     method="post"
                     type="button"
-                    as="button"
+                    :as="'button'"
                     class="block px-3 py-1 text-sm leading-6 text-gray-900"
                     >Logout
                 </Link>

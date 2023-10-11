@@ -15,7 +15,7 @@ const form = useForm({
 <template>
     <AuthSplitScreenLayout
         label="Create your account"
-        :callback="$route('login')"
+        :callback="route('login')"
         callback-pre-message="Already have an account?"
         callback-message="Sign in"
     >
@@ -23,7 +23,7 @@ const form = useForm({
             <form
                 class="space-y-6"
                 @submit.prevent="
-                    form.post($route('register'), { preserveScroll: true })
+                    form.post(route('register'), { preserveScroll: true })
                 "
             >
                 <InputText

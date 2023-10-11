@@ -25,7 +25,7 @@ const mobileMenuOpen = ref(false);
                 aria-label="Global"
             >
                 <div class="flex lg:flex-1">
-                    <Link :href="$route('home')" class="-m-1.5 p-1.5">
+                    <Link :href="route('home')" class="-m-1.5 p-1.5">
                         <span class="sr-only">StudyMate</span>
                         <img
                             class="h-8 w-auto"
@@ -55,7 +55,7 @@ const mobileMenuOpen = ref(false);
                 </div>
                 <div class="hidden lg:flex lg:flex-1 lg:justify-end">
                     <Link
-                        :href="$route('login')"
+                        :href="route('login')"
                         class="text-sm font-semibold leading-6 text-gray-900"
                         >Log in <span aria-hidden="true">&rarr;</span></Link
                     >
@@ -72,7 +72,7 @@ const mobileMenuOpen = ref(false);
                     class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
                 >
                     <div class="flex items-center justify-between">
-                        <Link :href="$route('home')" class="-m-1.5 p-1.5">
+                        <Link :href="route('home')" class="-m-1.5 p-1.5">
                             <span class="sr-only">StudyMate</span>
                             <img
                                 class="h-8 w-auto"
@@ -102,7 +102,7 @@ const mobileMenuOpen = ref(false);
                             </div>
                             <div class="py-6">
                                 <Link
-                                    :href="$route('login')"
+                                    :href="route('login')"
                                     class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                                     >Log in
                                 </Link>
@@ -177,7 +177,7 @@ const mobileMenuOpen = ref(false);
                                 class="mt-10 flex items-center justify-center gap-x-6"
                             >
                                 <Link
-                                    :href="$route('register')"
+                                    :href="route('register')"
                                     class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                     >Get started
                                 </Link>

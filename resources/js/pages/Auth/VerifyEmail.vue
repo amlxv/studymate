@@ -17,7 +17,7 @@ const form = useForm({
             <form
                 class="space-y-6"
                 @submit.prevent="
-                    form.post($route('verification.send'), {
+                    form.post(route('verification.send'), {
                         preserveScroll: true,
                     })
                 "

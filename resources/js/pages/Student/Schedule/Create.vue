@@ -3,11 +3,11 @@ import moment from "moment";
 import { computed } from "vue";
 import { useForm, Link } from "@inertiajs/vue3";
 import Layout from "@/layouts/Layout.vue";
-import Button from "@/composables/buttons/Button.vue";
 import SubmitButton from "@/composables/buttons/SubmitButton.vue";
 import SectionHeading from "@/composables/heading/SectionHeading.vue";
 import DetailsForm from "@/components/schedules/DetailsForm.vue";
 import TypeTabs from "@/components/schedules/TypeTabs.vue";
+import CommonButton from "@/composables/buttons/CommonButton.vue";
 
 const form = useForm({
     type: "class",
@@ -32,7 +32,7 @@ const type = computed({
     <Layout>
         <form
             @submit.prevent="
-                form.post($route('schedule.store'), { preserveScroll: true })
+                form.post(route('schedule.store'), { preserveScroll: true })
             "
         >
             <div class="space-y-12">
@@ -42,8 +42,8 @@ const type = computed({
                         description="This information will be added into your
                                 schedule."
                     >
-                        <Link :href="$route('schedule.index')">
-                            <Button type="warning" label="Cancel" />
+                        <Link :href="route('schedule.index')">
+                            <CommonButton type="warning" label="Cancel" />
                         </Link>
                     </SectionHeading>
 

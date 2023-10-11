@@ -25,7 +25,7 @@ const form = useForm({
             <form
                 class="space-y-6"
                 @submit.prevent="
-                    form.post($route('password.update', { token: token }), {
+                    form.post(route('password.update', { token: token }), {
                         preserveScroll: true,
                     })
                 "
@@ -59,7 +59,7 @@ const form = useForm({
             {{ " " }}
             <Link
                 target="_blank"
-                :href="$route('login')"
+                :href="route('login')"
                 class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
                 >Sign in
             </Link>

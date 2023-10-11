@@ -9,7 +9,7 @@ import { router } from "@inertiajs/vue3";
 
     <button
         v-if="$page.props.auth.user"
-        @click="router.post($route('logout'))"
+        @click="router.post(route('logout'))"
         type="submit"
     >
         Logout

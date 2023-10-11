@@ -75,7 +75,7 @@ const props = defineProps<{
                             <SocialButton
                                 id="github"
                                 :href="
-                                    $route('social-provider.redirect', 'github')
+                                    route('social-provider.redirect', 'github')
                                 "
                             >
                                 <template v-slot:icon>
@@ -86,7 +86,7 @@ const props = defineProps<{
                             <SocialButton
                                 id="google"
                                 :href="
-                                    $route('social-provider.redirect', 'google')
+                                    route('social-provider.redirect', 'google')
                                 "
                             >
                                 <template v-slot:icon>

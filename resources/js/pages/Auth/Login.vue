@@ -15,7 +15,7 @@ const form = useForm({
 <template>
     <AuthSplitScreenLayout
         label="Sign in to your account"
-        :callback="$route('register')"
+        :callback="route('register')"
         callback-pre-message="Not a member?"
         callback-message="Sign up now"
     >
@@ -23,7 +23,7 @@ const form = useForm({
             <form
                 class="space-y-6"
                 @submit.prevent="
-                    form.post($route('login'), {
+                    form.post(route('login'), {
                         preserveScroll: true,
                     })
                 "
@@ -53,7 +53,7 @@ const form = useForm({
 
                     <div class="text-sm leading-6">
                         <Link
-                            :href="$route('password.request')"
+                            :href="route('password.request')"
                             class="font-semibold text-indigo-600 hover:text-indigo-500"
                             >Forgot password?
                         </Link>

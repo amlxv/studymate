@@ -14,7 +14,7 @@ const form = useForm({
         <template v-slot:form>
             <form
                 @submit.prevent="
-                    form.post($route('password.request'), {
+                    form.post(route('password.request'), {
                         preserveScroll: true,
                     })
                 "

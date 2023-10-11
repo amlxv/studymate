@@ -19,7 +19,7 @@ const navigations = toRef(props.navigations);
             class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4"
         >
             <div class="flex h-16 shrink-0 items-center">
-                <Link :href="$route('home')">
+                <Link :href="route('home')">
                     <img
                         class="h-8 w-auto"
                         src="/assets/images/logo.png"
@@ -33,7 +33,7 @@ const navigations = toRef(props.navigations);
                         <ul role="list" class="-mx-2 space-y-1">
                             <li v-for="item in navigations" :key="item.name">
                                 <Link
-                                    :href="$route(item.href)"
+                                    :href="route(item.href)"
                                     :class="[
                                         item.current
                                             ? 'bg-gray-50 text-indigo-600'
