@@ -85,7 +85,7 @@ class SocialProviderController extends Controller
 
         $this->data = [
             'user' => [
-                'name' => $this->socialUser->getName(),
+                'name' => $this->socialUser->getName() ?? $this->socialUser->getNickname(),
                 'email' => $this->socialUser->getEmail(),
                 'avatar' => $this->socialUser->getAvatar(),
                 'email_verified_at' => now()
