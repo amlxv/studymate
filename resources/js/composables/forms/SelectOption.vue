@@ -51,6 +51,7 @@ const getClassList = () => {
                 :class="getClassList()"
                 v-model="model[id]"
                 @change="model?.clearErrors(<never>id)"
+                v-bind:disabled="disabled"
             >
                 <option v-for="option in options" :value="option">
                     {{ _.capitalize(option) }}

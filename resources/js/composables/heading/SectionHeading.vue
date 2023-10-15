@@ -17,7 +17,7 @@ const { title, description } = toRefs(props);
 
 <template>
     <div
-        class="border-b border-gray-200 pb-5 sm:flex sm:items-center sm:justify-between"
+        class="border-b border-gray-200 pb-8 sm:flex sm:items-center sm:justify-between"
     >
         <div class="flex-1">
             <h2 class="text-base font-semibold leading-7 text-gray-900">

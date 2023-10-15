@@ -15,7 +15,7 @@ const { label, disabled, onClick, customClass, type } = toRefs(props);
 const commonButtonStyles = [
     {
         type: "successful",
-        style: "",
+        style: "flex w-full justify-center rounded-md font-semibold px-3 py-1.5 text-sm leading-6 shadow-sm transition-colors bg-indigo-600 text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
     },
     {
         type: "info",

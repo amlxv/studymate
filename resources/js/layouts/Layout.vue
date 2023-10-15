@@ -47,7 +47,9 @@ const navigations: Navigation[] = [
     },
 ];
 
-const userNavigations: UserNavigation[] = [{ name: "Your profile", href: "#" }];
+const userNavigations: UserNavigation[] = [
+    { name: "Your profile", href: "profile.index" },
+];
 </script>
 <template>
     <Toast />

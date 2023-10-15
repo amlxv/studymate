@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SocialProviderController;
 use App\Http\Controllers\StudentController;
@@ -32,5 +33,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('student', StudentController::class);
     Route::resource('course', CourseController::class);
     Route::resource('schedule', ScheduleController::class);
+    Route::resource('profile', ProfileController::class);
 });
 
+/**
+ * Temporarily for testing purpose.
+ */
+Route::put("test", function (\Illuminate\Http\Request $request) {
+    dd($request->all());
+})->name("test");

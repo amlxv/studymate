@@ -48,7 +48,7 @@ const props = defineProps<{
                     v-slot="{ active }"
                 >
                     <Link
-                        :href="item.href"
+                        :href="route(item.href)"
                         :class="[
                             active ? 'bg-gray-50' : '',
                             'block px-3 py-1 text-sm leading-6 text-gray-900',
