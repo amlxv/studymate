@@ -82,7 +82,10 @@ const { sidebarOpen, navigations } = toRefs(props);
                                 <Link :href="route('home')">
                                     <img
                                         class="h-8 w-auto"
-                                        src="/assets/images/logo.png"
+                                        :src="
+                                            route('home') +
+                                            '/assets/images/logo.png'
+                                        "
                                         alt="StudyMate"
                                     />
                                 </Link>
