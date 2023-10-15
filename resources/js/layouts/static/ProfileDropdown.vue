@@ -4,6 +4,7 @@ import { Link } from "@inertiajs/vue3";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { ChevronDownIcon } from "@heroicons/vue/20/solid";
 import { UserNavigation } from "@/types/layout";
+import { UserCircleIcon } from "@heroicons/vue/24/solid";
 
 const props = defineProps<{
     userNavigations: UserNavigation[];
@@ -14,10 +15,16 @@ const props = defineProps<{
     <Menu as="div" class="relative">
         <MenuButton class="-m-1.5 flex items-center p-1.5">
             <span class="sr-only">Open user menu</span>
+            <UserCircleIcon
+                v-if="!$page.props.auth.user?.avatar"
+                class="h-8 w-8 rounded-full text-gray-300"
+                aria-hidden="true"
+            />
             <img
                 class="h-8 w-8 rounded-full bg-gray-50"
+                v-if="$page.props.auth.user?.avatar"
                 :src="$page.props.auth.user?.avatar"
-                alt=""
+                alt="User's avatar"
             />
             <span class="hidden lg:flex lg:items-center">
                 <span
