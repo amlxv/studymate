@@ -16,7 +16,7 @@ const props = defineProps<{
             <span class="sr-only">Open user menu</span>
             <img
                 class="h-8 w-8 rounded-full bg-gray-50"
-                src="https://avatars.githubusercontent.com/u/34534953?v=4"
+                :src="$page.props.auth.user?.avatar"
                 alt=""
             />
             <span class="hidden lg:flex lg:items-center">

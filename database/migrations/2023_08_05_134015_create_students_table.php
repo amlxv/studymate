@@ -11,13 +11,15 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id();
             $table->foreignId('user_id')->constrained();
+            $table->string('student_id')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->text('address')->nullable();
-            $table->string('faculty');
-            $table->string('program');
-            $table->string('campus');
+            // $table->string('institute');
+            $table->string('faculty')->nullable();
+            $table->string('campus')->nullable();
+            $table->string('program')->nullable();
             $table->timestamps();
         });
     }

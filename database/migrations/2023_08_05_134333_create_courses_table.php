@@ -12,8 +12,7 @@ return new class extends Migration {
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->string('student_id')->unique();
-            $table->foreign('student_id')->references('id')->on('students');
+            $table->foreignId('student_id')->constrained();
             $table->string('name');
             $table->string('code');
             $table->string('group');
