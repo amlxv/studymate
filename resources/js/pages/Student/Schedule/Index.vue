@@ -59,8 +59,17 @@ const handleDeleteConfirmationModal = () => {
     <Layout>
         <SectionHeading
             title="Schedules"
-            description="Where all the schedules are being managed."
+            description="Where all the schedules within month are being managed."
         >
+            <Link :href="route('schedule.all')">
+                <button
+                    type="button"
+                    class="mr-2 inline-flex items-center bg-white px-4 py-2 text-sm font-semibold text-indigo-500"
+                >
+                    View all
+                </button>
+            </Link>
+
             <Link :href="route('schedule.create')">
                 <button
                     type="button"
@@ -244,8 +253,8 @@ const handleDeleteConfirmationModal = () => {
                                     class="-mx-0.5 mt-auto flex flex-wrap-reverse"
                                 >
                                     <span
-                                        v-for="event in schedule['events']"
-                                        :key="event.id"
+                                        v-for="index in 5"
+                                        :key="index"
                                         class="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"
                                     />
                                 </span>
