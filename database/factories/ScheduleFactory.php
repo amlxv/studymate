@@ -17,8 +17,12 @@ class ScheduleFactory extends Factory
     public function definition(): array
     {
         return [
+            "title" => $this->faker->name,
+            "description" => $this->faker->text,
+            "time_start" => $this->faker->time,
+            "time_end" => $this->faker->time,
             "user_id" => 1,
-            "remind" => 0,
+            "remind" => $this->faker->numberBetween(0, 1),
         ];
     }
 }

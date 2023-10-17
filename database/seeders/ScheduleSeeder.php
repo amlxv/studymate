@@ -2,11 +2,15 @@
 
 namespace Database\Seeders;
 
+use App\Models\Schedule;
+use Faker\Factory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class ScheduleSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      */
@@ -119,7 +123,23 @@ class ScheduleSeeder extends Seeder
         ];
 
         foreach ($schedules as $schedule) {
-            \App\Models\Schedule::factory()->create($schedule);
+            Schedule::factory()->create($schedule);
         }
+
+        Schedule::factory()
+            ->count(100)
+            ->sequence(fn(Sequence $sequence) => [
+                "day" => Factory::create()->randomElement([
+                    'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
+                ])
+            ])
+            ->create(["type" => "class"]);
+
+        Schedule::factory()
+            ->count(100)
+            ->sequence(fn(Sequence $sequence) => [
+                "date" => Factory::create()->date()
+            ])
+            ->create(["type" => "activity"]);
     }
 }

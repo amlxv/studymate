@@ -50,7 +50,7 @@ const getClassList = () => {
                 autocomplete="day"
                 :class="getClassList()"
                 v-model="model[id]"
-                @change="model?.clearErrors(<never>id)"
+                @change="() => (!!error ? model?.clearErrors(<never>id) : '')"
                 v-bind:disabled="disabled"
             >
                 <option v-for="option in options" :value="option">
