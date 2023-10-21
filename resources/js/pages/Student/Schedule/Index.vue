@@ -109,7 +109,7 @@ const handleDeleteConfirmationModal = () => {
                                 )"
                                 :key="index"
                                 v-if="schedules.day !== 'monday'"
-                                class="relative bg-slate-50 px-3 py-2"
+                                class="group relative bg-slate-50 px-3 py-2"
                             />
                             <div
                                 v-for="schedule in schedules"
@@ -121,7 +121,7 @@ const handleDeleteConfirmationModal = () => {
                                     :class="
                                         schedule['isToday']
                                             ? 'flex h-6 w-6 items-center justify-center rounded-full bg-indigo-600 font-semibold text-white'
-                                            : undefined
+                                            : null
                                     "
                                 >
                                     {{
@@ -146,9 +146,12 @@ const handleDeleteConfirmationModal = () => {
                                             @click="handleInfoModal(event)"
                                         >
                                             <p
-                                                class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600"
+                                                class="group flex-auto -translate-x-3 truncate font-medium text-gray-900 transition-all hover:translate-x-0 group-hover:text-indigo-600"
                                             >
-                                                {{ index + 1 }}.
+                                                <span
+                                                    class="opacity-0 transition-all group-hover:opacity-100"
+                                                    >{{ index + 1 }}.</span
+                                                >
                                                 {{ event["title"] }}
                                             </p>
                                             <time
@@ -165,7 +168,7 @@ const handleDeleteConfirmationModal = () => {
                                     </li>
                                     <li
                                         v-if="schedule['events'].length > 2"
-                                        class="text-gray-500"
+                                        class="cursor-pointer text-gray-500"
                                     >
                                         + {{ schedule["events"].length - 2 }}
                                         more
@@ -288,8 +291,15 @@ const handleDeleteConfirmationModal = () => {
                             class="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50"
                         >
                             <div class="flex-auto">
-                                <p class="mb-1 font-semibold text-gray-900">
-                                    {{ index + 1 }}. {{ event["title"] }}
+                                <p
+                                    class="mb-1 -translate-x-3 font-semibold text-gray-900 transition-all group-hover:translate-x-0"
+                                >
+                                    <span
+                                        class="opacity-0 transition-all group-hover:opacity-100"
+                                    >
+                                        {{ index + 1 }}.
+                                    </span>
+                                    {{ event["title"] }}
                                 </p>
                                 <p
                                     class="whitespace-pre-line text-xs font-light text-gray-800"
