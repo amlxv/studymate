@@ -19,6 +19,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'me@amlxv.com',
         ]);
 
+        \App\Models\User::factory()->create([
+            'name' => 'Asrol Arshad',
+            'email' => 'asrol.arshad@gmail.com',
+        ]);
+
         $this->call([
             ScheduleSeeder::class,
         ]);

@@ -136,7 +136,7 @@ const handleDeleteConfirmationModal = () => {
                                     class="mt-2"
                                 >
                                     <li
-                                        v-for="event in schedule[
+                                        v-for="(event, index) in schedule[
                                             'events'
                                         ].slice(0, 2)"
                                         :key="event.id"
@@ -148,6 +148,7 @@ const handleDeleteConfirmationModal = () => {
                                             <p
                                                 class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600"
                                             >
+                                                {{ index + 1 }}.
                                                 {{ event["title"] }}
                                             </p>
                                             <time
@@ -282,13 +283,13 @@ const handleDeleteConfirmationModal = () => {
                         class="divide-y divide-gray-100 overflow-hidden rounded-lg bg-white text-sm shadow ring-1 ring-black ring-opacity-5"
                     >
                         <li
-                            v-for="event in selectedDay"
+                            v-for="(event, index) in selectedDay"
                             :key="event.id"
                             class="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50"
                         >
                             <div class="flex-auto">
                                 <p class="mb-1 font-semibold text-gray-900">
-                                    {{ event["title"] }}
+                                    {{ index + 1 }}. {{ event["title"] }}
                                 </p>
                                 <p
                                     class="whitespace-pre-line text-xs font-light text-gray-800"
