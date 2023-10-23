@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, toRef } from "vue";
 import { usePage } from "@inertiajs/vue3";
+import queryString from "query-string";
 import { Navigation, UserNavigation } from "@/types/layout";
 import DesktopSidebar from "@/layouts/static/DesktopSidebar.vue";
 import MobileSidebar from "@/layouts/static/MobileSidebar.vue";
@@ -16,8 +17,11 @@ import {
     AcademicCapIcon,
 } from "@heroicons/vue/24/outline";
 
-const page = usePage();
+const { search: searchParams } = new URL(window.location.toString());
+const params = queryString.parse(searchParams);
 
+const page = usePage();
+const search = toRef(params.search);
 const sidebarOpen = ref(false);
 
 const navigations: Navigation[] = [
@@ -93,6 +97,7 @@ const userNavigations: UserNavigation[] = [
                             id="search-field"
                             class="block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
                             placeholder="Search..."
+                            v-model="search"
                             type="search"
                             name="search"
                         />
