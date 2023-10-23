@@ -166,6 +166,7 @@ const handleDeleteConfirmationModal = () => {
                                             </time>
                                         </div>
                                     </li>
+                                    <!-- TODO: Optionally view more -->
                                     <li
                                         v-if="schedule['events'].length > 2"
                                         class="cursor-pointer text-gray-500"
