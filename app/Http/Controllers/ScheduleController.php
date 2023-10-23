@@ -6,9 +6,11 @@ use App\Http\Requests\StoreScheduleRequest;
 use App\Models\Schedule;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
@@ -19,19 +21,24 @@ class ScheduleController extends Controller
     {
         $now = Carbon::now();
 
+        $userId = Auth::id();
+
+        /** @noinspection PhpUndefinedMethodInspection */
         $classes = Schedule::query()
-            ->where("type", "=", "class")
-            ->where('user_id', '=', Auth::id())
-            ->get()->toArray();
+            ->ofType("class")
+            ->thatBelongsTo($userId)
+            ->get()
+            ->toArray();
 
-
+        /** @noinspection PhpUndefinedMethodInspection */
         $activities = Schedule::query()
-            ->where('type', '=', 'activity')
-            ->where("user_id", '=', Auth::id())
+            ->ofType("activity")
+            ->thatBelongsTo($userId)
             ->whereMonth('date', '=', $now->month)
             ->orderBy('date')
             ->orderBy('time_start')
-            ->get()->toArray();
+            ->get()
+            ->toArray();
 
         $from = Carbon::now()->firstOfMonth();
         $to = Carbon::now()->endOfMonth();
@@ -39,15 +46,18 @@ class ScheduleController extends Controller
 
         foreach ($period as $date) {
             $day = Str::lower($date->format('l'));
-
             $classSchedules = collect($classes)->where('day', '=', $day)->toArray();
             $activitySchedules = collect($activities)->where('date', '=', $date->format('Y-m-d'))->toArray();
 
             $todaySchedules = [
                 'date' => $date->format("Y-m-d"),
                 'day' => $day,
-                'events' => collect($classSchedules)->merge($activitySchedules)->sortBy('time_start')->values()->all(),
                 'isToday' => $date->isToday(),
+                'events' => collect($classSchedules)
+                    ->merge($activitySchedules)
+                    ->sortBy('time_start')
+                    ->values()
+                    ->all(),
             ];
 
             $schedules[] = $todaySchedules;
@@ -73,10 +83,13 @@ class ScheduleController extends Controller
         $schedule = $this->filterRequest($request);
 
         if (Schedule::query()->create($schedule->merge($userId)->toArray())) {
-            return redirect()->route('schedule.index')->with(["status" => "A new schedule has been created!"]);
+            return redirect()->route('schedule.index')
+                ->with(["status" => "A new schedule has been created!"]);
         }
 
-        return back()->with(['status' => ['error' => 'Something went wrong when creating a new schedule.']]);
+        return back()->with([
+            'status' => ['error' => 'Something went wrong when creating a new schedule.']
+        ]);
 
         // TODO: Check if the schedule is today's upcoming event, then add this schedule to the events table too.
     }
@@ -135,7 +148,7 @@ class ScheduleController extends Controller
     /**
      * Filter the required information based on the type.
      */
-    public function filterRequest(StoreScheduleRequest $request): \Illuminate\Support\Collection
+    public function filterRequest(StoreScheduleRequest $request): Collection
     {
         switch ($request['type']) {
             case 'class':
@@ -146,5 +159,34 @@ class ScheduleController extends Controller
         }
 
         abort('422');
+    }
+
+    /**
+     * Show all the schedules
+     */
+    public function viewAll(Request $request)
+    {
+        $userId = Auth::id();
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        $classes = Schedule::query()
+            ->ofType("class")
+            ->ofDay($request)
+            ->search($request)
+            ->thatBelongsTo($userId)
+            ->paginate(15);
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        $activities = Schedule::query()
+            ->ofType("activity")
+            ->ofMonth($request)
+            ->search($request)
+            ->thatBelongsTo($userId)
+            ->paginate(15);
+
+        return Inertia::render('Student/Schedule/All', [
+            "classes" => $classes,
+            'activities' => $activities
+        ]);
     }
 }

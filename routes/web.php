@@ -32,8 +32,10 @@ Route::prefix('/auth/{provider}/')->name('social-provider.')->group(function () 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('student', StudentController::class);
     Route::resource('course', CourseController::class);
-    Route::resource('schedule', ScheduleController::class);
     Route::resource('profile', ProfileController::class);
+
+    Route::resource('schedule', ScheduleController::class);
+    Route::get('schedules', [ScheduleController::class, 'viewAll'])->name('schedule.all');
 });
 
 /**
