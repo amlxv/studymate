@@ -3,6 +3,7 @@ import _ from "lodash";
 import { toRefs } from "vue";
 import { Link } from "@inertiajs/vue3";
 import moment from "moment";
+import { PencilSquareIcon } from "@heroicons/vue/24/outline";
 
 const props = defineProps<{
     type: string;
@@ -70,7 +71,7 @@ const { type, classes, activities, form } = toRefs(props);
                                     scope="col"
                                     class="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8"
                                 >
-                                    <span class="sr-only">Edit</span>
+                                    <span class="sr-only"></span>
                                 </th>
                             </tr>
                         </thead>
@@ -117,7 +118,9 @@ const { type, classes, activities, form } = toRefs(props);
                                     <Link
                                         :href="route('schedule.edit', item.id)"
                                         class="text-indigo-600 hover:text-indigo-900"
-                                        >Edit<span class="sr-only"
+                                    >
+                                        <PencilSquareIcon class="h-5 w-5" />
+                                        <span class="sr-only"
                                             >, {{ item.id }}</span
                                         ></Link
                                     >
@@ -169,7 +172,9 @@ const { type, classes, activities, form } = toRefs(props);
                                     <Link
                                         :href="route('schedule.edit', item.id)"
                                         class="text-indigo-600 hover:text-indigo-900"
-                                        >Edit<span class="sr-only"
+                                    >
+                                        <PencilSquareIcon class="h-5 w-5" />
+                                        <span class="sr-only"
                                             >, {{ item.id }}</span
                                         ></Link
                                     >

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import moment from "moment";
 import { computed } from "vue";
-import { useForm, Link, usePage } from "@inertiajs/vue3";
+import { useForm, Link, usePage, router } from "@inertiajs/vue3";
 import Layout from "@/layouts/Layout.vue";
 import SubmitButton from "@/composables/buttons/SubmitButton.vue";
 import SectionHeading from "@/composables/heading/SectionHeading.vue";
@@ -46,9 +46,29 @@ const type = computed({
                         title="Edit Schedule"
                         description="The new information will be updated."
                     >
-                        <Link :href="route('schedule.index')">
-                            <CommonButton type="warning" label="Cancel" />
-                        </Link>
+                        <div class="flex space-x-2">
+                            <div
+                                @click="
+                                    () =>
+                                        router.delete(
+                                            route(
+                                                'schedule.destroy',
+                                                schedule?.id,
+                                            ),
+                                        )
+                                "
+                            >
+                                <CommonButton
+                                    type="warning"
+                                    label="Delete"
+                                    class="bg-red-600 text-white hover:bg-red-700 hover:text-white"
+                                />
+                            </div>
+
+                            <Link :href="route('schedule.index')">
+                                <CommonButton type="warning" label="Cancel" />
+                            </Link>
+                        </div>
                     </SectionHeading>
 
                     <TypeTabs

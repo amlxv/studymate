@@ -142,7 +142,7 @@ class ScheduleController extends Controller
             return back()->with(["status" => ["error" => "Something went wrong when deleting the schedule."]]);
         }
 
-        return back()->with(['status' => "The schedule has been deleted."]);
+        return redirect()->route('schedule.index')->with(['status' => "The schedule has been deleted."]);
     }
 
     /**

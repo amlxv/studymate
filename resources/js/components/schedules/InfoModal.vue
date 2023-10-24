@@ -8,7 +8,7 @@ import {
     TransitionChild,
     TransitionRoot,
 } from "@headlessui/vue";
-import { XMarkIcon, TrashIcon } from "@heroicons/vue/24/outline";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
 import {
     ClockIcon,
     BellAlertIcon,
@@ -134,15 +134,15 @@ const { open, event } = toRefs(props);
                                         Manage
                                     </Link>
 
-                                    <div class="mt-1 sm:mr-1 sm:mt-auto">
+                                    <div class="mt-1 sm:mr-2 sm:mt-auto">
                                         <button
                                             type="button"
                                             @click="
                                                 $emit('delete', event?.['id'])
                                             "
-                                            class="mt-3 inline-flex w-full cursor-pointer justify-center rounded-md bg-white px-3 py-2 text-sm text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                                            class="mt-3 inline-flex w-full cursor-pointer justify-center rounded-md bg-red-600 px-3 py-2 text-sm text-white hover:bg-red-700 sm:mt-0 sm:w-auto"
                                         >
-                                            <TrashIcon class="h-5" />
+                                            Remove
                                         </button>
                                     </div>
                                 </div>

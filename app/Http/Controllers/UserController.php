@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Schedule;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -34,7 +35,25 @@ class UserController extends Controller
         }
 
         if ($user->isStudent()) {
-            return Inertia::render('Student/Home/Index');
+
+
+            /** @noinspection PhpUndefinedMethodInspection */
+            $classes = Schedule::query()
+                ->ofType("class")
+                ->thatBelongsTo($user->id)
+                ->get()
+                ->toArray();
+
+            /** @noinspection PhpUndefinedMethodInspection */
+            $activities = Schedule::query()
+                ->ofType("activity")
+                ->thatBelongsTo($user->id)
+                ->get()
+                ->toArray();
+
+            $schedules = collect(["classes" => $classes])->merge(["activities" => $activities]);
+
+            return Inertia::render('Student/Home/Index', ["schedules" => $schedules]);
         }
 
         abort(404);
