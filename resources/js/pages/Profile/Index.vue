@@ -73,7 +73,7 @@ const form = useForm({
                 <div class="space-y-12">
                     <div class="border-b border-gray-900/10 pb-12">
                         <div
-                            class="mt-1 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"
+                            class="mt-1 flex grid grid-cols-1 justify-center gap-x-6 gap-y-8 sm:grid-cols-6"
                         >
                             <div class="col-span-full">
                                 <InputAvatar
@@ -81,6 +81,7 @@ const form = useForm({
                                     id="avatar"
                                     :error="form?.errors?.avatar"
                                     :disabled="!isEditingMode"
+                                    icon-class="h-32 w-32"
                                 />
                             </div>
 

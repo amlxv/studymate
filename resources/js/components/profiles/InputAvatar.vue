@@ -10,9 +10,10 @@ const props = defineProps<{
     error?: string;
     disabled?: boolean;
     readonly?: boolean;
+    iconClass?: string;
 }>();
 
-const { id, label, form, error, disabled, readonly } = toRefs(props);
+const { id, label, form, error, disabled, readonly, iconClass } = toRefs(props);
 
 const avatarPreviewURL = ref(null);
 
@@ -32,16 +33,18 @@ onMounted(() => {
     <label class="block text-sm font-medium leading-6 text-gray-900">{{
         label ?? "Avatar"
     }}</label>
-    <div class="mt-2 flex items-center gap-x-3">
+    <div class="mt-2 flex flex-col items-center gap-y-4">
         <div>
             <UserCircleIcon
                 v-if="!form[id] && !avatarPreviewURL"
                 class="h-12 w-12 text-gray-300"
+                :class="iconClass"
                 aria-hidden="true"
             />
 
             <img
                 class="h-12 w-12 rounded-full"
+                :class="iconClass"
                 v-if="form[id] || avatarPreviewURL"
                 :src="avatarPreviewURL"
                 alt="User's avatar"
@@ -52,7 +55,7 @@ onMounted(() => {
             v-if="!disabled"
             type="button"
             :for="id"
-            class="cursor-pointer rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            class="block cursor-pointer rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
         >
             Choose
         </label>
