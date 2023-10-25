@@ -78,28 +78,13 @@ class Schedule extends Model
         return $query;
     }
 
-    public function scopeToday(): Collection
+    public function scopeToday(Builder $query, int $userId): Builder
     {
-        $classes = Schedule::query()
-            ->ofType("class")
-            ->where("day", "=", now()->format("l"))
-            ->get()
-            ->toArray();
-
-        $activities = Schedule::query()
-            ->ofType("activity")
-            ->where("date", "=", now()->format("Y-m-d"))
-            ->get()
-            ->toArray();
-
-        return collect($classes)->merge($activities)->sortBy("time_start");
-    }
-
-    public function scopeUpcomingEvents(): Collection
-    {
-        $timeNow = now()->format("H:i");
-        
-        return $this->scopeToday()
-            ->filter(fn($item) => $item['time_start'] >= $timeNow);
+        return $query
+            ->where(function ($query) {
+                $query->where("day", "=", now()->format("l"))
+                    ->orWhere("date", "=", now()->format("Y-m-d"));
+            })
+            ->where("user_id", "=", $userId);
     }
 }
