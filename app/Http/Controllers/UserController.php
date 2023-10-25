@@ -52,7 +52,12 @@ class UserController extends Controller
             $schedules = collect(["classes" => $classes])->merge(["activities" => $activities]);
 
             /** @noinspection PhpUndefinedMethodInspection */
-            $upcomingEvents = Schedule::query()->upcomingEvents()->toArray();
+            $upcomingEvents = Schedule::query()
+                ->today($user->id)
+                ->get();
+
+            $upcomingEvents = collect($upcomingEvents)
+                ->filter(fn($item) => $item['time_start'] >= now()->format("H:i"));
 
             return Inertia::render('Student/Home/Index', [
                 "schedules" => $schedules,
