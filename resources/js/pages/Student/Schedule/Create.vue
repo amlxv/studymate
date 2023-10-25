@@ -58,7 +58,7 @@ const type = computed({
 
             <div class="mt-6 flex items-center justify-end gap-x-6">
                 <div>
-                    <SubmitButton />
+                    <SubmitButton :disabled="form.processing" />
                 </div>
             </div>
         </form>
