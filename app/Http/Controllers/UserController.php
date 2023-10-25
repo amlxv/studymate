@@ -35,8 +35,6 @@ class UserController extends Controller
         }
 
         if ($user->isStudent()) {
-
-
             /** @noinspection PhpUndefinedMethodInspection */
             $classes = Schedule::query()
                 ->ofType("class")
@@ -53,7 +51,13 @@ class UserController extends Controller
 
             $schedules = collect(["classes" => $classes])->merge(["activities" => $activities]);
 
-            return Inertia::render('Student/Home/Index', ["schedules" => $schedules]);
+            /** @noinspection PhpUndefinedMethodInspection */
+            $upcomingEvents = Schedule::query()->upcomingEvents()->toArray();
+
+            return Inertia::render('Student/Home/Index', [
+                "schedules" => $schedules,
+                "upcomingEvents" => $upcomingEvents
+            ]);
         }
 
         abort(404);

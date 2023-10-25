@@ -127,7 +127,7 @@ class ScheduleSeeder extends Seeder
         }
 
         Schedule::factory()
-            ->count(100)
+            ->count(30)
             ->sequence(fn(Sequence $sequence) => [
                 "day" => Factory::create()->randomElement([
                     'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'

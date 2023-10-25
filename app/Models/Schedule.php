@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class Schedule extends Model
 {
@@ -75,5 +76,30 @@ class Schedule extends Model
         }
 
         return $query;
+    }
+
+    public function scopeToday(): Collection
+    {
+        $classes = Schedule::query()
+            ->ofType("class")
+            ->where("day", "=", now()->format("l"))
+            ->get()
+            ->toArray();
+
+        $activities = Schedule::query()
+            ->ofType("activity")
+            ->where("date", "=", now()->format("Y-m-d"))
+            ->get()
+            ->toArray();
+
+        return collect($classes)->merge($activities)->sortBy("time_start");
+    }
+
+    public function scopeUpcomingEvents(): Collection
+    {
+        $timeNow = now()->format("H:i");
+        
+        return $this->scopeToday()
+            ->filter(fn($item) => $item['time_start'] >= $timeNow);
     }
 }
