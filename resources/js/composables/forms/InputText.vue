@@ -77,8 +77,8 @@ const getInputType = (): InputType => {
 
 const getInputIcon = (): FunctionalComponent | null => {
     const iconComponent =
-        _.find(commonInputs, (input) => input.id === id.value)?.icon ??
-        (icon?.value || null);
+        icon?.value ??
+        (_.find(commonInputs, (input) => input.id === id.value)?.icon || null);
 
     return iconComponent ?? iconComponent?.({}, undefined);
 };

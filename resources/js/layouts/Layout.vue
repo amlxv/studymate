@@ -12,7 +12,6 @@ import {
     Bars3Icon,
     BellIcon,
     CalendarIcon,
-    FolderIcon,
     HomeIcon,
     AcademicCapIcon,
 } from "@heroicons/vue/24/outline";
@@ -37,12 +36,12 @@ const navigations: Navigation[] = [
         icon: CalendarIcon,
         current: page.url.startsWith("/schedule"),
     },
-    {
-        name: "Classes",
-        href: "home",
-        icon: FolderIcon,
-        current: page.url.startsWith("/class"),
-    },
+    // {
+    //     name: "Classes",
+    //     href: "home",
+    //     icon: FolderIcon,
+    //     current: page.url.startsWith("/class"),
+    // },
     {
         name: "Courses",
         href: "course.index",
