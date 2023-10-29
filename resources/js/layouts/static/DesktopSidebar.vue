@@ -63,7 +63,7 @@ const navigations = toRef(props.navigations);
                             class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-indigo-700 hover:text-white"
                             :class="{
                                 'bg-indigo-800 text-white hover:bg-indigo-800':
-                                    $page.url.startsWith('/settings'),
+                                    $page.url.startsWith('/setting'),
                             }"
                         >
                             <Cog6ToothIcon

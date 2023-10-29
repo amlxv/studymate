@@ -1,3 +1,5 @@
+<!-- Deprecated -->
+
 <script setup lang="ts">
 import { toRefs } from "vue";
 import { InertiaForm } from "@inertiajs/vue3";

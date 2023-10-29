@@ -132,7 +132,7 @@ const { sidebarOpen, navigations } = toRefs(props);
                                             :class="{
                                                 'bg-indigo-800 text-white hover:bg-indigo-800':
                                                     $page.url.startsWith(
-                                                        '/settings',
+                                                        '/setting',
                                                     ),
                                             }"
                                         >
