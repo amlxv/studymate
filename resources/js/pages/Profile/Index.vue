@@ -44,8 +44,8 @@ const form = useForm({
             @submit.prevent="
                 form.post(route('profile.update', $page.props.user.id), {
                     preserveScroll: true,
-                    onFinish: () => {
-                        isEditingMode.value = false;
+                    onSuccess: () => {
+                        isEditingMode = false;
                     },
                 })
             "
@@ -59,7 +59,7 @@ const form = useForm({
                     <CommonButton
                         type="warning"
                         :label="
-                            isEditingMode ? 'Disable Editing' : 'Edit Profile'
+                            isEditingMode ? 'Disable Editing' : 'Enable Edit'
                         "
                         @click="isEditingMode = !isEditingMode"
                         :class="
@@ -267,7 +267,7 @@ const form = useForm({
                 }"
             >
                 <div>
-                    <SubmitButton />
+                    <SubmitButton label="Save" />
                 </div>
             </div>
         </form>

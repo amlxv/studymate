@@ -29,6 +29,8 @@ const props = defineProps<{
     disabled?: boolean;
     readonly?: boolean;
     classList?: string;
+    min?: string | number;
+    max?: string | number;
 }>();
 
 const {
@@ -42,6 +44,8 @@ const {
     disabled,
     readonly,
     classList,
+    min,
+    max,
 } = toRefs(props);
 
 const commonInputs: CommonInput[] = [
@@ -147,6 +151,8 @@ const getClassList = () => {
                 @input="model?.clearErrors(<never>id)"
                 v-bind:readonly="readonly"
                 v-bind:disabled="disabled"
+                v-bind:max="max"
+                v-bind:min="min"
             />
             <div
                 v-if="error && !!getInputIcon()"

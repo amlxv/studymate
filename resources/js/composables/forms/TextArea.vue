@@ -11,6 +11,7 @@ const props = defineProps<{
     disabled?: boolean;
     readonly?: boolean;
     classList?: string;
+    description?: string;
 }>();
 
 const { id, label, placeholder, model, error, disabled, readonly, classList } =
@@ -22,8 +23,8 @@ const { id, label, placeholder, model, error, disabled, readonly, classList } =
         <label
             for="description"
             class="block text-sm font-medium leading-6 text-gray-900"
-            >Description</label
-        >
+            >{{ label ?? "Description" }}
+        </label>
         <div class="mt-2">
             <textarea
                 :id="id"
@@ -45,7 +46,7 @@ const { id, label, placeholder, model, error, disabled, readonly, classList } =
             />
         </div>
         <p class="mt-3 text-sm leading-6 text-gray-600" v-if="!error">
-            Write a few sentences about this task.
+            {{ description ?? "Write a few sentences about this task." }}
         </p>
 
         <p v-if="error" class="mt-2 text-sm text-red-600">
