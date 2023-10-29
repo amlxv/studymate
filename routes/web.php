@@ -36,6 +36,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('schedule', ScheduleController::class);
     Route::get('schedules', [ScheduleController::class, 'viewAll'])->name('schedule.all');
+
+    Route::get('upcoming', [UserController::class, 'upcoming'])->name('upcoming');
 });
 
 /**

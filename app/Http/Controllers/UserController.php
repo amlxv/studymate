@@ -51,20 +51,32 @@ class UserController extends Controller
 
             $schedules = collect(["classes" => $classes])->merge(["activities" => $activities]);
 
-            /** @noinspection PhpUndefinedMethodInspection */
-            $upcomingEvents = Schedule::query()
-                ->today($user->id)
-                ->get();
-
-            $upcomingEvents = collect($upcomingEvents)
-                ->filter(fn($item) => $item['time_start'] >= now()->format("H:i"));
-
             return Inertia::render('Student/Home/Index', [
                 "schedules" => $schedules,
-                "upcomingEvents" => $upcomingEvents
             ]);
         }
 
         abort(404);
+    }
+
+    /**
+     * Managing the events that will be occurred
+     * in that day.
+     *
+     * @return Response
+     */
+    public function upcoming()
+    {
+        /** @noinspection PhpUndefinedMethodInspection */
+        $upcomingEvents = Schedule::query()
+            ->today(Auth::id())
+            ->get();
+
+        $upcomingEvents = collect($upcomingEvents)
+            ->filter(fn($item) => $item['time_start'] >= now()->format("H:i"));
+
+        return Inertia::render('Student/Upcoming/Index', [
+            "upcomingEvents" => $upcomingEvents
+        ]);
     }
 }

@@ -14,6 +14,7 @@ import {
     CalendarIcon,
     HomeIcon,
     AcademicCapIcon,
+    ClockIcon,
 } from "@heroicons/vue/24/outline";
 
 const { search: searchParams } = new URL(window.location.toString());
@@ -31,17 +32,17 @@ const navigations: Navigation[] = [
         current: page.url === "/",
     },
     {
+        name: "Upcoming",
+        href: "upcoming",
+        icon: ClockIcon,
+        current: page.url.startsWith("/upcoming"),
+    },
+    {
         name: "Schedules",
         href: "schedule.index",
         icon: CalendarIcon,
         current: page.url.startsWith("/schedule"),
     },
-    // {
-    //     name: "Classes",
-    //     href: "home",
-    //     icon: FolderIcon,
-    //     current: page.url.startsWith("/class"),
-    // },
     {
         name: "Courses",
         href: "course.index",
