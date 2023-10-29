@@ -35,7 +35,10 @@ const commonButtonStyles = [
 <template>
     <button
         :disabled="disabled"
-        :class="commonButtonStyles.find((btn) => btn.type === type).style"
+        :class="
+            commonButtonStyles.find((btn) => btn.type === type).style +
+            ' transition-all'
+        "
         @click="onClick"
         type="button"
     >

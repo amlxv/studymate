@@ -58,7 +58,7 @@ const props = defineProps<{
                         :href="route(item.href)"
                         :class="[
                             active ? 'bg-gray-50' : '',
-                            'block px-3 py-1 text-sm leading-6 text-gray-900',
+                            'block px-3 py-1 text-sm leading-6 text-gray-900 transition-all',
                         ]"
                         >{{ item.name }}
                     </Link>
@@ -69,8 +69,8 @@ const props = defineProps<{
                     method="post"
                     type="button"
                     :as="'button'"
-                    class="block px-3 py-1 text-sm leading-6 text-gray-900"
-                    >Logout
+                    class="block w-full px-3 py-1 text-left text-sm leading-6 text-gray-900"
+                    >Sign Out
                 </Link>
             </MenuItems>
         </transition>

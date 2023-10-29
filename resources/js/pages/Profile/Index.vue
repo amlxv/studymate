@@ -45,7 +45,7 @@ const form = useForm({
                 form.post(route('profile.update', $page.props.user.id), {
                     preserveScroll: true,
                     onFinish: () => {
-                        isEditingMode = false;
+                        isEditingMode.value = false;
                     },
                 })
             "
@@ -109,8 +109,11 @@ const form = useForm({
                                 />
 
                                 <p
-                                    class="mt-2 text-xs text-gray-600"
-                                    v-if="isEditingMode"
+                                    class="mt-2 text-xs text-gray-600 transition-all duration-300"
+                                    :class="{
+                                        '-mb-6 opacity-0': !isEditingMode,
+                                        'opacity-100': isEditingMode,
+                                    }"
                                 >
                                     The email address cannot be change.
                                 </p>
@@ -257,8 +260,11 @@ const form = useForm({
             </div>
 
             <div
-                class="mt-6 flex items-center justify-end gap-x-6"
-                v-if="isEditingMode"
+                class="mt-6 flex items-center justify-end gap-x-6 transition-all duration-300"
+                :class="{
+                    '-mb-6 opacity-0': !isEditingMode,
+                    'opacity-100': isEditingMode,
+                }"
             >
                 <div>
                     <SubmitButton />

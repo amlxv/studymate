@@ -1,3 +1,5 @@
+<!-- Deprecated -->
+
 <script setup lang="ts">
 import { useForm, Link } from "@inertiajs/vue3";
 import Layout from "@/layouts/Layout.vue";

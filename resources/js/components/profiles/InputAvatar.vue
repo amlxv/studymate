@@ -52,10 +52,13 @@ onMounted(() => {
         </div>
 
         <label
-            v-if="!disabled"
             type="button"
             :for="id"
-            class="block cursor-pointer rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            class="block cursor-pointer rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-all duration-300 hover:bg-gray-50"
+            :class="{
+                '-mb-10 -translate-y-10 opacity-0': disabled,
+                'opacity-100': !disabled,
+            }"
         >
             Choose
         </label>
