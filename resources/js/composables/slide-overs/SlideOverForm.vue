@@ -22,11 +22,7 @@ const { open, form, onSubmit, title, description } = toRefs(props);
 
 <template>
     <TransitionRoot as="template" :show="open">
-        <Dialog
-            as="div"
-            class="relative z-50"
-            @close="$emit('slideOverFormClose')"
-        >
+        <Dialog as="div" class="relative z-50" @close="$emit('close')">
             <div class="fixed inset-0" />
 
             <div class="fixed inset-0 overflow-hidden">
@@ -68,11 +64,7 @@ const { open, form, onSubmit, title, description } = toRefs(props);
                                                     <button
                                                         type="button"
                                                         class="rounded-md bg-indigo-700 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                                                        @click="
-                                                            $emit(
-                                                                'slideOverFormClose',
-                                                            )
-                                                        "
+                                                        @click="$emit('close')"
                                                     >
                                                         <span class="sr-only"
                                                             >Close panel</span
@@ -112,7 +104,7 @@ const { open, form, onSubmit, title, description } = toRefs(props);
                                         <button
                                             type="button"
                                             class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                            @click="$emit('slideOverFormClose')"
+                                            @click="$emit('close')"
                                         >
                                             Cancel
                                         </button>

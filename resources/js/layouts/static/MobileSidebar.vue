@@ -76,7 +76,7 @@ const { sidebarOpen, navigations } = toRefs(props);
                             </div>
                         </TransitionChild>
                         <div
-                            class="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4"
+                            class="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-700 px-6 pb-4"
                         >
                             <div class="flex h-16 shrink-0 items-center">
                                 <Link :href="route('home')">
@@ -105,8 +105,8 @@ const { sidebarOpen, navigations } = toRefs(props);
                                                     :href="route(item.href)"
                                                     :class="[
                                                         item.current
-                                                            ? 'bg-indigo-700 text-white'
-                                                            : 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
+                                                            ? 'bg-indigo-800 text-white'
+                                                            : 'text-indigo-200 hover:bg-indigo-600 hover:text-white',
                                                         'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 transition-all',
                                                     ]"
                                                 >

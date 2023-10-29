@@ -124,7 +124,7 @@ const userNavigations: UserNavigation[] = [
             </div>
 
             <main class="py-10">
-                <div class="px-4 sm:px-6 lg:px-8">
+                <div class="px-4 transition-all duration-700 sm:px-6 lg:px-8">
                     <slot />
                 </div>
             </main>

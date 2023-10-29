@@ -80,7 +80,7 @@ const handleDelete = (path: string) => {
                     : 'Fill in the form with new information to update the course as you wish.'
             "
             :open="slideOverFormOpen"
-            @slide-over-form-close="slideOverFormOpen = false"
+            @close="slideOverFormOpen = false"
         >
             <InputForm :form="form" />
         </SlideOverForm>

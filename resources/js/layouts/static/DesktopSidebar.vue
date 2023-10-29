@@ -16,7 +16,7 @@ const navigations = toRef(props.navigations);
         class="hidden lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:w-72 lg:flex-col"
     >
         <div
-            class="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4"
+            class="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-700 px-6 pb-4"
         >
             <div class="flex h-16 shrink-0 items-center">
                 <Link :href="route('home')">
@@ -36,8 +36,8 @@ const navigations = toRef(props.navigations);
                                     :href="route(item.href)"
                                     :class="[
                                         item.current
-                                            ? 'bg-indigo-700 text-white'
-                                            : 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
+                                            ? 'bg-indigo-800 text-white'
+                                            : 'text-indigo-200 hover:bg-indigo-600 hover:text-white',
                                         'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 transition-all',
                                     ]"
                                 >
