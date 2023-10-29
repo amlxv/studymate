@@ -58,16 +58,24 @@ const navigations = toRef(props.navigations);
                     </li>
 
                     <li class="mt-auto">
-                        <a
-                            href="#"
+                        <Link
+                            :href="route('setting.index')"
                             class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-indigo-700 hover:text-white"
+                            :class="{
+                                'bg-indigo-800 text-white hover:bg-indigo-800':
+                                    $page.url.startsWith('/settings'),
+                            }"
                         >
                             <Cog6ToothIcon
                                 class="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
                                 aria-hidden="true"
+                                :class="{
+                                    'text-white':
+                                        $page.url.startsWith('/settings'),
+                                }"
                             />
                             Settings
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </nav>

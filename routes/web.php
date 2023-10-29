@@ -3,6 +3,7 @@
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SocialProviderController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
@@ -33,6 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('student', StudentController::class);
     Route::resource('course', CourseController::class);
     Route::resource('profile', ProfileController::class);
+    Route::resource('setting', SettingController::class);
 
     Route::resource('schedule', ScheduleController::class);
     Route::get('schedules', [ScheduleController::class, 'viewAll'])->name('schedule.all');
