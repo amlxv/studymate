@@ -11,12 +11,16 @@ class Telegram extends Model
     use HasFactory;
 
     protected $fillable = [
-        'student_id',
-        'username'
+        'user_id',
+        'username',
+        'first_name',
+        'chat_id',
+        'photo_url',
+        'auth_date'
     ];
 
-    public function student(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(User::class);
     }
 }

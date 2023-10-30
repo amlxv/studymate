@@ -6,6 +6,7 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SocialProviderController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TelegramController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,12 +35,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('student', StudentController::class);
     Route::resource('course', CourseController::class);
     Route::resource('profile', ProfileController::class);
-    Route::resource('setting', SettingController::class);
 
     Route::resource('schedule', ScheduleController::class);
     Route::get('schedules', [ScheduleController::class, 'viewAll'])->name('schedule.all');
 
     Route::get('upcoming', [UserController::class, 'upcoming'])->name('upcoming');
+
+    Route::get('setting/telegram', [TelegramController::class, 'redirect'])->name('telegram.redirect');
+    Route::get('setting/telegram/callback', [TelegramController::class, 'callback'])->name('telegram.callback');
+
+    Route::resource('setting', SettingController::class);
 });
 
 /**

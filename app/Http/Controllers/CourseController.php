@@ -17,8 +17,7 @@ class CourseController extends Controller
     {
         $user = User::query()->where("id", "=", Auth::id())->first();
         $student = $user->student;
-
-        $courses = $student->courses;
+        $courses = $student ? $student->courses : [];
 
         return Inertia::render('Student/Course/Index', ["courses" => $courses]);
     }

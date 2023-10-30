@@ -17,9 +17,9 @@ class Preference extends Model
         'custom_message'
     ];
 
-    public function student(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(User::class);
     }
 
     public function telegram(): BelongsTo

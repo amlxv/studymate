@@ -42,4 +42,11 @@ return [
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
         'redirect' => env('GITHUB_AUTH_REDIRECT'),
     ],
+
+    'telegram' => [
+        'bot' => env('TELEGRAM_BOT_NAME'),
+        'client_id' => null,
+        'client_secret' => env('TELEGRAM_TOKEN'),
+        'redirect' => env('TELEGRAM_REDIRECT_URI'),
+    ],
 ];

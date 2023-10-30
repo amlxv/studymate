@@ -23,6 +23,12 @@ const commonSocial = [
         label: "GitHub",
         classList: "bg-[#24292F] text-white focus-visible:outline-[#24292F]",
     },
+    {
+        id: "telegram",
+        label: "Telegram",
+        classList:
+            "bg-white text-gray-900 focus-visible:outline-[#1D9BF0] border border-slate-300",
+    },
 ];
 
 const getLabel = () => {
@@ -46,7 +52,7 @@ const getClassList = () => {
     <a
         :href="href"
         class="flex w-full items-center justify-center gap-3 rounded-md px-3 py-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-        :class="getClassList()"
+        :class="getClassList() + ' ' + classList"
     >
         <slot name="icon" />
         <span class="text-sm font-semibold leading-6">{{ getLabel() }}</span>

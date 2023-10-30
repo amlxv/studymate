@@ -68,6 +68,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Student::class);
     }
 
+    public function telegram(): HasOne
+    {
+        return $this->hasOne(Telegram::class);
+    }
+
+    public function preference(): HasOne
+    {
+        return $this->hasOne(Preference::class);
+    }
+
     public function socialProviders(): HasMany
     {
         return $this->hasMany(SocialProvider::class);

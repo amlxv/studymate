@@ -14,6 +14,10 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->string('username');
+            $table->string('first_name')->nullable();
+            $table->string('chat_id')->nullable();
+            $table->string('photo_url')->nullable();
+            $table->string('auth_date')->nullable();
             $table->timestamps();
         });
     }

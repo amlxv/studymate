@@ -23,7 +23,7 @@ const props = defineProps<{
             <img
                 class="h-8 w-8 rounded-full bg-gray-50"
                 v-if="$page.props.auth.user?.avatar"
-                :src="route('home') + '/' + $page.props.auth.user?.avatar"
+                :src="$page.props.auth.user?.avatar"
                 alt="User's avatar"
             />
             <span class="hidden lg:flex lg:items-center">
