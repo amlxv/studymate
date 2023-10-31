@@ -108,9 +108,9 @@ class ProfileController extends Controller
         }
 
         if ($user->isStudent()) {
-            $student = Student::firstOrCreate(["user_id" => $user->id]);
+            $student = Student::updateOrCreate(["user_id" => $user->id], $studentData);
 
-            if (!$student->update($studentData)) {
+            if (!$student) {
                 return back()->with(["status" => [
                     "failed" => "Operation stopped. Something went wrong when updating student information."
                 ]]);

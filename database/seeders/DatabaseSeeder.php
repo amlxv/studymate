@@ -12,17 +12,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        \App\Models\User::factory()->create([
+            'name' => 'amlxv (Student)',
+            'email' => 'student@amlxv.com',
+        ]);
 
         \App\Models\User::factory()->create([
-            'name' => 'amlxv',
-            'email' => 'me@amlxv.com',
+            'name' => 'amlxv (Admin)',
+            'email' => 'admin@amlxv.com',
+            'role' => 'admin'
         ]);
 
         \App\Models\User::factory()->create([
             'name' => 'Asrol Arshad',
             'email' => 'asrol.arshad@gmail.com',
         ]);
+
+        \App\Models\User::factory(10)->create();
 
         $this->call([
             ScheduleSeeder::class,
