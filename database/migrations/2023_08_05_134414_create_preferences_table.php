@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('preferences', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('telegram_id')->constrained();
             $table->integer('time_before')->nullable();
             $table->text('custom_message')->nullable();

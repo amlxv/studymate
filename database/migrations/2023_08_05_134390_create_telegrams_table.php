@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('telegrams', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('username');
             $table->string('first_name')->nullable();
             $table->string('chat_id')->nullable();

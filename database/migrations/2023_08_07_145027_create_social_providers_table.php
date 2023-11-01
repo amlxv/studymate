@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('social_providers', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('token');
             $table->string('refresh_token')->nullable();
