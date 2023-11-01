@@ -68,7 +68,7 @@ class ProfileController extends Controller
         $validated = $request->validate([
             "avatar" => "nullable|mimes:png,jpg,jpeg|max:3072",
             "name" => "required|min:4|max:255",
-            "phone_number" => "nullable|starts_with:+60",
+            "phone_number" => "nullable|string|starts_with:60",
             "gender" => "nullable|in:male,female",
             "student_id" => "nullable|min:10|max:10",
             "address" => "nullable|max:255",

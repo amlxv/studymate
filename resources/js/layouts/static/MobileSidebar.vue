@@ -109,6 +109,12 @@ const { sidebarOpen, navigations } = toRefs(props);
                                                             : 'text-indigo-200 hover:bg-indigo-600 hover:text-white',
                                                         'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 transition-all',
                                                     ]"
+                                                    v-if="
+                                                        item?.role ==
+                                                            $page.props?.auth
+                                                                ?.user?.role ||
+                                                        !item?.role
+                                                    "
                                                 >
                                                     <component
                                                         :is="item.icon"

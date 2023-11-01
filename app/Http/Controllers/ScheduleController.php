@@ -138,11 +138,10 @@ class ScheduleController extends Controller
      */
     public function destroy(Schedule $schedule)
     {
-        if (!$schedule->delete()) {
-            return back()->with(["status" => ["error" => "Something went wrong when deleting the schedule."]]);
+        if ($schedule->delete()) {
+            return redirect()->route('schedule.index')->with(['status' => "The schedule has been deleted."]);
         }
-
-        return redirect()->route('schedule.index')->with(['status' => "The schedule has been deleted."]);
+        return back()->with(["status" => ["error" => "Something went wrong when deleting the schedule."]]);
     }
 
     /**

@@ -2,6 +2,7 @@
 import { onMounted, ref, toRaw, toRefs } from "vue";
 import { UserCircleIcon } from "@heroicons/vue/24/solid";
 import { InertiaForm } from "@inertiajs/vue3";
+import { getImagePath } from "@/composables/etc/utils";
 
 const props = defineProps<{
     id: string;
@@ -24,6 +25,7 @@ const setImagePreviewURL = (file) => {
 onMounted(() => {
     if (form.value[id.value]) {
         avatarPreviewURL.value = toRaw(form.value[id.value]);
+        avatarPreviewURL.value = getImagePath(avatarPreviewURL.value);
         form.value[id.value] = null;
     }
 });

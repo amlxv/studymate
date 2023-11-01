@@ -5,6 +5,7 @@ export interface Navigation {
     href: string;
     icon: FunctionalComponent;
     current: boolean;
+    role?: "student" | "admin";
 }
 
 export interface UserNavigation {

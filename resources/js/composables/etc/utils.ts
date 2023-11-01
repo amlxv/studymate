@@ -1,3 +1,5 @@
+import { Ziggy } from "../../ziggy";
+
 export const calculateDaysDifferenceByDayName = (
     from: string,
     to: string,
@@ -24,3 +26,16 @@ export const days: string[] = [
     "Saturday",
     "Sunday",
 ];
+
+export const getImagePath = (path: string): string => {
+    // @ts-ignore
+    return path.includes("http")
+        ? path
+        : `${new URL(window.location.toString()).origin}/${path}`;
+};
+
+export const getRoute = (path: string): string => {
+    return `${new URL(window.location.toString()).origin}/${
+        Ziggy.routes[path].uri
+    }`;
+};

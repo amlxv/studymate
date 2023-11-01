@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -81,5 +83,20 @@ class User extends Authenticatable implements MustVerifyEmail
     public function socialProviders(): HasMany
     {
         return $this->hasMany(SocialProvider::class);
+    }
+
+    public function scopeSearch(Builder $query, Request $request): Builder
+    {
+        if ($request->has('search')) {
+            $searchQuery = $request->get('search');
+            return $query->where('name', "LIKE", "%" . $searchQuery . "%")
+                ->orWhere('email', "LIKE", "%" . $searchQuery . "%")
+                ->orWhere('student_id', "LIKE", "%" . $searchQuery . "%")
+                ->orWhere('program', "LIKE", "%" . $searchQuery . "%")
+                ->orWhere('faculty', "LIKE", "%" . $searchQuery . "%")
+                ->orWhere('campus', "LIKE", "%" . $searchQuery . "%");
+        }
+
+        return $query;
     }
 }

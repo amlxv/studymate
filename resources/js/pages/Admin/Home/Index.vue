@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import { router } from "@inertiajs/vue3";
+import Layout from "@/layouts/Layout.vue";
+import SectionHeading from "@/composables/heading/SectionHeading.vue";
 </script>
 
 <template>
-    <div>Dashboard (Verified User)</div>
-
-    <div>You're now logged as: {{ $page.props.auth.user.role }}</div>
-
-    <button
-        v-if="$page.props.auth.user"
-        @click="router.post(route('logout'))"
-        type="submit"
-    >
-        Logout
-    </button>
+    <Layout>
+        <SectionHeading
+            title="Dashboard"
+            description="Just like a normal dashboard. But powerful."
+        >
+        </SectionHeading>
+    </Layout>
 </template>

@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import { defineProps } from "vue";
-import { Link } from "@inertiajs/vue3";
+import { computed, ComputedRef, defineProps } from "vue";
+import { Link, usePage } from "@inertiajs/vue3";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { ChevronDownIcon } from "@heroicons/vue/20/solid";
 import { UserNavigation } from "@/types/layout";
 import { UserCircleIcon } from "@heroicons/vue/24/solid";
+import { getImagePath } from "@/composables/etc/utils";
+import { AuthUser } from "@/types/common";
+
+const page = usePage();
+const user: ComputedRef<AuthUser> = computed(() => page?.props?.auth.user);
 
 const props = defineProps<{
     userNavigations: UserNavigation[];
@@ -16,21 +21,21 @@ const props = defineProps<{
         <MenuButton class="-m-1.5 flex items-center p-1.5">
             <span class="sr-only">Open user menu</span>
             <UserCircleIcon
-                v-if="!$page.props.auth.user?.avatar"
+                v-if="!user?.avatar"
                 class="h-8 w-8 rounded-full text-gray-300"
                 aria-hidden="true"
             />
             <img
                 class="h-8 w-8 rounded-full bg-gray-50"
-                v-if="$page.props.auth.user?.avatar"
-                :src="$page.props.auth.user?.avatar"
+                v-if="user?.avatar"
+                :src="getImagePath(<string>user?.avatar)"
                 alt="User's avatar"
             />
             <span class="hidden lg:flex lg:items-center">
                 <span
                     class="ml-4 text-sm font-semibold leading-6 text-gray-900"
                     aria-hidden="true"
-                    >{{ $page.props.auth.user.name }}</span
+                    >{{ user.name }}</span
                 >
                 <ChevronDownIcon
                     class="ml-2 h-5 w-5 text-gray-400"

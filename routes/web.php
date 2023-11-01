@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
@@ -32,9 +33,9 @@ Route::prefix('/auth/{provider}/')->name('social-provider.')->group(function () 
 
 /** Core */
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('student', StudentController::class);
     Route::resource('course', CourseController::class);
     Route::resource('profile', ProfileController::class);
+    Route::resource('student', StudentController::class);
 
     Route::resource('schedule', ScheduleController::class);
     Route::get('schedules', [ScheduleController::class, 'viewAll'])->name('schedule.all');
@@ -45,6 +46,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('setting/telegram/callback', [TelegramController::class, 'callback'])->name('telegram.callback');
 
     Route::resource('setting', SettingController::class);
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::name('student.')->group(function () {
+            Route::get('student', [AdminController::class, 'studentIndex'])->name('index');
+            Route::post('student', [AdminController::class, 'studentStore'])->name('store');
+            Route::put('student/{user}', [AdminController::class, 'studentUpdate'])->name('update');
+            Route::delete('student/{user}', [AdminController::class, 'studentDestroy'])->name('destroy');
+        });
+    });
 });
 
 /**
