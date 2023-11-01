@@ -40,3 +40,35 @@ export type Paginator<T> = {
     to?: number;
     total?: number;
 };
+export type Schedule = {
+    classes: Class[];
+    activities: Activity[];
+};
+export type Class = {
+    created_at: string;
+    date?: string;
+    day?: string;
+    description: string;
+    id: number;
+    remind: number;
+    time_end: string;
+    time_start: string;
+    title: string;
+    type: string;
+    updated_at: string;
+    user_id: number;
+};
+export type Activity = {
+    created_at: string;
+    date?: string;
+    day?: string;
+    description: string;
+    id: number;
+    remind: number;
+    time_end: string;
+    time_start: string;
+    title: string;
+    type: string;
+    updated_at: string;
+    user_id: number;
+};

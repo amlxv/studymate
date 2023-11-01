@@ -29,7 +29,7 @@ const page = usePage();
                             ['time_start'],
                         )"
                         :key="event?.id"
-                        class="skew-x group relative flex cursor-pointer space-x-6 p-8 transition-all xl:static"
+                        class="skew-x group relative flex cursor-pointer space-x-6 p-8 transition-all duration-300 xl:static"
                         :class="{
                             'z-10 rounded-lg border border-indigo-200 bg-gradient-to-br from-indigo-800 to-indigo-400':
                                 !index,

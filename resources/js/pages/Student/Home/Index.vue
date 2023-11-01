@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ComputedRef, ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import Layout from "@/layouts/Layout.vue";
 import SectionHeading from "@/composables/heading/SectionHeading.vue";
+import GlobalStatisticsLineChart from "@/components/home/GlobalStatisticsLineChart.vue";
+import { Schedule } from "@/types/common";
 import {
     AcademicCapIcon,
     CalendarDaysIcon,
@@ -11,22 +13,26 @@ import {
 
 const page = usePage();
 
+const schedules: ComputedRef<Schedule> = computed(
+    () => page?.props?.schedules as Schedule,
+);
+
 const stats = ref([
     {
         name: "Total Classes",
-        stat: page.props?.schedules?.classes?.length ?? 0,
+        stat: schedules.value?.classes?.length ?? 0,
         icon: AcademicCapIcon,
     },
     {
         name: "Total Activities",
-        stat: page.props?.schedules?.activities?.length ?? 0,
+        stat: schedules.value?.activities?.length ?? 0,
         icon: RectangleStackIcon,
     },
     {
         name: "Total Schedules",
         stat:
-            page.props?.schedules?.classes?.length +
-                page.props?.schedules?.activities?.length ?? 0,
+            schedules.value?.classes?.length +
+                schedules.value?.activities?.length ?? 0,
         icon: CalendarDaysIcon,
     },
 ]);
@@ -72,6 +78,12 @@ const stats = ref([
             </div>
         </div>
 
-        <!--       CHART HERE       -->
+        <!--       Chart       -->
+        <div class="mb-10 mt-10 w-full xl:w-3/4">
+            <h2 class="mb-4 text-base font-medium leading-7 text-gray-900">
+                Global Statistics
+            </h2>
+            <GlobalStatisticsLineChart />
+        </div>
     </Layout>
 </template>
