@@ -4,6 +4,8 @@ export type Course = {
     name: string;
     code: string;
     group: string;
+    student?: Student;
+    user?: User;
 };
 export type AuthUser = {
     id: number;
@@ -11,6 +13,12 @@ export type AuthUser = {
     email: string;
     avatar: string | File;
     role: "admin" | "student";
+};
+export type User = {
+    name: string;
+    email: string;
+    password: string;
+    avatar: File;
 };
 export type Student = {
     name: string;

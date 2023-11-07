@@ -48,11 +48,26 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('setting', SettingController::class);
 
     Route::prefix('admin')->name('admin.')->group(function () {
+        /** Student */
         Route::name('student.')->group(function () {
             Route::get('student', [AdminController::class, 'studentIndex'])->name('index');
             Route::post('student', [AdminController::class, 'studentStore'])->name('store');
             Route::put('student/{user}', [AdminController::class, 'studentUpdate'])->name('update');
             Route::delete('student/{user}', [AdminController::class, 'studentDestroy'])->name('destroy');
+        });
+        /** Course */
+        Route::name('course.')->group(function () {
+            Route::get('course', [AdminController::class, 'courseIndex'])->name('index');
+            Route::post('course', [AdminController::class, 'courseStore'])->name('store');
+            Route::put('course/{course}', [AdminController::class, 'courseUpdate'])->name('update');
+            Route::delete('course/{course}', [AdminController::class, 'courseDestroy'])->name('destroy');
+        });
+        /** Schedules */
+        Route::name('schedule.')->group(function () {
+            Route::get('schedule', [AdminController::class, 'scheduleIndex'])->name('index');
+            Route::post('schedule', [AdminController::class, 'scheduleStore'])->name('store');
+            Route::put('schedule/{schedule}', [AdminController::class, 'scheduleUpdate'])->name('update');
+            Route::delete('schedule/{schedule}', [AdminController::class, 'scheduleDestroy'])->name('destroy');
         });
     });
 });

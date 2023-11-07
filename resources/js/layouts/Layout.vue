@@ -50,6 +50,14 @@ const navigations: Navigation[] = [
         href: "course.index",
         icon: AcademicCapIcon,
         current: page.url.startsWith("/course"),
+        role: "student",
+    },
+    {
+        name: "Courses",
+        href: "admin.course.index",
+        icon: AcademicCapIcon,
+        current: page.url.startsWith("/admin/course"),
+        role: "admin",
     },
     {
         name: "Students",

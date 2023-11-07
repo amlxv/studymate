@@ -24,6 +24,20 @@ const { courses, onEdit, onDelete } = toRefs(props);
                     No.
                 </th>
                 <th
+                    v-if="courses && 'user' in courses[0]"
+                    scope="col"
+                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                >
+                    Student Name
+                </th>
+                <th
+                    v-if="courses && 'student' in courses[0]"
+                    scope="col"
+                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                >
+                    Student ID
+                </th>
+                <th
                     scope="col"
                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                 >
@@ -59,6 +73,18 @@ const { courses, onEdit, onDelete } = toRefs(props);
                     class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"
                 >
                     {{ index + 1 }}
+                </td>
+                <td
+                    v-if="courses && 'user' in courses[0]"
+                    class="px-3 py-4 text-sm text-gray-500"
+                >
+                    {{ course?.user?.name }}
+                </td>
+                <td
+                    v-if="courses && 'student' in courses[0]"
+                    class="px-3 py-4 text-sm text-gray-500"
+                >
+                    {{ course?.student?.student_id }}
                 </td>
                 <td class="px-3 py-4 text-sm text-gray-500">
                     {{ course?.name }}

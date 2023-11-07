@@ -7,16 +7,27 @@ import {
     AtSymbolIcon,
     ClipboardDocumentIcon,
     UserGroupIcon,
+    UserIcon,
 } from "@heroicons/vue/20/solid";
 
 const props = defineProps<{
-    form: InertiaForm<Course>;
+    form: InertiaForm<Course & { student_id?: string }>;
 }>();
 
 const { form } = toRefs(props);
 </script>
 
 <template>
+    <div v-if="$page.props.auth.user.role === 'admin'" class="sm:col-span-4">
+        <InputText
+            id="student_id"
+            :model="form"
+            label="Student ID"
+            placeholder="2022988117"
+            :error="form?.errors?.student_id"
+            :icon="UserIcon"
+        />
+    </div>
     <div class="sm:col-span-4">
         <InputText
             id="name"
