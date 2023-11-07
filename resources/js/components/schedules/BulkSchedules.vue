@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import _ from "lodash";
+import moment from "moment";
 import { toRefs } from "vue";
 import { Link } from "@inertiajs/vue3";
-import moment from "moment";
 import { PencilSquareIcon } from "@heroicons/vue/24/outline";
 
 const props = defineProps<{
@@ -28,6 +28,20 @@ const { type, classes, activities, form } = toRefs(props);
                                     class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8"
                                 >
                                     Title
+                                </th>
+                                <th
+                                    v-if="'name' in classes.data[0]"
+                                    scope="col"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                >
+                                    Student Name
+                                </th>
+                                <th
+                                    v-if="'name' in classes.data[0]"
+                                    scope="col"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                >
+                                    Email
                                 </th>
                                 <th
                                     scope="col"
@@ -84,7 +98,17 @@ const { type, classes, activities, form } = toRefs(props);
                                 <td
                                     class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"
                                 >
-                                    {{ item.title }}
+                                    {{ _.capitalize(item.title) }}
+                                </td>
+                                <td
+                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                                >
+                                    {{ item.name }}
+                                </td>
+                                <td
+                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                                >
+                                    {{ item.email }}
                                 </td>
                                 <td class="px-3 py-4 text-sm text-gray-500">
                                     {{
@@ -116,7 +140,15 @@ const { type, classes, activities, form } = toRefs(props);
                                     class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8"
                                 >
                                     <Link
-                                        :href="route('schedule.edit', item.id)"
+                                        :href="
+                                            route(
+                                                $page.props.auth.user.role !=
+                                                    'admin'
+                                                    ? 'schedule.edit'
+                                                    : 'admin.schedule.edit',
+                                                item.id,
+                                            )
+                                        "
                                         class="text-indigo-600 hover:text-indigo-900"
                                     >
                                         <PencilSquareIcon class="h-5 w-5" />
@@ -136,6 +168,16 @@ const { type, classes, activities, form } = toRefs(props);
                                     class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"
                                 >
                                     {{ item.title }}
+                                </td>
+                                <td
+                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                                >
+                                    {{ item.name }}
+                                </td>
+                                <td
+                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                                >
+                                    {{ item.email }}
                                 </td>
                                 <td class="px-3 py-4 text-sm text-gray-500">
                                     {{ item.description.toString().slice(0, 35)
@@ -170,7 +212,15 @@ const { type, classes, activities, form } = toRefs(props);
                                     class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8"
                                 >
                                     <Link
-                                        :href="route('schedule.edit', item.id)"
+                                        :href="
+                                            route(
+                                                $page.props.auth.user.role !=
+                                                    'admin'
+                                                    ? 'schedule.edit'
+                                                    : 'admin.schedule.edit',
+                                                item.id,
+                                            )
+                                        "
                                         class="text-indigo-600 hover:text-indigo-900"
                                     >
                                         <PencilSquareIcon class="h-5 w-5" />

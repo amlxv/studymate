@@ -44,6 +44,14 @@ const navigations: Navigation[] = [
         href: "schedule.index",
         icon: CalendarIcon,
         current: page.url.startsWith("/schedule"),
+        role: "student",
+    },
+    {
+        name: "Schedules",
+        href: "admin.schedule.index",
+        icon: CalendarIcon,
+        current: page.url.startsWith("/admin/schedule"),
+        role: "admin",
     },
     {
         name: "Courses",

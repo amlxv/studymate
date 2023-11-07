@@ -55,6 +55,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::put('student/{user}', [AdminController::class, 'studentUpdate'])->name('update');
             Route::delete('student/{user}', [AdminController::class, 'studentDestroy'])->name('destroy');
         });
+        
         /** Course */
         Route::name('course.')->group(function () {
             Route::get('course', [AdminController::class, 'courseIndex'])->name('index');
@@ -62,12 +63,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::put('course/{course}', [AdminController::class, 'courseUpdate'])->name('update');
             Route::delete('course/{course}', [AdminController::class, 'courseDestroy'])->name('destroy');
         });
+
         /** Schedules */
         Route::name('schedule.')->group(function () {
             Route::get('schedule', [AdminController::class, 'scheduleIndex'])->name('index');
+            Route::get('schedule/create', [AdminController::class, 'scheduleCreate'])->name('create');
             Route::post('schedule', [AdminController::class, 'scheduleStore'])->name('store');
+            Route::get('schedule/{schedule}', [AdminController::class, 'scheduleEdit'])->name('edit');
             Route::put('schedule/{schedule}', [AdminController::class, 'scheduleUpdate'])->name('update');
             Route::delete('schedule/{schedule}', [AdminController::class, 'scheduleDestroy'])->name('destroy');
+        });
+
+        /** Settings */
+        Route::name('setting.')->group(function () {
+            Route::get('setting', [AdminController::class, 'settingIndex'])->name('index');
+            Route::get('setting/create', [AdminController::class, 'settingCreate'])->name('create');
+            Route::post('setting', [AdminController::class, 'settingStore'])->name('store');
+            Route::get('setting/{setting}', [AdminController::class, 'settingEdit'])->name('edit');
+            Route::put('setting/{setting}', [AdminController::class, 'settingUpdate'])->name('update');
+            Route::delete('setting/{setting}', [AdminController::class, 'settingDestroy'])->name('destroy');
         });
     });
 });

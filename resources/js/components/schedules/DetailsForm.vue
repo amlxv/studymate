@@ -12,6 +12,7 @@ import SelectOption from "@/composables/forms/SelectOption.vue";
 import TextArea from "@/composables/forms/TextArea.vue";
 
 type Details = {
+    email?: string;
     title: string;
     description: string;
     day: string;
@@ -32,6 +33,19 @@ const { form, type } = toRefs(props);
 <template>
     <div class="border-b border-gray-900/10 pb-12">
         <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div
+                class="sm:col-span-4"
+                v-if="$page.url.startsWith('/admin/schedule/create')"
+            >
+                <InputText
+                    id="email"
+                    :model="form"
+                    label="Email"
+                    placeholder="student@amlxv.com"
+                    :error="form?.errors?.email"
+                />
+            </div>
+
             <div class="sm:col-span-4">
                 <InputText
                     id="title"

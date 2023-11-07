@@ -133,12 +133,20 @@ const { sidebarOpen, navigations } = toRefs(props);
                                     </li>
                                     <li class="mt-auto">
                                         <Link
-                                            :href="route('setting.index')"
+                                            :href="
+                                                route(
+                                                    $page.props.auth.user
+                                                        .role != 'admin'
+                                                        ? 'setting.index'
+                                                        : 'admin.setting.index',
+                                                )
+                                            "
                                             class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-indigo-700 hover:text-white"
                                             :class="{
                                                 'bg-indigo-800 text-white hover:bg-indigo-800':
                                                     $page.url.startsWith(
-                                                        '/setting',
+                                                        '/setting' &&
+                                                            '/admin/setting',
                                                     ),
                                             }"
                                         >
