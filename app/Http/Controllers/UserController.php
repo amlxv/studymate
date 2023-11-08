@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Schedule;
 use App\Models\User;
 use Carbon\Carbon;
@@ -34,7 +35,7 @@ class UserController extends Controller
         }
 
         if ($user->isAdmin()) {
-            return Inertia::render('Admin/Home/Index');
+            return $this->adminDashboard();
         }
 
         if ($user->isStudent()) {
@@ -62,6 +63,20 @@ class UserController extends Controller
 
         return Inertia::render('Student/Upcoming/Index', [
             "upcomingEvents" => $upcomingEvents
+        ]);
+    }
+
+    public function adminDashboard()
+    {
+        $users = User::all()->count();
+        $schedules = Schedule::all()->count();
+        $course = Course::all()->count();
+
+        return Inertia::render('Admin/Home/Index', [
+            "schedules" => $schedules,
+            "users" => $users,
+            "courses" => $course,
+            "schedulesStatistics" => $this->getSchedulesStatistics(),
         ]);
     }
 
