@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTelegramRequest;
 use App\Models\Telegram;
 use Auth;
 use Illuminate\Http\Request;
@@ -14,27 +15,17 @@ class TelegramController extends Controller
         return Socialite::driver('telegram')->redirect();
     }
 
-    public function callback(Request $request)
+    public function callback(StoreTelegramRequest $request)
     {
-        $validated = $request->validate([
-            'id' => "required",
-            "first_name" => "required",
-            "username" => "required",
-            "photo_url" => "nullable",
-            "auth_date" => "required",
-        ]);
-
-        $userId = Auth::id();
-
         $data = array_merge(
             $request->except("id"),
             [
-                "chat_id" => $validated['id'],
-                "user_id" => $userId
+                "chat_id" => $request['id'],
+                "user_id" => Auth::id()
             ]
         );
 
-        if (Telegram::updateOrCreate(["user_id" => $userId], $data)) {
+        if (Telegram::updateOrCreate(["user_id" => Auth::id()], $data)) {
             return redirect()->route('setting.index')->with([
                 "status" => "Successfully added Telegram into your account."
             ]);

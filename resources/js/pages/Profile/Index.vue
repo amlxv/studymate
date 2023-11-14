@@ -262,7 +262,7 @@ const form = useForm({
             <div
                 class="mt-6 flex items-center justify-end gap-x-6 transition-all duration-300"
                 :class="{
-                    '-mb-6 opacity-0': !isEditingMode,
+                    'pointer-events-none -mb-6 opacity-0': !isEditingMode,
                     'opacity-100': isEditingMode,
                 }"
             >

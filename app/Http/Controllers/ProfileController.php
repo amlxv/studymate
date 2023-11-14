@@ -63,39 +63,25 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $profile)
+    public function update(Request $request, string $id)
     {
-        $validated = $request->validate([
-            "avatar" => "nullable|mimes:png,jpg,jpeg|max:3072",
-            "name" => "required|min:4|max:255",
-            "phone_number" => "nullable|string|starts_with:60",
-            "gender" => "nullable|in:male,female",
-            "student_id" => "nullable|min:10|max:10",
-            "address" => "nullable|max:255",
-            // "institute" => "required|max:255",
-            "campus" => "nullable|max:255",
-            "faculty" => "nullable|max:255",
-            "program" => "nullable|max:255",
-        ]);
+        $user = User::query()->find($id);
 
-        $user = $profile;
-
-        if ($user->id !== Auth::id()) {
+        if (!$user || $user->id !== Auth::id()) {
             return back()->with(["status" => [
                 "warning" => "You're not authorized to make changes to this profile!"
             ]]);
         }
 
-        $userData = collect($validated)
+        $userData = collect($request)
             ->only("avatar", "name", "phone_number")
             ->filter(fn($request) => $request != null);
 
-        $studentData = collect($validated)
+        $studentData = collect($request)
             ->except("avatar", "name", "phone_number")
             ->filter(fn($request) => $request != null)
             ->toArray();
-
-
+        
         if ($userData->has('avatar')) {
             $path = $request->file('avatar')->store('images');
             if ($path) $userData->put('avatar', $path);

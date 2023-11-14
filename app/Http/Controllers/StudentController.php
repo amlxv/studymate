@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreStudentRequest;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,26 +28,18 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreStudentRequest $request)
     {
-        $validated = $request->validate([
-            'id' => 'required',
-            'campus' => 'required',
-            'faculty' => 'required',
-            'program' => 'required',
-            'gender' => 'nullable|in:male,female',
-            'address' => 'nullable'
-        ]);
-
         $user = Auth::user();
-
-        $student = Student::create(array_merge($validated, ['user_id' => $user->id]));
+        $student = Student::create(array_merge($request->toArray(), ["user_id" => $user->id]));
 
         if ($student) {
-            return redirect()->back()->with('status', 'A new student data has been created');
+            return redirect()->back()->with("status", "A new student data has been created");
         }
 
-        return redirect()->back()->with('status', ['error' => 'Something went wrong went creating a student']);
+        return redirect()->back()->with("status", [
+            "error" => "Something went wrong went creating a student"
+        ]);
     }
 
     /**

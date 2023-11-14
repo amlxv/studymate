@@ -3,20 +3,15 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class StoreStudentByAdminRequest extends FormRequest
+class StoreProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        if (Auth::user()->isAdmin()) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
@@ -27,16 +22,15 @@ class StoreStudentByAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required|string|min:4|max:255",
-            "email" => "required|string|email|max:255|unique:users",
-            "password" => "required|string",
-            "phone_number" => "nullable|string|max:12",
             "avatar" => "nullable|mimes:png,jpg,jpeg|max:3072",
-            "student_id" => "nullable|string|min:10|max:10",
+            "name" => "required|min:4|max:255",
+            "phone_number" => "nullable|string|starts_with:60",
             "gender" => "nullable|in:male,female",
+            "student_id" => "nullable|min:10|max:10",
             "address" => "nullable|max:255",
-            "faculty" => "nullable|max:255",
+            // "institute" => "required|max:255",
             "campus" => "nullable|max:255",
+            "faculty" => "nullable|max:255",
             "program" => "nullable|max:255",
         ];
     }

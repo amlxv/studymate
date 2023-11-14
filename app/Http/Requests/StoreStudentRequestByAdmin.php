@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateStudentByAdminRequest extends FormRequest
+class StoreStudentRequestByAdmin extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,9 +27,9 @@ class UpdateStudentByAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "nullable|string|min:4|max:255",
-            "email" => "nullable|string|email|max:255",
-            "password" => "nullable|string",
+            "name" => "required|string|min:4|max:255",
+            "email" => "required|string|email|max:255|unique:users",
+            "password" => "required|string",
             "phone_number" => "nullable|string|max:12",
             "avatar" => "nullable|mimes:png,jpg,jpeg|max:3072",
             "student_id" => "nullable|string|min:10|max:10",

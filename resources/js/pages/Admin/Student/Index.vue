@@ -106,10 +106,7 @@ watch(selectedItem, () => {
                     : 'Fill in the form with new information to update the student information.'
             "
             :open="slideOverFormOpen"
-            @close="
-                slideOverFormOpen = false;
-                selectedItem = null;
-            "
+            @close="slideOverFormOpen = false"
         >
             <InputForm :form="form" />
         </SlideOverForm>

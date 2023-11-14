@@ -24,14 +24,14 @@ const { courses, onEdit, onDelete } = toRefs(props);
                     No.
                 </th>
                 <th
-                    v-if="!courses && 'user' in courses?.[0]"
+                    v-if="courses && 'user' in courses?.[0]"
                     scope="col"
                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                 >
                     Student Name
                 </th>
                 <th
-                    v-if="!courses && 'student' in courses?.[0]"
+                    v-if="courses && 'student' in courses?.[0]"
                     scope="col"
                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                 >

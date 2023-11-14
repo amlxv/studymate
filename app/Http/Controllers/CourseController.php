@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCourseRequest;
 use App\Models\Course;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -33,14 +33,8 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCourseRequest $request)
     {
-        $validated = $request->validate([
-            "name" => "required",
-            "code" => "required",
-            "group" => "required"
-        ]);
-
         $user = User::query()->where("id", "=", Auth::id())->first();
         $student = $user->student;
 
@@ -49,7 +43,7 @@ class CourseController extends Controller
                 ->with(["status" => ["warning" => "Complete your student information to continue!"]]);
         }
 
-        $course = collect($validated)->merge(["student_id" => $student->id])->toArray();
+        $course = collect($request)->merge(["student_id" => $student->id])->toArray();
 
         if (Course::query()->create($course)) {
             return redirect()->route("course.index")
@@ -83,25 +77,21 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Course $course)
+    public function update(StoreCourseRequest $request, Course $course)
     {
-        $validated = $request->validate([
-            "name" => "required",
-            "code" => "required",
-            "group" => "required"
-        ]);
-
         if ($course->student->user->id != Auth::id()) {
             return redirect()->route("course.index")
                 ->with(["status" => ["error" => "This course does not belongs to you!"]]);
         }
 
-        if ($course->update($validated)) {
+        if ($course->update($request->toArray())) {
             return redirect()->route("course.index")
                 ->with(["status" => "Successfully updated the course."]);
         }
 
-        return back()->with(["status" => ["error" => "Something went wrong when updating the course."]]);
+        return back()->with(["status" => [
+            "error" => "Something went wrong when updating the course."
+        ]]);
     }
 
     /**
@@ -110,7 +100,9 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         if (!$course->delete()) {
-            return back()->with(["status" => ["error" => "Something went wrong when deleting the course."]]);
+            return back()->with(["status" => [
+                "error" => "Something went wrong when deleting the course."
+            ]]);
         }
 
         return redirect()->route('course.index')->with(['status' => "The course has been deleted."]);

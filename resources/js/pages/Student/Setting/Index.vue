@@ -88,6 +88,7 @@ const form = useForm({
                                 class="relative mt-5 -translate-x-1/4 opacity-0 transition-all sm:col-span-3"
                                 :class="{
                                     'translate-x-0 opacity-100': isEditingMode,
+                                    'pointer-events-none': !isEditingMode,
                                 }"
                                 :style="{ width: socialButtonWidth + 'px' }"
                             >
@@ -124,7 +125,7 @@ const form = useForm({
                                 </div>
                             </div>
 
-                            <div class="sm:col-span-4">
+                            <div class="sm:col-span-3 sm:col-start-1">
                                 <InputText
                                     id="time_before"
                                     :model="form"
@@ -146,7 +147,7 @@ const form = useForm({
                                 </p>
                             </div>
 
-                            <div class="sm:col-span-3">
+                            <div class="sm:col-span-3 sm:col-start-1">
                                 <TextArea
                                     id="custom_message"
                                     :model="form"
@@ -164,7 +165,7 @@ const form = useForm({
             <div
                 class="mt-6 flex items-center justify-end gap-x-6 transition-all duration-300"
                 :class="{
-                    '-mb-6 opacity-0': !isEditingMode,
+                    'pointer-events-none -mb-6 opacity-0': !isEditingMode,
                     'opacity-100': isEditingMode,
                 }"
             >

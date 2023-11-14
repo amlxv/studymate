@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSettingRequest;
 use App\Models\Preference;
 use App\Models\Telegram;
 use App\Models\User;
@@ -61,7 +62,7 @@ class SettingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreSettingRequest $request, string $id)
     {
         if (Auth::id() != $id) {
             return back()->with(["status" => [
@@ -69,17 +70,11 @@ class SettingController extends Controller
             ]]);
         }
 
-        $validated = $request->validate([
-            "username" => "required",
-            "time_before" => "nullable|numeric|min:10|max:60",
-            "custom_message" => "nullable"
-        ]);
-
         $telegram = Telegram::updateOrCreate([
             "user_id" => $id,
         ], [
             "user_id" => $id,
-            "username" => $validated['username'],
+            "username" => $request['username'],
         ]);
 
         if (!$telegram) {
@@ -91,8 +86,8 @@ class SettingController extends Controller
         $preference = Preference::updateOrCreate(["user_id" => $id], [
             "user_id" => $id,
             "telegram_id" => $telegram->id,
-            "time_before" => $validated['time_before'],
-            "custom_message" => $validated['custom_message']
+            "time_before" => $request['time_before'],
+            "custom_message" => $request['custom_message'] ?? ''
         ]);
 
         if ($preference) {

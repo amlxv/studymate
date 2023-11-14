@@ -20,7 +20,6 @@ class ScheduleController extends Controller
     public function index()
     {
         $now = Carbon::now();
-
         $userId = Auth::id();
 
         /** @noinspection PhpUndefinedMethodInspection */
@@ -125,7 +124,8 @@ class ScheduleController extends Controller
         $data = $this->filterRequest($request)->all();
 
         if ($schedule->update($data)) {
-            return redirect()->route('schedule.index')->with(["status" => "The schedule has been updated!"]);
+            return redirect()->route('schedule.index')
+                ->with(["status" => "The schedule has been updated!"]);
         }
 
         return back()->with(['status' => ['error' => 'Something went wrong when updating the schedule.']]);
@@ -139,7 +139,8 @@ class ScheduleController extends Controller
     public function destroy(Schedule $schedule)
     {
         if ($schedule->delete()) {
-            return redirect()->route('schedule.index')->with(['status' => "The schedule has been deleted."]);
+            return redirect()->route('schedule.index')
+                ->with(['status' => "The schedule has been deleted."]);
         }
         return back()->with(["status" => ["error" => "Something went wrong when deleting the schedule."]]);
     }
