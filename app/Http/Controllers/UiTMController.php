@@ -11,13 +11,11 @@ class UiTMController extends Controller
 {
     protected string $iCressBaseUrl = "https://simsweb4.uitm.edu.my/estudent/class_timetable/";
     protected string $myStudentBaseUrl = "https://cdn.uitm.edu.my/jadual/baru/{studentId}.json";
-
     protected string $studentId;
     protected string $courseCode;
     protected string $group;
     protected string $campusCode;
     protected string|null $facultyCode;
-
 
     /**
      * @param string $studentId
@@ -132,7 +130,7 @@ class UiTMController extends Controller
     protected function registerMyStudentUri()
     {
         try {
-            if (!$this->studentId) {
+            if (!$this->studentId && !$this->courseCode && !$this->group) {
                 throw new Exception("Missing required information.");
             }
             $this->myStudentBaseUrl = str_replace("{studentId}", $this->studentId, $this->myStudentBaseUrl);
