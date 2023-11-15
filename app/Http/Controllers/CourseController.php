@@ -27,7 +27,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return Inertia::render("Student/Course/Create");
+        //
     }
 
     /**
@@ -66,12 +66,7 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        if ($course->student->user->id != Auth::id()) {
-            return redirect()->route("course.index")
-                ->with(["status" => ["error" => "This course does not belongs to you!"]]);
-        }
-
-        return Inertia::render("Student/Course/Edit", ["course" => $course]);
+        //
     }
 
     /**
