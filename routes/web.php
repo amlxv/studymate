@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Admin\StudentController as AdminStudentController;
 use App\Http\Controllers\Admin\CourseController as AdminCourseController;
 use App\Http\Controllers\Admin\ScheduleController as AdminScheduleController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +66,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 /**
  * Temporarily for testing purpose.
  */
-Route::put("test", function (\Illuminate\Http\Request $request) {
-    dd($request->all());
-})->name("test");
+Route::get("test", function () {
+    dd("test");
+});

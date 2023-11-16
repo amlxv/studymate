@@ -27,6 +27,20 @@ class Student extends Model
 
     public $incrementing = false;
 
+    public function isProfileCompleted(): bool
+    {
+        if ($this->student_id && $this->campus && $this->program) {
+
+            if ($this->campus == "B" && !$this->faculty) {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

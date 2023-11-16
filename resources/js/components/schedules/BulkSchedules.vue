@@ -30,14 +30,14 @@ const { type, classes, activities, form } = toRefs(props);
                                     Title
                                 </th>
                                 <th
-                                    v-if="'name' in classes.data[0]"
+                                    v-if="_.has(classes, 'data[0].name')"
                                     scope="col"
                                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                                 >
                                     Student Name
                                 </th>
                                 <th
-                                    v-if="'name' in classes.data[0]"
+                                    v-if="_.has(classes, 'data[0].email')"
                                     scope="col"
                                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                                 >
@@ -102,11 +102,13 @@ const { type, classes, activities, form } = toRefs(props);
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                                    v-if="_.has(classes, 'data[0].name')"
                                 >
                                     {{ item.name }}
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                                    v-if="_.has(classes, 'data[0].email')"
                                 >
                                     {{ item.email }}
                                 </td>
@@ -171,11 +173,13 @@ const { type, classes, activities, form } = toRefs(props);
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                                    v-if="_.has(classes, 'data[0].name')"
                                 >
                                     {{ item.name }}
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                                    v-if="_.has(classes, 'data[0].email')"
                                 >
                                     {{ item.email }}
                                 </td>

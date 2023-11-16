@@ -6,11 +6,13 @@ use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
+use App\Models\Campus;
+use App\Models\Faculty;
 
 class UiTMController extends Controller
 {
-    protected string $iCressBaseUrl = "https://simsweb4.uitm.edu.my/estudent/class_timetable/";
-    protected string $myStudentBaseUrl = "https://cdn.uitm.edu.my/jadual/baru/{studentId}.json";
+    public static string $iCressBaseUrl = "https://simsweb4.uitm.edu.my/estudent/class_timetable/";
+    public static string $myStudentBaseUrl = "https://cdn.uitm.edu.my/jadual/baru/{studentId}.json";
     protected string $studentId;
     protected string $courseCode;
     protected string $group;
@@ -42,30 +44,26 @@ class UiTMController extends Controller
     {
         $timetables = [];
 
-        try {
-            if ($this->registerICressIdentifier()) {
-                $timetables = $this->getTimetableFromICress();
+        if ($this->registerICressIdentifier()) {
+            $timetables = $this->getTimetableFromICress();
+        }
+
+        if ($this->registerMyStudentUri()) {
+            $data = $this->getTimetablesFromMyStudent();
+
+            if ($timetables && $data) {
+                $extraKeys = array_keys(array_diff_key($data[0], $timetables[0]));
+                $timetables = collect($timetables)
+                    ->map(function ($timetable, $timetableIndex) use (&$extraKeys, $data) {
+                        collect($extraKeys)
+                            ->each(function ($extraKey) use (&$timetable, $timetableIndex, $data) {
+                                $timetable = array_merge($timetable, [$extraKey => $data[$timetableIndex][$extraKey]]);
+                            });
+                        return $timetable;
+                    })->toArray();
             }
 
-            if ($this->registerMyStudentUri()) {
-                $data = $this->getTimetablesFromMyStudent();
-
-                if ($timetables && $data) {
-                    $extraKeys = array_keys(array_diff_key($data[0], $timetables[0]));
-                    $timetables = collect($timetables)
-                        ->map(function ($timetable, $timetableIndex) use (&$extraKeys, $data) {
-                            collect($extraKeys)
-                                ->each(function ($extraKey) use (&$timetable, $timetableIndex, $data) {
-                                    $timetable = array_merge($timetable, [$extraKey => $data[$timetableIndex][$extraKey]]);
-                                });
-                            return $timetable;
-                        })->toArray();
-                }
-
-                if (!$timetables) $timetables = $data;
-            }
-        } catch (Exception $err) {
-            return [];
+            if (!$timetables) $timetables = $data;
         }
 
         return $timetables;
@@ -85,7 +83,7 @@ class UiTMController extends Controller
                 throw new Exception("Missing required information.");
             }
 
-            $url = $this->iCressBaseUrl . 'index_result.cfm';
+            $url = self::$iCressBaseUrl . 'index_result.cfm';
 
             $data = [
                 "search_campus" => $this->campusCode,
@@ -94,7 +92,7 @@ class UiTMController extends Controller
             ];
 
             $response = Http::asForm()
-                ->replaceHeaders(['Referer' => $this->iCressBaseUrl . "index.htm"])
+                ->replaceHeaders(['Referer' => self::$iCressBaseUrl . "index.htm"])
                 ->post($url, $data);
 
             if (!Str::contains($response->body(), "Record Founds") ||
@@ -113,7 +111,7 @@ class UiTMController extends Controller
 
             preg_match("/id1=([^']*)&id2=([^']*)/", $result, $matches);
 
-            $this->iCressBaseUrl = $this->iCressBaseUrl . "index_tt.cfm?" . $matches[0];
+            self::$iCressBaseUrl = self::$iCressBaseUrl . "index_tt.cfm?" . $matches[0];
         } catch (Exception) {
             return false;
         }
@@ -133,7 +131,7 @@ class UiTMController extends Controller
             if (!$this->studentId && !$this->courseCode && !$this->group) {
                 throw new Exception("Missing required information.");
             }
-            $this->myStudentBaseUrl = str_replace("{studentId}", $this->studentId, $this->myStudentBaseUrl);
+            self::$myStudentBaseUrl = str_replace("{studentId}", $this->studentId, self::$myStudentBaseUrl);
         } catch (Exception) {
             return false;
         }
@@ -149,7 +147,7 @@ class UiTMController extends Controller
     protected function getTimetableFromICress()
     {
         try {
-            $response = Http::timeout(10)->get($this->iCressBaseUrl);
+            $response = Http::timeout(10)->get(self::$iCressBaseUrl);
 
             if (!$response->ok()) {
                 throw new Exception("Cannot connect to the server.");
@@ -159,7 +157,7 @@ class UiTMController extends Controller
 
             $crawler = new Crawler($response->body());
 
-            $crawler->filter('tr')->slice(1)->each(function (Crawler $node, int $i) use (&$data) {
+            $crawler->filter('tr')->slice(1)->each(function (Crawler $node) use (&$data) {
 
                 $children = $node->children();
 
@@ -206,7 +204,7 @@ class UiTMController extends Controller
     protected function getTimetablesFromMyStudent()
     {
         try {
-            $response = Http::timeout(10)->get($this->myStudentBaseUrl);
+            $response = Http::timeout(10)->get(self::$myStudentBaseUrl);
 
             if (!$response->ok()) {
                 throw new Exception("Cannot connect to the server.");
@@ -251,5 +249,87 @@ class UiTMController extends Controller
         } catch (Exception) {
             return [];
         }
+    }
+
+    /**
+     * Register the campuses in database.
+     *
+     * @return string
+     */
+    public static function registerCampuses()
+    {
+        try {
+            $response = Http::timeout(10)->get(self::$iCressBaseUrl . "combo_select_campus.txt");
+
+            $result = self::handleCampusesAndFaculties($response);
+
+            if (Campus::query()->truncate() &&
+                !Campus::query()->insert($result->toArray())
+            ) {
+                throw new Exception("Something went wrong when updating the campuses.");
+            }
+
+            return "Successfully fetched and updated the campuses.";
+        } catch (Exception $error) {
+            return $error->getMessage();
+        }
+    }
+
+    /**
+     * Register the faculties in database.
+     *
+     * @return array
+     */
+    public static function registerFaculties()
+    {
+        try {
+            $response = Http::timeout(10)->get(self::$iCressBaseUrl . "combo_select_faculty.txt");
+
+            $result = self::handleCampusesAndFaculties($response);
+
+            if (Faculty::query()->truncate() &&
+                !Faculty::query()->insert($result->toArray())
+            ) {
+                throw new Exception("Something went wrong when updating the faculties.");
+            }
+
+            return ["status" => "success", "message" => "Successfully fetched and updated the faculties."];
+        } catch (Exception $error) {
+            return ["status" => "error", "message" => $error->getMessage()];
+        }
+    }
+
+
+    /**
+     * Handle the data extraction of
+     * the campuses and faculties.
+     *
+     * @param \GuzzleHttp\Promise\PromiseInterface|\Illuminate\Http\Client\Response $response
+     * @return \Illuminate\Support\Collection
+     * @throws Exception
+     */
+    public static function handleCampusesAndFaculties(\GuzzleHttp\Promise\PromiseInterface|\Illuminate\Http\Client\Response $response): \Illuminate\Support\Collection
+    {
+        if (!$response->ok()) {
+            throw new Exception("Cannot connect to the server.");
+        }
+
+        $result = str_replace(["\r", "\n", "\t"], "", $response->body());
+        $result = explode("<br>", $result);
+        $result = collect($result)->map(fn($item) => trim($item));
+        $result = collect($result)->filter(fn($item) => $item && !Str::startsWith($item, "==="));
+
+        return collect($result)->map(function ($item) {
+            $raw = explode("-", $item);
+            $code = trim($raw[0]);
+            $name = trim($raw[1]);
+
+            if (count($raw) > 2) {
+                unset($raw[0]);
+                $name = trim(implode("-", $raw));
+            }
+
+            return ["code" => $code, "name" => $name];
+        });
     }
 }

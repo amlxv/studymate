@@ -24,14 +24,14 @@ const { courses, onEdit, onDelete } = toRefs(props);
                     No.
                 </th>
                 <th
-                    v-if="courses && 'user' in courses?.[0]"
+                    v-if="_.has(courses, '[0].user')"
                     scope="col"
                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                 >
                     Student Name
                 </th>
                 <th
-                    v-if="courses && 'student' in courses?.[0]"
+                    v-if="_.has(courses, '[0].student')"
                     scope="col"
                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                 >
@@ -75,13 +75,13 @@ const { courses, onEdit, onDelete } = toRefs(props);
                     {{ index + 1 }}
                 </td>
                 <td
-                    v-if="courses && 'user' in courses[0]"
+                    v-if="_.has(courses, '[0].user')"
                     class="px-3 py-4 text-sm text-gray-500"
                 >
                     {{ course?.user?.name }}
                 </td>
                 <td
-                    v-if="courses && 'student' in courses[0]"
+                    v-if="_.has(courses, '[0].student')"
                     class="px-3 py-4 text-sm text-gray-500"
                 >
                     {{ course?.student?.student_id }}
