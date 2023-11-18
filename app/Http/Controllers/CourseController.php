@@ -38,9 +38,9 @@ class CourseController extends Controller
         $user = User::query()->where("id", "=", Auth::id())->first();
         $student = $user->student;
 
-        if (!$student || !$student->student_id) {
-            return redirect()->route('profile.index',)
-                ->with(["status" => ["warning" => "Complete your student information to continue!"]]);
+        if (!$student || !$student->isProfileCompleted()) {
+            return redirect()->route('profile.index')
+                ->with(["status" => ["warning" => "Your student information is missing. Please complete them to continue."]]);
         }
 
         $course = collect($request)->merge(["student_id" => $student->id])->toArray();

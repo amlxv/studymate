@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import _ from "lodash";
 import { ref } from "vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import Layout from "@/layouts/Layout.vue";
@@ -8,14 +9,13 @@ import CommonButton from "@/composables/buttons/CommonButton.vue";
 import InputText from "@/composables/forms/InputText.vue";
 import SelectOption from "@/composables/forms/SelectOption.vue";
 import InputAvatar from "@/components/profiles/InputAvatar.vue";
+import CustomSelectOption from "@/composables/forms/CustomSelectOption.vue";
+import { AcademicCapIcon, HomeIcon } from "@heroicons/vue/24/outline";
 import {
-    BookmarkSquareIcon,
     BookOpenIcon,
     DevicePhoneMobileIcon,
-    HomeModernIcon,
     IdentificationIcon,
 } from "@heroicons/vue/20/solid";
-import { AcademicCapIcon, HomeIcon } from "@heroicons/vue/24/outline";
 
 const isEditingMode = ref(false);
 
@@ -183,8 +183,8 @@ const form = useForm({
                             Student Information
                         </h2>
                         <p class="mt-1 text-sm leading-6 text-gray-600">
-                            The information collected may be used to improve our
-                            system.
+                            These information are required to enjoy the UiTM
+                            Timetable's features.
                         </p>
 
                         <div
@@ -217,28 +217,51 @@ const form = useForm({
                             </div>
 
                             <div class="sm:col-span-4">
-                                <InputText
-                                    id="campus"
+                                <CustomSelectOption
                                     :model="form"
-                                    :error="form?.errors?.campus"
-                                    label="Campus"
-                                    type="text"
-                                    placeholder="Jasin, Melaka"
-                                    :icon="HomeModernIcon"
+                                    :items="props?.campuses"
                                     :disabled="!isEditingMode"
+                                    id="campus"
+                                    label="Campus"
+                                    :display-text="
+                                        form?.campus?.name ??
+                                        _.find(
+                                            <Array<unknown & { id: number }>>(
+                                                props?.campuses
+                                            ),
+                                            {
+                                                id: parseInt(form.campus),
+                                            },
+                                        )?.name ??
+                                        'Select the campus name'
+                                    "
                                 />
                             </div>
 
                             <div class="sm:col-span-4">
-                                <InputText
-                                    id="faculty"
+                                <CustomSelectOption
                                     :model="form"
-                                    :error="form?.errors?.faculty"
-                                    label="Faculty"
-                                    type="text"
-                                    placeholder="College of Computers, Information's & Mathematics"
-                                    :icon="BookmarkSquareIcon"
+                                    :items="props?.faculties"
                                     :disabled="!isEditingMode"
+                                    id="faculty"
+                                    :label="
+                                        'Faculty ' +
+                                        (form.campus?.code === 'B'
+                                            ? ' - (Required)'
+                                            : ' - (Optional)')
+                                    "
+                                    :display-text="
+                                        form?.faculty?.name ??
+                                        _.find(
+                                            <Array<unknown & { id: number }>>(
+                                                props?.faculties
+                                            ),
+                                            {
+                                                id: parseInt(form.faculty),
+                                            },
+                                        )?.name ??
+                                        'Select the faculty name'
+                                    "
                                 />
                             </div>
 

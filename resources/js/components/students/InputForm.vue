@@ -1,17 +1,15 @@
 <script setup lang="ts">
+import _ from "lodash";
 import { defineProps, toRefs } from "vue";
 import { InertiaForm } from "@inertiajs/vue3";
 import { Student } from "@/types/common";
 import InputText from "@/composables/forms/InputText.vue";
-import { AtSymbolIcon, HomeModernIcon } from "@heroicons/vue/20/solid";
+import CustomSelectOption from "@/composables/forms/CustomSelectOption.vue";
+import { AtSymbolIcon } from "@heroicons/vue/20/solid";
 import InputAvatar from "@/components/profiles/InputAvatar.vue";
 import SelectOption from "@/composables/forms/SelectOption.vue";
 import TextArea from "@/composables/forms/TextArea.vue";
-import {
-    AcademicCapIcon,
-    HomeIcon,
-    PhoneIcon,
-} from "@heroicons/vue/24/outline";
+import { AcademicCapIcon, PhoneIcon } from "@heroicons/vue/24/outline";
 
 const props = defineProps<{
     form: InertiaForm<Student>;
@@ -69,24 +67,40 @@ const { form } = toRefs(props);
     </div>
 
     <div class="sm:col-span-4">
-        <InputText
-            id="faculty"
+        <CustomSelectOption
             :model="form"
-            label="Faculty"
-            placeholder="College of Computers, Information & Mathematics"
-            :error="form?.errors?.faculty"
-            :icon="HomeModernIcon"
+            :items="$page.props?.campuses"
+            id="campus"
+            label="Campus"
+            :display-text="
+                form?.campus?.name ??
+                _.find(<Array<unknown & { id: number }>>$page.props?.campuses, {
+                    id: parseInt(form.campus),
+                })?.name ??
+                'Select the campus name'
+            "
         />
     </div>
 
     <div class="sm:col-span-4">
-        <InputText
-            id="campus"
+        <CustomSelectOption
             :model="form"
-            label="Campus"
-            placeholder="Jasin, Melaka"
-            :error="form?.errors?.campus"
-            :icon="HomeIcon"
+            :items="$page.props?.faculties"
+            id="faculty"
+            :label="
+                'Faculty ' +
+                (form.campus?.code === 'B' ? ' - (Required)' : ' - (Optional)')
+            "
+            :display-text="
+                form?.faculty?.name ??
+                _.find(
+                    <Array<unknown & { id: number }>>$page.props?.faculties,
+                    {
+                        id: parseInt(form.faculty),
+                    },
+                )?.name ??
+                'Select the faculty name'
+            "
         />
     </div>
 

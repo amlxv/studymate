@@ -96,11 +96,33 @@ const { students, onEdit, onDelete } = toRefs(props);
                         {{ student?.program }}
                     </div>
                     <div class="text-gray500 mt-1">
-                        {{ student?.faculty }}
+                        {{
+                            student?.faculty
+                                ? _.find(
+                                      $page.props?.faculties as Array<{
+                                          id: number;
+                                      }>,
+                                      {
+                                          id: parseInt(student?.faculty),
+                                      },
+                                  )?.name
+                                : ""
+                        }}
                     </div>
                 </td>
                 <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                    {{ student?.campus }}
+                    {{
+                        student?.campus
+                            ? _.find(
+                                  $page.props?.campuses as Array<{
+                                      id: number;
+                                  }>,
+                                  {
+                                      id: parseInt(student?.campus),
+                                  },
+                              )?.name
+                            : ""
+                    }}
                 </td>
                 <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
                     {{ _.capitalize(student?.gender) }}

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\StoreStudentRequestByAdmin;
 use App\Http\Requests\UpdateStudentRequestByAdmin;
+use App\Models\Campus;
+use App\Models\Faculty;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,7 +28,14 @@ class StudentController extends AdminController
             ->latest('users.created_at')
             ->paginate(10);
 
-        return Inertia::render("Admin/Student/Index", ["students" => $students]);
+        $campuses = Campus::all()->toArray();
+        $faculties = Faculty::all()->toArray();
+
+        return Inertia::render("Admin/Student/Index", [
+            "students" => $students,
+            "campuses" => $campuses,
+            "faculties" => $faculties
+        ]);
     }
 
     /**
@@ -132,7 +141,8 @@ class StudentController extends AdminController
 
             "student" => collect($request)
                 ->only(['student_id', 'address', 'faculty', 'campus', 'program', 'gender'])
-                ->filter(fn($request) => $request != null),
+                ->filter(fn($request) => $request != null)
+                ->map(fn($data) => is_array($data) ? $data['id'] : $data),
         ];
 
         if ($data['user']->has('avatar')) {

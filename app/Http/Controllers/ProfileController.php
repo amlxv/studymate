@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Campus;
+use App\Models\Faculty;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,11 +22,15 @@ class ProfileController extends Controller
         $user = User::query()->where("id", $userId)->first();
         $student = Student::query()->where("user_id", $userId)->first();
         $admin = Admin::query()->where("user_id", $userId)->first();
+        $campuses = Campus::all()->toArray();
+        $faculties = Faculty::all()->toArray();
 
         return Inertia::render("Profile/Index", [
             "user" => $user,
             "student" => $student,
-            "admin" => $admin
+            "admin" => $admin,
+            "campuses" => $campuses,
+            "faculties" => $faculties,
         ]);
     }
 
@@ -80,6 +86,7 @@ class ProfileController extends Controller
         $studentData = collect($request)
             ->except("avatar", "name", "phone_number")
             ->filter(fn($request) => $request != null)
+            ->map(fn($data) => is_array($data) ? $data['id'] : $data)
             ->toArray();
         
         if ($userData->has('avatar')) {
