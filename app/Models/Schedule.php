@@ -22,7 +22,8 @@ class Schedule extends Model
         'time_start',
         'time_end',
         'type',
-        'remind'
+        'remind',
+        'course_id',
     ];
 
     public function user(): BelongsTo
@@ -33,6 +34,11 @@ class Schedule extends Model
     public function preference(): BelongsTo
     {
         return $this->belongsTo(Preference::class);
+    }
+
+    public function course(): BelongsTo
+    {
+        return $this->belongsTo(Course::class);
     }
 
     public function scopeOfType(Builder $query, string $type): Builder

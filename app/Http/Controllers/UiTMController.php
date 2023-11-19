@@ -147,7 +147,7 @@ class UiTMController extends Controller
     protected function getTimetableFromICress()
     {
         try {
-            $response = Http::timeout(10)->get(self::$iCressBaseUrl);
+            $response = Http::get(self::$iCressBaseUrl);
 
             if (!$response->ok()) {
                 throw new Exception("Cannot connect to the server.");
@@ -204,7 +204,7 @@ class UiTMController extends Controller
     protected function getTimetablesFromMyStudent()
     {
         try {
-            $response = Http::timeout(10)->get(self::$myStudentBaseUrl);
+            $response = Http::get(self::$myStudentBaseUrl);
 
             if (!$response->ok()) {
                 throw new Exception("Cannot connect to the server.");
@@ -259,7 +259,7 @@ class UiTMController extends Controller
     public static function registerCampuses()
     {
         try {
-            $response = Http::timeout(10)->get(self::$iCressBaseUrl . "combo_select_campus.txt");
+            $response = Http::get(self::$iCressBaseUrl . "combo_select_campus.txt");
 
             $result = self::handleCampusesAndFaculties($response);
 
@@ -283,7 +283,7 @@ class UiTMController extends Controller
     public static function registerFaculties()
     {
         try {
-            $response = Http::timeout(10)->get(self::$iCressBaseUrl . "combo_select_faculty.txt");
+            $response = Http::get(self::$iCressBaseUrl . "combo_select_faculty.txt");
 
             $result = self::handleCampusesAndFaculties($response);
 
