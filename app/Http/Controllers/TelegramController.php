@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTelegramRequest;
+use App\Models\Preference;
 use App\Models\Telegram;
 use Auth;
 use Illuminate\Http\Request;
@@ -17,6 +18,8 @@ class TelegramController extends Controller
 
     public function callback(StoreTelegramRequest $request)
     {
+        $userId = Auth::id();
+
         $data = array_merge(
             $request->except("id"),
             [
@@ -25,7 +28,16 @@ class TelegramController extends Controller
             ]
         );
 
-        if (Telegram::updateOrCreate(["user_id" => Auth::id()], $data)) {
+        $telegram = Telegram::updateOrCreate(["user_id" => $userId], $data);
+
+        if ($telegram) {
+
+            $preference = Preference::query()->where("user_id", "=", $userId)->first();
+
+            if (!$preference) {
+                Preference::query()->create(["user_id" => $userId, "telegram_id" => $telegram->id]);
+            }
+
             return redirect()->route('setting.index')->with([
                 "status" => "Successfully added Telegram into your account."
             ]);

@@ -88,7 +88,16 @@ class ScheduleSeeder extends Seeder
                 "time_start" => "20:25:00",
                 "time_end" => "23:47:00",
                 "type" => "class",
-            ], [
+            ],
+            [
+                "title" => "Flutter",
+                "description" => "Learn flutter.",
+                "day" => "monday",
+                "time_start" => "21:25:00",
+                "time_end" => "23:47:00",
+                "type" => "class",
+            ],
+            [
                 "title" => "Quick Test",
                 "description" => "Lecturer: Bob\nChapter: 2 - 5\nCarry Mark: 40\n\nDuration: 30 Minutes only",
                 "date" => "2023/10/10",
@@ -122,24 +131,24 @@ class ScheduleSeeder extends Seeder
             ],
         ];
 
-//        foreach ($schedules as $schedule) {
-//            Schedule::factory()->create($schedule);
-//        }
+        foreach ($schedules as $schedule) {
+            Schedule::factory()->create($schedule);
+        }
 
-//        Schedule::factory()
-//            ->count(30)
-//            ->sequence(fn(Sequence $sequence) => [
-//                "day" => Factory::create()->randomElement([
-//                    'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
-//                ])
-//            ])
-//            ->create(["type" => "class"]);
-//
-//        Schedule::factory()
-//            ->count(100)
-//            ->sequence(fn(Sequence $sequence) => [
-//                "date" => Factory::create()->date()
-//            ])
-//            ->create(["type" => "activity"]);
+        Schedule::factory()
+            ->count(30)
+            ->sequence(fn(Sequence $sequence) => [
+                "day" => Factory::create()->randomElement([
+                    'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
+                ])
+            ])
+            ->create(["type" => "class"]);
+
+        Schedule::factory()
+            ->count(100)
+            ->sequence(fn(Sequence $sequence) => [
+                "date" => Factory::create()->date()
+            ])
+            ->create(["type" => "activity"]);
     }
 }

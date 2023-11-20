@@ -7,11 +7,11 @@ use App\Models\Course;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use App\Traits\ScheduleScraper;
+use App\Traits\ScheduleScraperTrait;
 
 class CourseController extends Controller
 {
-    use ScheduleScraper;
+    use ScheduleScraperTrait;
 
     /**
      * Display a listing of the resource.

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreScheduleRequest;
 use App\Models\Schedule;
+use App\Models\Telegram;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -11,9 +12,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Traits\EventTrait;
 
 class ScheduleController extends Controller
 {
+    use EventTrait;
+
     /**
      * Display a listing of the resource.
      */
@@ -78,19 +82,44 @@ class ScheduleController extends Controller
      */
     public function store(StoreScheduleRequest $request)
     {
-        $userId = ['user_id' => $request->user()->id];
+        $userId = ["user_id" => $request->user()->id];
         $schedule = $this->filterRequest($request);
 
-        if (Schedule::query()->create($schedule->merge($userId)->toArray())) {
-            return redirect()->route('schedule.index')
-                ->with(["status" => "A new schedule has been created!"]);
+        if ($request['remind']) {
+            $telegram = Telegram::where("user_id", "=", $userId)->first();
+
+            if (!$telegram) {
+                return redirect()
+                    ->route("setting.index")
+                    ->with([
+                        "status" => ["error" =>
+                            "Reminder feature should only be enable when your account already integrated with Telegram."
+                        ]
+                    ]);
+            }
         }
 
-        return back()->with([
-            'status' => ['error' => 'Something went wrong when creating a new schedule.']
-        ]);
+        $schedule = $schedule->merge($userId)->toArray();
+        $schedule = Schedule::query()->create($schedule);
 
-        // TODO: Check if the schedule is today's upcoming event, then add this schedule to the events table too.
+        if (!$schedule) {
+            return redirect()->route('schedule.index')
+                ->with(['status' => ['error' => 'Something went wrong when creating a new schedule.']]);
+        }
+
+        if ($request['remind']) {
+            $event = $this->getEventDataFromSchedule($schedule);
+
+            if ($event && !$this->addEvent($event)) {
+                return redirect()->route('schedule.index')
+                    ->with(['status' => ['error' => 'Something went wrong when adding the event for this schedule.']]);
+            }
+        }
+
+        return redirect()->route('schedule.index')
+            ->with(["status" => "The schedule has been successfully created!"]);
+
+        /** Do the same for schedule update, & schedule management for admin */
     }
 
     /**

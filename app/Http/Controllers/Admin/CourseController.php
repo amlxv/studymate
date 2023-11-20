@@ -9,12 +9,11 @@ use App\Models\Schedule;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Traits\ScheduleScraper;
+use App\Traits\ScheduleScraperTrait;
 
 class CourseController extends AdminController
 {
-
-    use ScheduleScraper;
+    use ScheduleScraperTrait;
 
     /**
      * Display a listing of the resource.

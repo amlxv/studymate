@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use LaravelIdea\Helper\App\Models\_IH_Course_QB;
 
-trait ScheduleScraper
+trait ScheduleScraperTrait
 {
     /**
      * @param StoreCourseRequest|StoreCourseRequestByAdmin|UpdateCourseRequestByAdmin $request
