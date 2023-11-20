@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\StoreCourseRequestByAdmin;
 use App\Http\Requests\UpdateCourseRequestByAdmin;
 use App\Models\Course;
+use App\Models\Schedule;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Traits\ScheduleScraper;
 
 class CourseController extends AdminController
 {
+
+    use ScheduleScraper;
+
     /**
      * Display a listing of the resource.
      */
@@ -48,17 +53,17 @@ class CourseController extends AdminController
                 ->with(["status" => ["warning" => "Student not found!"]]);
         }
 
-        $course = collect($request)->merge(["student_id" => $student->id])->toArray();
+        $userId = $student->user->id;
 
-        if (Course::query()->create($course)) {
-            return redirect()
-                ->route("admin.course.index")
-                ->with(["status" => "Successfully added the course to the student."]);
-        }
+        return $this->handleScheduleRequest($request, $userId, function ($user, $timetables, $course) use ($request) {
+            $course = Course::query()->create($course);
 
-        return back()->with(["status" => [
-            "error" => "Something went wrong when creating the course for the student."
-        ]]);
+            if ($course) {
+                return $this->handleCreateSchedule($timetables, $request, $user, $course);
+            }
+
+            return back()->with(["status" => ["error" => "Something went wrong when creating the course."]]);
+        });
     }
 
     /**
@@ -90,6 +95,7 @@ class CourseController extends AdminController
                 ->with(["status" => ["warning" => "Student with given ID not found!"]]);
         }
 
+        $userId = $student->user->id;
         $course = Course::find($request['id']);
 
         if (!$course) {
@@ -98,18 +104,26 @@ class CourseController extends AdminController
                 ->with(["status" => ["warning" => "The selected course not found!"]]);
         }
 
-        $validated = collect($request)
-            ->except('student_id')
-            ->merge(["student_id" => $student->id])
-            ->toArray();
+        return $this->handleScheduleRequest($request, $userId, function ($user, $timetables) use ($course, $request, $student) {
 
-        if ($course->update($validated)) {
-            return redirect()
-                ->route("admin.course.index")
-                ->with(["status" => "Successfully updated the course."]);
-        }
+            $data = collect($request)->merge(["student_id" => $student->id])->toArray();
 
-        return back()->with(["status" => ["error" => "Something went wrong when updating the course."]]);
+            if ($course->update($data)) {
+                $schedules = Schedule::query()->where("course_id", "=", $course->id);
+                $schedules->delete();
+                $schedules = $schedules->get();
+
+                if (count($schedules)) {
+                    return back()->with(["status" => [
+                        "error" => "Something went wrong when removing the old schedule."
+                    ]]);
+                }
+
+                return $this->handleCreateSchedule($timetables, $request, $user, $course);
+            }
+
+            return back()->with(["status" => ["error" => "Something went wrong when updating the course."]]);
+        });
     }
 
     /**
