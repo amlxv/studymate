@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreScheduleRequest;
+use App\Models\Event;
 use App\Models\Schedule;
 use App\Models\Telegram;
 use Carbon\CarbonPeriod;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -85,18 +87,8 @@ class ScheduleController extends Controller
         $userId = ["user_id" => $request->user()->id];
         $schedule = $this->filterRequest($request);
 
-        if ($request['remind']) {
-            $telegram = Telegram::where("user_id", "=", $userId)->first();
-
-            if (!$telegram) {
-                return redirect()
-                    ->route("setting.index")
-                    ->with([
-                        "status" => ["error" =>
-                            "Reminder feature should only be enable when your account already integrated with Telegram."
-                        ]
-                    ]);
-            }
+        if ($request['remind'] && !$this->verifyTelegramIntegration($userId)) {
+            return $this->handleTelegramIntegrationFailedRedirect();
         }
 
         $schedule = $schedule->merge($userId)->toArray();
@@ -107,7 +99,7 @@ class ScheduleController extends Controller
                 ->with(['status' => ['error' => 'Something went wrong when creating a new schedule.']]);
         }
 
-        if ($request['remind']) {
+        if ($request['remind'] && $this->isToday($schedule)) {
             $event = $this->getEventDataFromSchedule($schedule);
 
             if ($event && !$this->addEvent($event)) {
@@ -118,8 +110,6 @@ class ScheduleController extends Controller
 
         return redirect()->route('schedule.index')
             ->with(["status" => "The schedule has been successfully created!"]);
-
-        /** Do the same for schedule update, & schedule management for admin */
     }
 
     /**
@@ -149,17 +139,49 @@ class ScheduleController extends Controller
     public function update(StoreScheduleRequest $request, Schedule $schedule)
     {
         if ($schedule['user_id'] != Auth::id()) abort('403');
+        $userId = $schedule["user_id"];
 
         $data = $this->filterRequest($request)->all();
 
-        if ($schedule->update($data)) {
-            return redirect()->route('schedule.index')
-                ->with(["status" => "The schedule has been updated!"]);
+        if ($request['remind'] && !$this->verifyTelegramIntegration($userId)) {
+            return $this->handleTelegramIntegrationFailedRedirect();
         }
 
-        return back()->with(['status' => ['error' => 'Something went wrong when updating the schedule.']]);
+        if (!$schedule->update($data)) {
+            return redirect()->route('schedule.index')
+                ->with(['status' => ['error' => 'Something went wrong when updating the schedule.']]);
+        }
 
-        // TODO: Check if the schedule is today's upcoming event, then add this schedule to the events table too.
+        $isToday = $this->isToday($schedule);
+        $eventInstance = Event::query()->where("schedule_id", "=", $schedule->id)->first();
+
+        if (!$request["remind"] && $eventInstance || ($eventInstance && !$isToday)) {
+            $this->deleteEvent($eventInstance->id);
+        }
+
+        if (!$isToday) {
+            return redirect()->route('schedule.index')
+                ->with(["status" => "The schedule has been successfully updated!"]);
+        }
+
+        $event = $this->getEventDataFromSchedule($schedule);
+
+        if ($request['remind'] && $event) {
+            if (!$eventInstance) {
+                if (!$this->addEvent($event)) {
+                    return redirect()->route('schedule.index')
+                        ->with(['status' => ['error' => 'Something went wrong when adding the event for this schedule.']]);
+                }
+            } else {
+                if (!$this->updateEvent($eventInstance->id, $event)) {
+                    return redirect()->route('schedule.index')
+                        ->with(['status' => ['error' => 'Something went wrong when updating the event for this schedule.']]);
+                }
+            }
+        }
+
+        return redirect()->route('schedule.index')
+            ->with(["status" => "The schedule has been successfully updated!"]);
     }
 
     /**
@@ -217,5 +239,49 @@ class ScheduleController extends Controller
             "classes" => $classes,
             'activities' => $activities
         ]);
+    }
+
+    /**
+     * Check today schedule.
+     *
+     * @param Schedule $schedule
+     * @return bool
+     */
+    protected function isToday(Schedule $schedule)
+    {
+        $now = Carbon::now();
+        $currentDayName = Str::lower($now->dayName);
+        $currentDate = $now->format("Y-m-d");
+        return $schedule->date == $currentDate || $schedule->day == $currentDayName;
+    }
+
+    /**
+     * Check whether the user already integrate
+     * the account to Telegram.
+     *
+     * @param $userId
+     * @return bool
+     */
+    protected function verifyTelegramIntegration($userId): bool
+    {
+        $telegram = Telegram::where("user_id", "=", $userId)->first();
+        return (bool)$telegram;
+    }
+
+    /**
+     * Redirect to profile setting if
+     * failed verify the telegram integration.
+     *
+     * @return RedirectResponse
+     */
+    protected function handleTelegramIntegrationFailedRedirect()
+    {
+        return redirect()
+            ->route("setting.index")
+            ->with([
+                "status" => ["error" =>
+                    "Reminder feature should only be enable when your account already integrated with Telegram."
+                ]
+            ]);
     }
 }

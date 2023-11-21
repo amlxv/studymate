@@ -28,7 +28,7 @@ trait EventTrait
         $timeStart = $schedule->time_start;
         $carbon = Carbon::parse($timeStart);
         $timeToSend = $carbon->subMinutes($minutesBefore)->toTimeString();
-        
+
         if (!$telegramId || $currentTime > $timeStart) {
             return null;
         };
@@ -51,5 +51,16 @@ trait EventTrait
     public function addEvent(array $event): bool
     {
         return Event::query()->insert($event);
+    }
+
+    public function updateEvent(int $id, array $event): bool|int
+    {
+        $eventInstance = Event::query()->find($id);
+        return $eventInstance->update($event);
+    }
+
+    public function deleteEvent(int $id)
+    {
+        return Event::query()->find($id)->delete();
     }
 }
