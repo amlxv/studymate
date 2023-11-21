@@ -9,9 +9,13 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Inertia\Inertia;
+use App\Traits\ScheduleTrait;
+use App\Traits\EventTrait;
 
 class ScheduleController extends AdminController
 {
+    use ScheduleTrait, EventTrait;
+
     /**
      * Display a listing of the resource.
      */
@@ -60,21 +64,26 @@ class ScheduleController extends AdminController
 
         if (!$user) {
             return back()->with(["status" => [
-                "error" => "User with the given email address is not exist."
+                "error" => "The user with given email address does not exist."
             ]]);
         }
 
         $userId = ["user_id" => $user->id];
         $schedule = $this->filterScheduleRequest($request);
+        $schedule = $schedule->merge($userId)->toArray();
 
-        if (Schedule::query()->create($schedule->merge($userId)->toArray())) {
-            return redirect()->route('admin.schedule.index')
-                ->with(["status" => "A new schedule has been created!"]);
+        try {
+            $schedule = Schedule::query()->create($schedule);
+
+            if ($schedule) {
+                return redirect()->route('admin.schedule.index')
+                    ->with(["status" => "The schedule has been successfully created."]);
+            }
+        } catch (\Exception $error) {
+            return back()->with(['status' => ['error' => $error->getMessage()]]);
         }
 
-        return back()->with([
-            'status' => ['error' => 'Something went wrong when creating a new schedule.']
-        ]);
+        return back()->with(['status' => ['error' => 'Something went wrong when creating a new schedule.']]);
     }
 
     /**
@@ -100,17 +109,17 @@ class ScheduleController extends AdminController
     {
         $data = $this->filterScheduleRequest($request)->all();
 
-        if ($schedule->update($data)) {
-            return redirect()
-                ->route("admin.schedule.index")
-                ->with(["status" => "The schedule has been updated!"]);
+        try {
+            if ($schedule->update($data)) {
+                return redirect()->route("admin.schedule.index")
+                    ->with(["status" => "The schedule has been successfully updated!"]);
+
+            }
+        } catch (\Exception $error) {
+            return back()->with(["status" => ["error" => $error->getMessage()]]);
         }
 
-        return back()->with(["status" => [
-            "error" => "Something went wrong when updating the schedule."
-        ]]);
-
-        // TODO: Check if the schedule is today's upcoming event, then add this schedule to the events table too.
+        return back()->with(["status" => ["error" => "Something went wrong when updating the schedule."]]);
     }
 
     /**

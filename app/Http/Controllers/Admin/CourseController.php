@@ -49,7 +49,7 @@ class CourseController extends AdminController
         if (!$student) {
             return redirect()
                 ->route('admin.course.index',)
-                ->with(["status" => ["warning" => "Student not found!"]]);
+                ->with(["status" => ["warning" => "The user with provided student ID does not exist."]]);
         }
 
         $userId = $student->user->id;

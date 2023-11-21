@@ -131,24 +131,24 @@ class ScheduleSeeder extends Seeder
             ],
         ];
 
-        foreach ($schedules as $schedule) {
-            Schedule::factory()->create($schedule);
-        }
-
-        Schedule::factory()
-            ->count(30)
-            ->sequence(fn(Sequence $sequence) => [
-                "day" => Factory::create()->randomElement([
-                    'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
-                ])
-            ])
-            ->create(["type" => "class"]);
-
-        Schedule::factory()
-            ->count(100)
-            ->sequence(fn(Sequence $sequence) => [
-                "date" => Factory::create()->date()
-            ])
-            ->create(["type" => "activity"]);
+//        foreach ($schedules as $schedule) {
+//            Schedule::factory()->create($schedule);
+//        }
+//
+//        Schedule::factory()
+//            ->count(30)
+//            ->sequence(fn(Sequence $sequence) => [
+//                "day" => Factory::create()->randomElement([
+//                    'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
+//                ])
+//            ])
+//            ->create(["type" => "class"]);
+//
+//        Schedule::factory()
+//            ->count(100)
+//            ->sequence(fn(Sequence $sequence) => [
+//                "date" => Factory::create()->date()
+//            ])
+//            ->create(["type" => "activity"]);
     }
 }

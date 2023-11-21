@@ -29,13 +29,13 @@ trait ScheduleScraperTrait
         $user = User::find($userId);
 
         if (!$user) {
-            return redirect()->with(["status" => ["warning" => "User not found. Please try again later."]]);
+            return back()->with(["status" => ["warning" => "User not found. Please try again later."]]);
         }
 
         $student = $user->student;
 
         if (!$student || !$student->isProfileCompleted()) {
-            return redirect()->with(["status" => ["warning" => "Some of the required student information are missing. Please complete them to continue."]]);
+            return back()->with(["status" => ["warning" => "Some of the required student information are missing. Please complete them to continue."]]);
         }
 
         $campus = Campus::query()->find($student->campus);
@@ -78,7 +78,7 @@ trait ScheduleScraperTrait
                 "End: " . $timetable['time_end'] . "\n\n" .
                 "Lecturer: " . (collect($timetable)->has('lecturer') ? $timetable['lecturer'] : '');
 
-            $schedule = Schedule::query()->create([
+            $data = [
                 "course_id" => $course->id,
                 "user_id" => $user->id,
                 "title" => $title,
@@ -88,7 +88,13 @@ trait ScheduleScraperTrait
                 "time_end" => $time_end,
                 "type" => "class",
                 "remind" => true,
-            ]);
+            ];
+
+            try {
+                $schedule = Schedule::query()->create($data);
+            } catch (\Exception $error) {
+                return back()->with(['status' => ['error' => $error->getMessage()]]);
+            }
 
             if (!$schedule) {
                 return back()->with(["status" => [

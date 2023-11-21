@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('schedule_id')->constrained();
+            $table->foreignId('schedule_id')->constrained()->cascadeOnDelete();
             $table->foreignId('preference_id')->nullable()->constrained();
             $table->foreignId('telegram_id')->nullable()->constrained();
             $table->time('time_to_send'); // Maybe can be removed in the future.

@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use App\Traits\ScheduleTrait;
+use App\Traits\EventTrait;
 
 class Schedule extends Model
 {
-    use HasFactory;
+    use HasFactory, ScheduleTrait, EventTrait;
 
     protected $fillable = [
         'user_id',
@@ -24,6 +26,58 @@ class Schedule extends Model
         'remind',
         'course_id',
     ];
+
+    /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::creating(function (Schedule $schedule) {
+            if ($schedule->remind && !static::verifyTelegramIntegration($schedule->user_id)) {
+                throw new \Exception("Telegram integration is required to enable reminder feature.");
+            }
+        });
+
+        static::created(function (Schedule $schedule) {
+            if ($schedule->remind && static::isUpcomingToday($schedule)) {
+                if ($eventData = static::getEventDataFromSchedule($schedule)) {
+                    if (!static::addEvent($eventData)) {
+                        throw new \Exception("Something went wrong when adding the event for this schedule.");
+                    }
+                }
+            }
+        });
+
+        static::updating(function (Schedule $schedule) {
+            if ($schedule->remind && !static::verifyTelegramIntegration($schedule->user_id)) {
+                throw new \Exception("Telegram integration is required to enable reminder feature.");
+            }
+        });
+
+        static::updated(function (Schedule $schedule) {
+            $event = Event::query()->where("schedule_id", "=", $schedule->id)->first();
+            $isUpcomingToday = static::isUpcomingToday($schedule);
+            $remind = $schedule->remind;
+
+            if ($remind && $isUpcomingToday) {
+                if ($eventData = static::getEventDataFromSchedule($schedule)) {
+                    if ($event && !static::updateEvent($event->id, $eventData)) {
+                        throw new \Exception("Something went wrong when updating the event for this schedule.");
+                    }
+
+                    if (!$event && !static::addEvent($eventData)) {
+                        throw new \Exception("Something went wrong when adding the event for this schedule.");
+                    }
+                }
+            }
+
+            if ($event && (!$remind || !$isUpcomingToday)) {
+                $event->delete();
+            }
+        });
+
+        parent::booted();
+    }
 
     public function user(): BelongsTo
     {

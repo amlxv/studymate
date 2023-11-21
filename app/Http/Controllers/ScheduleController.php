@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreScheduleRequest;
-use App\Models\Event;
 use App\Models\Schedule;
-use App\Models\Telegram;
 use Carbon\CarbonPeriod;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -15,10 +12,11 @@ use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Traits\EventTrait;
+use App\Traits\ScheduleTrait;
 
 class ScheduleController extends Controller
 {
-    use EventTrait;
+    use EventTrait, ScheduleTrait;
 
     /**
      * Display a listing of the resource.
@@ -86,30 +84,20 @@ class ScheduleController extends Controller
     {
         $userId = ["user_id" => $request->user()->id];
         $schedule = $this->filterRequest($request);
-
-        if ($request['remind'] && !$this->verifyTelegramIntegration($userId)) {
-            return $this->handleTelegramIntegrationFailedRedirect();
-        }
-
         $schedule = $schedule->merge($userId)->toArray();
-        $schedule = Schedule::query()->create($schedule);
 
-        if (!$schedule) {
-            return redirect()->route('schedule.index')
-                ->with(['status' => ['error' => 'Something went wrong when creating a new schedule.']]);
-        }
+        try {
+            $schedule = Schedule::query()->create($schedule);
 
-        if ($request['remind'] && $this->isToday($schedule)) {
-            $event = $this->getEventDataFromSchedule($schedule);
-
-            if ($event && !$this->addEvent($event)) {
+            if ($schedule) {
                 return redirect()->route('schedule.index')
-                    ->with(['status' => ['error' => 'Something went wrong when adding the event for this schedule.']]);
+                    ->with(["status" => "The schedule has been successfully created."]);
             }
+        } catch (\Exception $error) {
+            return back()->with(['status' => ['error' => $error->getMessage()]]);
         }
 
-        return redirect()->route('schedule.index')
-            ->with(["status" => "The schedule has been successfully created!"]);
+        return back()->with(['status' => ['error' => 'Something went wrong when creating a new schedule.']]);
     }
 
     /**
@@ -139,49 +127,19 @@ class ScheduleController extends Controller
     public function update(StoreScheduleRequest $request, Schedule $schedule)
     {
         if ($schedule['user_id'] != Auth::id()) abort('403');
-        $userId = $schedule["user_id"];
-
         $data = $this->filterRequest($request)->all();
 
-        if ($request['remind'] && !$this->verifyTelegramIntegration($userId)) {
-            return $this->handleTelegramIntegrationFailedRedirect();
-        }
+        try {
+            if ($schedule->update($data)) {
+                return redirect()->route("schedule.index")
+                    ->with(["status" => "The schedule has been successfully updated!"]);
 
-        if (!$schedule->update($data)) {
-            return redirect()->route('schedule.index')
-                ->with(['status' => ['error' => 'Something went wrong when updating the schedule.']]);
-        }
-
-        $isToday = $this->isToday($schedule);
-        $eventInstance = Event::query()->where("schedule_id", "=", $schedule->id)->first();
-
-        if (!$request["remind"] && $eventInstance || ($eventInstance && !$isToday)) {
-            $this->deleteEvent($eventInstance->id);
-        }
-
-        if (!$isToday) {
-            return redirect()->route('schedule.index')
-                ->with(["status" => "The schedule has been successfully updated!"]);
-        }
-
-        $event = $this->getEventDataFromSchedule($schedule);
-
-        if ($request['remind'] && $event) {
-            if (!$eventInstance) {
-                if (!$this->addEvent($event)) {
-                    return redirect()->route('schedule.index')
-                        ->with(['status' => ['error' => 'Something went wrong when adding the event for this schedule.']]);
-                }
-            } else {
-                if (!$this->updateEvent($eventInstance->id, $event)) {
-                    return redirect()->route('schedule.index')
-                        ->with(['status' => ['error' => 'Something went wrong when updating the event for this schedule.']]);
-                }
             }
+        } catch (\Exception $error) {
+            return back()->with(["status" => ["error" => $error->getMessage()]]);
         }
 
-        return redirect()->route('schedule.index')
-            ->with(["status" => "The schedule has been successfully updated!"]);
+        return back()->with(["status" => ["error" => "Something went wrong when updating the schedule."]]);
     }
 
     /**
@@ -239,49 +197,5 @@ class ScheduleController extends Controller
             "classes" => $classes,
             'activities' => $activities
         ]);
-    }
-
-    /**
-     * Check today schedule.
-     *
-     * @param Schedule $schedule
-     * @return bool
-     */
-    protected function isToday(Schedule $schedule)
-    {
-        $now = Carbon::now();
-        $currentDayName = Str::lower($now->dayName);
-        $currentDate = $now->format("Y-m-d");
-        return $schedule->date == $currentDate || $schedule->day == $currentDayName;
-    }
-
-    /**
-     * Check whether the user already integrate
-     * the account to Telegram.
-     *
-     * @param $userId
-     * @return bool
-     */
-    protected function verifyTelegramIntegration($userId): bool
-    {
-        $telegram = Telegram::where("user_id", "=", $userId)->first();
-        return (bool)$telegram;
-    }
-
-    /**
-     * Redirect to profile setting if
-     * failed verify the telegram integration.
-     *
-     * @return RedirectResponse
-     */
-    protected function handleTelegramIntegrationFailedRedirect()
-    {
-        return redirect()
-            ->route("setting.index")
-            ->with([
-                "status" => ["error" =>
-                    "Reminder feature should only be enable when your account already integrated with Telegram."
-                ]
-            ]);
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Support\Carbon;
 
 trait EventTrait
 {
-    public function getEventDataFromSchedule(Schedule $schedule): ?array
+    public static function getEventDataFromSchedule(Schedule $schedule): ?array
     {
         $userId = $schedule->user_id;
         $scheduleId = $schedule->id;
@@ -42,24 +42,24 @@ trait EventTrait
         ];
     }
 
-    public function refreshEvent(array $events): bool
+    public static function refreshEvent(array $events): bool
     {
         Event::query()->truncate();
         return Event::query()->insert($events);
     }
 
-    public function addEvent(array $event): bool
+    public static function addEvent(array $event): bool
     {
         return Event::query()->insert($event);
     }
 
-    public function updateEvent(int $id, array $event): bool|int
+    public static function updateEvent(int $id, array $event): bool|int
     {
         $eventInstance = Event::query()->find($id);
         return $eventInstance->update($event);
     }
 
-    public function deleteEvent(int $id)
+    public static function deleteEvent(int $id)
     {
         return Event::query()->find($id)->delete();
     }
