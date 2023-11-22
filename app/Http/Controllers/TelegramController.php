@@ -3,18 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTelegramRequest;
+use App\Jobs\TelegramSendMessage;
 use App\Models\Preference;
 use App\Models\Telegram;
 use Auth;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
-use App\Traits\TelegramAPITrait;
 
 class TelegramController extends Controller
 {
-
-    use TelegramAPITrait;
-
     public function redirect()
     {
         return Socialite::driver('telegram')->redirect();
@@ -46,14 +43,10 @@ class TelegramController extends Controller
                 "You'll receive any upcoming notifications right here moving forward. " .
                 "If you do not recognized this action, please contact @telegram support for terminating this integration.";
 
-            if (self::sendMessage($data['chat_id'], $message)) {
-                return redirect()->route('setting.index')->with([
-                    "status" => "Successfully added Telegram into your account."
-                ]);
-            }
+            TelegramSendMessage::dispatch($data['chat_id'], $message);
 
             return redirect()->route('setting.index')->with([
-                "status" => ["warning" => "Successfully added Telegram into your account but failed when sending the message."]
+                "status" => "Successfully added Telegram into your account."
             ]);
         }
 
