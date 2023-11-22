@@ -45,12 +45,19 @@ trait EventTrait
     public static function refreshEvent(array $events): bool
     {
         Event::query()->truncate();
-        return Event::query()->insert($events);
+        
+        foreach ($events as $event) {
+            if (!Event::query()->create($event)) {
+                return false;
+            };
+        }
+
+        return true;
     }
 
     public static function addEvent(array $event): bool
     {
-        return Event::query()->insert($event);
+        return (bool)Event::query()->create($event);
     }
 
     public static function updateEvent(int $id, array $event): bool|int
