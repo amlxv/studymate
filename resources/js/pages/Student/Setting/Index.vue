@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useForm, usePage } from "@inertiajs/vue3";
+import { useElementSize } from "@vueuse/core";
 import Layout from "@/layouts/Layout.vue";
 import SubmitButton from "@/composables/buttons/SubmitButton.vue";
 import SectionHeading from "@/composables/heading/SectionHeading.vue";
 import CommonButton from "@/composables/buttons/CommonButton.vue";
 import InputText from "@/composables/forms/InputText.vue";
 import TextArea from "@/composables/forms/TextArea.vue";
-import { AtSymbolIcon } from "@heroicons/vue/20/solid";
+import { AtSymbolIcon, ChevronUpIcon } from "@heroicons/vue/20/solid";
 import { ClockIcon } from "@heroicons/vue/24/outline";
 import BaseIcon from "@/composables/BaseIcon.vue";
 import SocialButton from "@/composables/buttons/SocialButton.vue";
-import { useElementSize } from "@vueuse/core";
+import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 
 const page = usePage();
 
@@ -156,6 +157,90 @@ const form = useForm({
                                     placeholder="Hi, [name]! [title] will be start soon."
                                     :disabled="!isEditingMode"
                                 />
+
+                                <div class="mt-4" v-if="isEditingMode">
+                                    <Disclosure v-slot="{ open }">
+                                        <DisclosureButton
+                                            class="flex w-full justify-between rounded-lg bg-indigo-100 px-4 py-2 text-left text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500/75"
+                                        >
+                                            <span
+                                                >How to use the schedule
+                                                information in custom
+                                                message?</span
+                                            >
+                                            <ChevronUpIcon
+                                                :class="
+                                                    open
+                                                        ? 'rotate-180 transform'
+                                                        : ''
+                                                "
+                                                class="h-5 w-5 text-purple-500"
+                                            />
+                                        </DisclosureButton>
+                                        <DisclosurePanel
+                                            class="px-4 pb-2 pt-4 text-sm text-gray-500"
+                                        >
+                                            There are several keywords with a
+                                            unique pattern that have been
+                                            reserved for mentioning schedule
+                                            information. When you use those
+                                            keywords, they will be replaced with
+                                            the actual schedule details before
+                                            the reminder is sent to you.
+
+                                            <ul class="ml-4 mt-3 list-disc">
+                                                <li class="mb-2.5">
+                                                    <span
+                                                        class="rounded bg-gray-200 p-1 text-gray-700"
+                                                        >{title}</span
+                                                    >
+                                                    — The schedule title that
+                                                    has been set.
+                                                </li>
+                                                <li class="mb-2.5">
+                                                    <span
+                                                        class="rounded bg-gray-200 p-1 text-gray-700"
+                                                        >{description}</span
+                                                    >
+                                                    — The schedule description
+                                                    that has been set.
+                                                </li>
+                                                <li class="mb-2.5">
+                                                    <span
+                                                        class="rounded bg-gray-200 p-1 text-gray-700"
+                                                        >{day}</span
+                                                    >
+                                                    — If exist, the schedule day
+                                                    that has been set.
+                                                </li>
+                                                <li class="mb-2.5">
+                                                    <span
+                                                        class="rounded bg-gray-200 p-1 text-gray-700"
+                                                        >{date}</span
+                                                    >
+                                                    — If exist, the schedule
+                                                    date that has been set.
+                                                </li>
+                                                <li class="mb-2.5">
+                                                    <span
+                                                        class="rounded bg-gray-200 p-1 text-gray-700"
+                                                        >{time_start}</span
+                                                    >
+                                                    — The schedule start time
+                                                    that has been set.
+                                                </li>
+                                                <li class="mb-2.5">
+                                                    <span
+                                                        class="rounded bg-gray-200 p-1 text-gray-700"
+                                                        >{time_end}</span
+                                                    >
+                                                    — The schedule end time that
+                                                    has been set.
+                                                </li>
+                                            </ul>
+                                        </DisclosurePanel>
+                                    </Disclosure>
+                                </div>
                             </div>
                         </div>
                     </div>
