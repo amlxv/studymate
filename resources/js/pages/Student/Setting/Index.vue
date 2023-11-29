@@ -154,7 +154,7 @@ const form = useForm({
                                     :model="form"
                                     label="Custom Message"
                                     description="Customize how the notification will looks like."
-                                    placeholder="Hi, [name]! [title] will be start soon."
+                                    placeholder="Hi, there! {title} will start soon."
                                     :disabled="!isEditingMode"
                                 />
 
