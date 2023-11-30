@@ -64,14 +64,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 /**
- * Initialize the campus & faculty
- */
-Route::get("init", function () {
-    \App\Http\Controllers\UiTMController::registerCampuses();
-    \App\Http\Controllers\UiTMController::registerFaculties();
-});
-
-/**
  * Temporarily for testing purpose.
  */
 Route::get("test", function () {
