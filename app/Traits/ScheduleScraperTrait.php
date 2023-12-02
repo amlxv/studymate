@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UiTMController;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\StoreCourseRequestByAdmin;
@@ -37,11 +38,18 @@ trait ScheduleScraperTrait
         $student = $user->student;
 
         if (!$student || !$student->isProfileCompleted()) {
-            return redirect()
-                ->route("profile.index", ["error" => "missing-student-information"])
-                ->with(["status" => [
-                    "warning" => "Some of the required student information is missing. Please complete it to continue."
-                ]]);
+            return Auth::user()->isAdmin() ?
+                redirect()
+                    ->back()
+                    ->with(["status" => [
+                        "warning" => "Some of the required student information is missing. Please complete it to continue."
+                    ]])
+                :
+                redirect()
+                    ->route("profile.index", ["error" => "missing-student-information"])
+                    ->with(["status" => [
+                        "warning" => "Some of the required student information is missing. Please complete it to continue."
+                    ]]);
         }
 
         $campus = Campus::query()->find($student->campus);
