@@ -21,7 +21,7 @@ const form = useForm({
     code: null,
     group: null,
     student_id: null,
-    remind: null,
+    remind: false,
 });
 
 watch(selectedItem, () => {
