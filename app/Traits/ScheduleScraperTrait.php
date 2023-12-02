@@ -78,10 +78,10 @@ trait ScheduleScraperTrait
                 $time_end = $timetable['time_end'];
                 $description = $request['code'] .
                     " - " . $request['name'] . "\n\n" .
-                    "Venue: " . (collect($timetable)->has('venue') ? $timetable['venue'] : '') . "\n" .
+                    "Venue: " . (collect($timetable)->has('venue') ? $timetable['venue'] : '-') . "\n" .
                     "Start: " . $timetable['time_start'] . "\n" .
                     "End: " . $timetable['time_end'] . "\n\n" .
-                    "Lecturer: " . (collect($timetable)->has('lecturer') ? $timetable['lecturer'] : '');
+                    "Lecturer: " . (collect($timetable)->has('lecturer') ? $timetable['lecturer'] : '-');
 
                 $data = [
                     "course_id" => $course->id,
@@ -92,7 +92,7 @@ trait ScheduleScraperTrait
                     "time_start" => $time_start,
                     "time_end" => $time_end,
                     "type" => "class",
-                    "remind" => true,
+                    "remind" => (bool)$request['remind'],
                 ];
 
                 if (!Schedule::query()->create($data)) {

@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCourseRequestByAdmin;
 use App\Models\Course;
 use App\Models\Schedule;
 use App\Models\Student;
+use App\Models\Telegram;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Traits\ScheduleScraperTrait;
@@ -41,6 +42,7 @@ class CourseController extends AdminController
 
     /**
      * Store a newly created resource in storage.
+     * @throws \Exception
      */
     public function store(StoreCourseRequestByAdmin $request)
     {
@@ -49,10 +51,22 @@ class CourseController extends AdminController
         if (!$student) {
             return redirect()
                 ->route('admin.course.index',)
-                ->with(["status" => ["warning" => "The user with provided student ID does not exist."]]);
+                ->with(["status" => [
+                    "warning" => "Student record not found for provided ID.
+                    Please verify the student ID entered is correct and belongs to an active student."
+                ]]);
         }
 
         $userId = $student->user->id;
+
+        $telegram = Telegram::query()->where("user_id", "=", $userId)->count();
+
+        if ($request['remind'] && !$telegram) {
+            return back()->with(["status" => [
+                "error" => "Telegram integration required to perform this action.
+                Required linking the Telegram account in the account settings to continue."
+            ]]);
+        }
 
         return $this->handleScheduleRequest($request, $userId, function ($user, $timetables, $course) use ($request) {
             $course = Course::query()->create($course);
@@ -83,6 +97,7 @@ class CourseController extends AdminController
 
     /**
      * Update the specified resource in storage.
+     * @throws \Exception
      */
     public function update(UpdateCourseRequestByAdmin $request)
     {
@@ -91,7 +106,10 @@ class CourseController extends AdminController
         if (!$student) {
             return redirect()
                 ->route('admin.course.index',)
-                ->with(["status" => ["warning" => "Student with given ID not found!"]]);
+                ->with(["status" => [
+                    "warning" => "Student record not found for provided ID.
+                    Please verify the student ID entered is correct and belongs to an active student."
+                ]]);
         }
 
         $userId = $student->user->id;
@@ -101,6 +119,15 @@ class CourseController extends AdminController
             return redirect()
                 ->route('admin.course.index',)
                 ->with(["status" => ["warning" => "The selected course not found!"]]);
+        }
+
+        $telegram = Telegram::query()->where("user_id", "=", $userId)->count();
+
+        if ($request['remind'] && !$telegram) {
+            return back()->with(["status" => [
+                "error" => "Telegram integration required to perform this action.
+                Required linking the Telegram account in the account settings to continue."
+            ]]);
         }
 
         return $this->handleScheduleRequest($request, $userId, function ($user, $timetables) use ($course, $request, $student) {

@@ -24,7 +24,8 @@ class StoreCourseRequest extends FormRequest
         return [
             "name" => "required",
             "code" => "required",
-            "group" => "required"
+            "group" => "required",
+            "remind" => "required",
         ];
     }
 }

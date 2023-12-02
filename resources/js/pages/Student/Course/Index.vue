@@ -20,6 +20,7 @@ const form = useForm({
     name: null,
     code: null,
     group: null,
+    remind: null,
 });
 
 watch(selectedItem, () => {

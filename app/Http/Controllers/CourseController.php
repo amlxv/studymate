@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCourseRequest;
 use App\Models\Course;
 use App\Models\Schedule;
+use App\Models\Telegram;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Traits\ScheduleScraperTrait;
@@ -35,9 +36,19 @@ class CourseController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @throws \Exception
      */
     public function store(StoreCourseRequest $request)
     {
+        $telegram = Telegram::query()->where("user_id", "=", Auth::id())->count();
+
+        if ($request['remind'] && !$telegram) {
+            return back()->with(["status" => [
+                "error" => "Telegram integration required to perform this action.
+                Please link your Telegram account in your account settings to continue."
+            ]]);
+        }
+
         return $this->handleScheduleRequest($request, Auth::id(), function ($user, $timetables, $course) use ($request) {
             $course = Course::query()->create($course);
 
@@ -67,9 +78,19 @@ class CourseController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @throws \Exception
      */
     public function update(StoreCourseRequest $request, Course $course)
     {
+        $telegram = Telegram::query()->where("user_id", "=", Auth::id())->count();
+
+        if ($request['remind'] && !$telegram) {
+            return back()->with(["status" => [
+                "error" => "Telegram integration required to perform this action.
+                Please link your Telegram account in your account settings to continue."
+            ]]);
+        }
+
         return $this->handleScheduleRequest($request, Auth::id(), function ($user, $timetables) use ($course, $request) {
 
             if ($course->update($request->toArray())) {

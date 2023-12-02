@@ -26,7 +26,8 @@ class UpdateCourseRequestByAdmin extends FormRequest
             "student_id" => "required",
             "name" => "required",
             "code" => "required",
-            "group" => "required"
+            "group" => "required",
+            "remind" => "required"
         ];
     }
 }
