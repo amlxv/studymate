@@ -34,7 +34,7 @@ class Schedule extends Model
     {
         static::creating(function (Schedule $schedule) {
             if ($schedule->remind && !static::verifyTelegramIntegration($schedule->user_id)) {
-                throw new \Exception("Telegram integration is required to enable reminder feature.");
+                throw new \Exception("Telegram integration required to perform this action. Please link your Telegram account in your account settings to continue.");
             }
         });
 
@@ -42,7 +42,7 @@ class Schedule extends Model
             if ($schedule->remind && static::isUpcomingToday($schedule)) {
                 if ($eventData = static::getEventDataFromSchedule($schedule)) {
                     if (!static::addEvent($eventData)) {
-                        throw new \Exception("Something went wrong when adding the event for this schedule.");
+                        throw new \Exception("Error adding event to schedule. Please try again.");
                     }
                 }
             }
@@ -50,7 +50,7 @@ class Schedule extends Model
 
         static::updating(function (Schedule $schedule) {
             if ($schedule->remind && !static::verifyTelegramIntegration($schedule->user_id)) {
-                throw new \Exception("Telegram integration is required to enable reminder feature.");
+                throw new \Exception("Telegram integration required to perform this action. Please link your Telegram account in your account settings to continue.");
             }
         });
 
@@ -62,11 +62,11 @@ class Schedule extends Model
             if ($remind && $isUpcomingToday) {
                 if ($eventData = static::getEventDataFromSchedule($schedule)) {
                     if ($event && !static::updateEvent($event->id, $eventData)) {
-                        throw new \Exception("Something went wrong when updating the event for this schedule.");
+                        throw new \Exception("Error updating schedule event. Please try again.");
                     }
 
                     if (!$event && !static::addEvent($eventData)) {
-                        throw new \Exception("Something went wrong when adding the event for this schedule.");
+                        throw new \Exception("Error adding event to schedule. Please try again.");
                     }
                 }
             }
