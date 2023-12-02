@@ -29,13 +29,17 @@ trait ScheduleScraperTrait
         $user = User::find($userId);
 
         if (!$user) {
-            return back()->with(["status" => ["warning" => "User not found. Please try again later."]]);
+            return back()->with(["status" => [
+                "warning" => "User not found. Please try again later."
+            ]]);
         }
 
         $student = $user->student;
 
         if (!$student || !$student->isProfileCompleted()) {
-            return back()->with(["status" => ["warning" => "Some of the required student information are missing. Please complete them to continue."]]);
+            return back()->with(["status" => [
+                "warning" => "Some of the required student information are missing. Please complete them to continue."
+            ]]);
         }
 
         $campus = Campus::query()->find($student->campus);
@@ -62,48 +66,44 @@ trait ScheduleScraperTrait
      * @param Builder|User|null $user
      * @param Model|_IH_Course_QB|Builder|Course $course
      * @return RedirectResponse
+     * @throws \Exception
      */
     public function handleCreateSchedule(array $timetables, StoreCourseRequest|StoreCourseRequestByAdmin|UpdateCourseRequestByAdmin $request, Builder|User|null $user, Model|_IH_Course_QB|Builder|Course $course): RedirectResponse
     {
-        $schedules = collect($timetables)->each(function ($timetable) use ($request, $user, $course) {
+        try {
+            $schedules = collect($timetables)->each(function ($timetable) use ($request, $user, $course) {
+                $title = $request['name'];
+                $day = $timetable['day'];
+                $time_start = $timetable['time_start'];
+                $time_end = $timetable['time_end'];
+                $description = $request['code'] .
+                    " - " . $request['name'] . "\n\n" .
+                    "Venue: " . (collect($timetable)->has('venue') ? $timetable['venue'] : '') . "\n" .
+                    "Start: " . $timetable['time_start'] . "\n" .
+                    "End: " . $timetable['time_end'] . "\n\n" .
+                    "Lecturer: " . (collect($timetable)->has('lecturer') ? $timetable['lecturer'] : '');
 
-            $title = $request['name'];
-            $day = $timetable['day'];
-            $time_start = $timetable['time_start'];
-            $time_end = $timetable['time_end'];
-            $description = $request['code'] .
-                " - " . $request['name'] . "\n\n" .
-                "Venue: " . (collect($timetable)->has('venue') ? $timetable['venue'] : '') . "\n" .
-                "Start: " . $timetable['time_start'] . "\n" .
-                "End: " . $timetable['time_end'] . "\n\n" .
-                "Lecturer: " . (collect($timetable)->has('lecturer') ? $timetable['lecturer'] : '');
+                $data = [
+                    "course_id" => $course->id,
+                    "user_id" => $user->id,
+                    "title" => $title,
+                    "description" => $description,
+                    "day" => $day,
+                    "time_start" => $time_start,
+                    "time_end" => $time_end,
+                    "type" => "class",
+                    "remind" => true,
+                ];
 
-            $data = [
-                "course_id" => $course->id,
-                "user_id" => $user->id,
-                "title" => $title,
-                "description" => $description,
-                "day" => $day,
-                "time_start" => $time_start,
-                "time_end" => $time_end,
-                "type" => "class",
-                "remind" => true,
-            ];
+                if (!Schedule::query()->create($data)) {
+                    throw new \Exception("Something went wrong when adding the schedule.");
+                }
 
-            try {
-                $schedule = Schedule::query()->create($data);
-            } catch (\Exception $error) {
-                return back()->with(['status' => ['error' => $error->getMessage()]]);
-            }
-
-            if (!$schedule) {
-                return back()->with(["status" => [
-                    "error" => "Something went wrong when adding the schedule."
-                ]]);
-            }
-
-            return true;
-        });
+                return true;
+            });
+        } catch (\Exception $error) {
+            return back()->with(["status" => ["error" => $error->getMessage()]]);
+        }
 
         if ($schedules) {
             return back()->with(["status" => "Successfully added the schedule for this course."]);

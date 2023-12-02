@@ -25,7 +25,7 @@ watch(
         if (status.value?.type !== undefined) {
             setTimeout(() => {
                 status.value = null;
-            }, 2800);
+            }, 5000);
         }
     },
     { immediate: true },
