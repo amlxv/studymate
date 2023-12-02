@@ -29,7 +29,7 @@ const { form } = toRefs(props);
             id="student_id"
             :model="form"
             label="Student ID"
-            placeholder="2022988117"
+            placeholder="e.g., 2022988117"
             :error="form?.errors?.student_id"
             :icon="UserIcon"
         />
@@ -39,7 +39,7 @@ const { form } = toRefs(props);
             id="name"
             :model="form"
             label="Course Name"
-            placeholder="Project Formulation"
+            placeholder="e.g., Project"
             :error="form?.errors?.name"
             :icon="ClipboardDocumentIcon"
         />
@@ -50,7 +50,7 @@ const { form } = toRefs(props);
             id="code"
             :model="form"
             label="Course Code"
-            placeholder="CSP600"
+            placeholder="e.g., CSP650"
             :error="form?.errors?.code"
             :icon="AtSymbolIcon"
         />
@@ -61,7 +61,7 @@ const { form } = toRefs(props);
             id="group"
             :model="form"
             label="Group"
-            placeholder="M3CS2516A"
+            placeholder="e.g., M3CS2516A"
             :error="form?.errors?.group"
             :icon="UserGroupIcon"
         />

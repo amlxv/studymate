@@ -79,7 +79,7 @@ const form = useForm({
                                     :error="form?.errors?.username"
                                     label="Telegram Username"
                                     type="text"
-                                    placeholder="amlxv"
+                                    placeholder="e.g., amlxv"
                                     :icon="AtSymbolIcon"
                                     disabled="disabled"
                                 />
@@ -133,7 +133,7 @@ const form = useForm({
                                     :error="form?.errors?.time_before"
                                     label="Time Before"
                                     type="number"
-                                    placeholder="10"
+                                    placeholder="e.g., 10"
                                     min="10"
                                     max="60"
                                     :icon="ClockIcon"
@@ -154,7 +154,7 @@ const form = useForm({
                                     :model="form"
                                     label="Custom Message"
                                     description="Customize how the notification will looks like."
-                                    placeholder="Hi, there! {title} will start soon."
+                                    placeholder="e.g., Hi, there! {title} will start soon."
                                     :disabled="!isEditingMode"
                                 />
 

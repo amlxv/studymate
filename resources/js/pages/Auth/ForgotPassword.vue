@@ -23,7 +23,7 @@ const form = useForm({
                 <InputText
                     id="email"
                     :model="form"
-                    placeholder="studymate@amlxv.com"
+                    placeholder="e.g., studymate@amlxv.com"
                     :error="form.errors.email"
                 />
 

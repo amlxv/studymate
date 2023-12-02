@@ -31,7 +31,7 @@ const form = useForm({
                 <InputText
                     id="email"
                     label="Email address"
-                    placeholder="studymate@amlxv.com"
+                    placeholder="e.g., studymate@amlxv.com"
                     :model="form"
                     :error="form.errors.email"
                 />

@@ -28,7 +28,7 @@ const { form } = toRefs(props);
             id="name"
             :model="form"
             label="Name"
-            placeholder="amlxv"
+            placeholder="e.g., amlxv"
             :error="form?.errors?.name"
         />
     </div>
@@ -38,7 +38,7 @@ const { form } = toRefs(props);
             id="email"
             :model="form"
             label="Email address"
-            placeholder="me@amlxv.com"
+            placeholder="e.g., me@amlxv.com"
             :error="form?.errors?.email"
         />
     </div>
@@ -60,7 +60,7 @@ const { form } = toRefs(props);
             id="student_id"
             :model="form"
             label="Student ID"
-            placeholder="2022988117"
+            placeholder="e.g., 2022988117"
             :error="form?.errors?.student_id"
             :icon="AtSymbolIcon"
         />
@@ -109,7 +109,7 @@ const { form } = toRefs(props);
             id="program"
             :model="form"
             label="Program"
-            placeholder="CS251"
+            placeholder="e.g., CS251"
             :error="form?.errors?.program"
             :icon="AcademicCapIcon"
         />
@@ -122,7 +122,7 @@ const { form } = toRefs(props);
             id="phone_number"
             :model="form"
             label="Phone Number"
-            placeholder="60168000782"
+            placeholder="e.g., +60168000782"
             :error="form?.errors?.phone_number"
             :icon="PhoneIcon"
         />
@@ -148,7 +148,7 @@ const { form } = toRefs(props);
             id="address"
             :model="form"
             label="Address"
-            placeholder="Jasin, Melaka"
+            placeholder="e.g., Jasin, Melaka"
             :error="form?.errors?.address"
             description="Optionally provide the student address."
         />

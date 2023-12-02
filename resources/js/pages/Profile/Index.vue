@@ -117,7 +117,7 @@ onMounted(() => {
                                     :error="form?.errors?.name"
                                     label="Name"
                                     type="text"
-                                    placeholder="e.g: amlxv"
+                                    placeholder="e.g., amlxv"
                                     :disabled="!isEditingMode"
                                 />
                             </div>
@@ -129,7 +129,7 @@ onMounted(() => {
                                     :error="form?.errors?.email"
                                     label="Email Address"
                                     type="email"
-                                    placeholder="e.g: studymate@amlxv.com"
+                                    placeholder="e.g., studymate@amlxv.com"
                                     disabled="disabled"
                                 />
 
@@ -152,7 +152,7 @@ onMounted(() => {
                                     label="Phone Number"
                                     type="text"
                                     :icon="DevicePhoneMobileIcon"
-                                    placeholder="e.g: +60168000782"
+                                    placeholder="e.g., +60168000782"
                                     :disabled="!isEditingMode"
                                 />
                             </div>
@@ -187,7 +187,7 @@ onMounted(() => {
                                     label="Address"
                                     type="text"
                                     :icon="HomeIcon"
-                                    placeholder="e.g: Kota Bharu, Kelantan"
+                                    placeholder="e.g., Kota Bharu, Kelantan"
                                     :disabled="!isEditingMode"
                                 />
                             </div>
@@ -222,7 +222,7 @@ onMounted(() => {
                                     :error="form?.errors?.student_id"
                                     label="Student ID"
                                     type="text"
-                                    placeholder="e.g: 2022988117"
+                                    placeholder="e.g., 2022988117"
                                     :icon="IdentificationIcon"
                                     :disabled="!isEditingMode"
                                 />
@@ -235,7 +235,7 @@ onMounted(() => {
                                     :error="form?.errors?.institute"
                                     label="Institute"
                                     type="text"
-                                    placeholder="e.g: Universiti Teknologi MARA"
+                                    placeholder="e.g., Universiti Teknologi MARA"
                                     :icon="AcademicCapIcon"
                                     :disabled="!isEditingMode"
                                 />
@@ -297,7 +297,7 @@ onMounted(() => {
                                     :error="form?.errors?.program"
                                     label="Program"
                                     type="text"
-                                    placeholder="e.g: CS251"
+                                    placeholder="e.g., CS251"
                                     :icon="BookOpenIcon"
                                     :disabled="!isEditingMode"
                                 />

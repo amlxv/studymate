@@ -41,7 +41,7 @@ const { form, type } = toRefs(props);
                     id="email"
                     :model="form"
                     label="Email"
-                    placeholder="student@amlxv.com"
+                    placeholder="e.g., student@amlxv.com"
                     :error="form?.errors?.email"
                 />
             </div>
@@ -51,7 +51,7 @@ const { form, type } = toRefs(props);
                     id="title"
                     :model="form"
                     label="Title"
-                    placeholder="Project Milestone"
+                    placeholder="e.g., Project Milestone"
                     :error="form?.errors?.title"
                 />
             </div>
@@ -60,7 +60,7 @@ const { form, type } = toRefs(props);
                 <TextArea
                     id="description"
                     :model="form"
-                    placeholder="Submit the project milestone to the supervisor."
+                    placeholder="e.g., Submit the project milestone to the supervisor."
                     :error="form?.errors?.description"
                 />
             </div>

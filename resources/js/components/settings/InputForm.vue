@@ -26,7 +26,7 @@ const { form } = toRefs(props);
             :error="form?.errors?.email"
             label="Email"
             type="text"
-            placeholder="student@amlxv.com"
+            placeholder="e.g., student@amlxv.com"
             :icon="AtSymbolIcon"
         />
     </div>
@@ -38,7 +38,7 @@ const { form } = toRefs(props);
             :error="form?.errors?.username"
             label="Telegram Username"
             type="text"
-            placeholder="amlxv"
+            placeholder="e.g., amlxv"
             :icon="AtSymbolIcon"
             disabled="disabled"
         />
@@ -50,7 +50,7 @@ const { form } = toRefs(props);
             :error="form?.errors?.time_before"
             label="Time Before"
             type="number"
-            placeholder="10"
+            placeholder="e.g., 10"
             min="10"
             max="60"
             :icon="ClockIcon"
@@ -62,7 +62,7 @@ const { form } = toRefs(props);
             id="custom_message"
             :model="form"
             label="Custom Message"
-            description="Customize how the notification will looks like."
+            description="e.g., Customize how the notification will looks like."
             placeholder="Hi, [name]! [title] will be start soon."
         />
     </div>

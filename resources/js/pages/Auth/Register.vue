@@ -29,14 +29,14 @@ const form = useForm({
                 <InputText
                     id="name"
                     :model="form"
-                    placeholder="Your name"
+                    placeholder="e.g., Your name"
                     :error="form.errors.name"
                 />
 
                 <InputText
                     id="email"
                     :model="form"
-                    placeholder="studymate@amlxv.com"
+                    placeholder="e.g., studymate@amlxv.com"
                     :error="form.errors.email"
                 />
 
