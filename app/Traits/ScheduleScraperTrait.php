@@ -37,9 +37,11 @@ trait ScheduleScraperTrait
         $student = $user->student;
 
         if (!$student || !$student->isProfileCompleted()) {
-            return back()->with(["status" => [
-                "warning" => "Some of the required student information are missing. Please complete them to continue."
-            ]]);
+            return redirect()
+                ->route("profile.index", ["error" => "missing-student-information"])
+                ->with(["status" => [
+                    "warning" => "Some of the required student information is missing. Please complete it to continue."
+                ]]);
         }
 
         $campus = Campus::query()->find($student->campus);
@@ -52,7 +54,7 @@ trait ScheduleScraperTrait
         $timetables = $timetableInstance->getTimetables();
 
         if (!$timetables) {
-            return back()->with(["status" => ["warning" => "There is no timetable matched with the given details."]]);
+            return back()->with(["status" => ["warning" => "There are no timetables matching the given details."]]);
         }
 
         $course = collect($request)->merge(["student_id" => $student->id])->toArray();

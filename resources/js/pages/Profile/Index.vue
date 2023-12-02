@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import _ from "lodash";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import queryString from "query-string";
 import { useForm, usePage } from "@inertiajs/vue3";
 import Layout from "@/layouts/Layout.vue";
 import SubmitButton from "@/composables/buttons/SubmitButton.vue";
@@ -36,6 +37,31 @@ const form = useForm({
     faculty: props?.student?.faculty,
     program: props?.student?.program,
 });
+
+const { pathname, search } = new URL(window.location.toString());
+const params = queryString.parse(search);
+
+const student = ref(null);
+
+onMounted(() => {
+    if ("error" in params && params.error === "missing-student-information") {
+        isEditingMode.value = true;
+
+        _.delay(
+            () => student.value.scrollIntoView({ behavior: "smooth" }),
+            500,
+        );
+
+        _.delay(
+            () =>
+                student.value.classList.add(
+                    "animate__animated",
+                    "animate__shakeY",
+                ),
+            800,
+        );
+    }
+});
 </script>
 
 <template>
@@ -53,8 +79,7 @@ const form = useForm({
             <div class="space-y-12">
                 <SectionHeading
                     title="Profile"
-                    description="This information may will be displayed publicly so
-                                be careful what you share."
+                    description="This information will be displayed publicly so be careful what you share."
                 >
                     <CommonButton
                         type="warning"
@@ -92,7 +117,7 @@ const form = useForm({
                                     :error="form?.errors?.name"
                                     label="Name"
                                     type="text"
-                                    placeholder="amlxv"
+                                    placeholder="e.g: amlxv"
                                     :disabled="!isEditingMode"
                                 />
                             </div>
@@ -104,7 +129,7 @@ const form = useForm({
                                     :error="form?.errors?.email"
                                     label="Email Address"
                                     type="email"
-                                    placeholder="studymate@amlxv.com"
+                                    placeholder="e.g: studymate@amlxv.com"
                                     disabled="disabled"
                                 />
 
@@ -127,7 +152,7 @@ const form = useForm({
                                     label="Phone Number"
                                     type="text"
                                     :icon="DevicePhoneMobileIcon"
-                                    placeholder="+60168000782"
+                                    placeholder="e.g: +60168000782"
                                     :disabled="!isEditingMode"
                                 />
                             </div>
@@ -162,7 +187,7 @@ const form = useForm({
                                     label="Address"
                                     type="text"
                                     :icon="HomeIcon"
-                                    placeholder="Kota Bharu, Kelantan"
+                                    placeholder="e.g: Kota Bharu, Kelantan"
                                     :disabled="!isEditingMode"
                                 />
                             </div>
@@ -170,7 +195,7 @@ const form = useForm({
                     </div>
 
                     <div
-                        id="student"
+                        ref="student"
                         class="pb-12"
                         :class="
                             isEditingMode ? 'border-b border-gray-900/10' : null
@@ -197,7 +222,7 @@ const form = useForm({
                                     :error="form?.errors?.student_id"
                                     label="Student ID"
                                     type="text"
-                                    placeholder="2022988117"
+                                    placeholder="e.g: 2022988117"
                                     :icon="IdentificationIcon"
                                     :disabled="!isEditingMode"
                                 />
@@ -210,7 +235,7 @@ const form = useForm({
                                     :error="form?.errors?.institute"
                                     label="Institute"
                                     type="text"
-                                    placeholder="Universiti Teknologi MARA"
+                                    placeholder="e.g: Universiti Teknologi MARA"
                                     :icon="AcademicCapIcon"
                                     :disabled="!isEditingMode"
                                 />
@@ -272,7 +297,7 @@ const form = useForm({
                                     :error="form?.errors?.program"
                                     label="Program"
                                     type="text"
-                                    placeholder="CS251"
+                                    placeholder="e.g: CS251"
                                     :icon="BookOpenIcon"
                                     :disabled="!isEditingMode"
                                 />

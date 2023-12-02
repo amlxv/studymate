@@ -34,3 +34,4 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 import "../fonts/Inter/inter.css";
 import "../css/app.css";
+import "animate.css";
