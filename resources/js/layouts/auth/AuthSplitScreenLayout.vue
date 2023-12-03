@@ -6,6 +6,7 @@ import { Link } from "@inertiajs/vue3";
 import SocialButton from "@/composables/buttons/SocialButton.vue";
 import BaseIcon from "@/composables/BaseIcon.vue";
 import Toast from "@/composables/notifications/Toast.vue";
+import WorkDesk from "@images/workdesk.png";
 
 const props = defineProps<{
     label: string;
@@ -26,7 +27,7 @@ const props = defineProps<{
                     <Link href="/">
                         <img
                             class="h-10 w-auto"
-                            src="../../../images/logo-b.png"
+                            src="@images/logo-b.png"
                             alt="StudyMate"
                         />
                     </Link>
@@ -101,7 +102,7 @@ const props = defineProps<{
         <div class="relative hidden w-0 flex-1 lg:block">
             <img
                 class="absolute inset-0 h-full w-full object-cover"
-                :src="image ?? '../../../images/workdesk.png'"
+                :src="image ?? WorkDesk"
                 alt="An image for illustration"
             />
         </div>

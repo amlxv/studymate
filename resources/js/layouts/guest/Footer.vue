@@ -7,7 +7,7 @@ import { Link } from "@inertiajs/vue3";
         <div class="py-16">
             <img
                 class="mx-auto h-10 w-auto"
-                src="../../../images/logo-b.png"
+                src="@images/logo-b.png"
                 alt="StudyMate Icon"
             />
             <nav class="mt-10 text-sm" aria-label="quick links">

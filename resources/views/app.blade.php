@@ -7,6 +7,10 @@
     <title>StudyMate</title>
     <link rel="icon" type="image/x-icon" href="/assets/images/logo.png">
     @vite('resources/js/app.js')
+
+    {{--    <script type="module" src="/build/assets/[].js"></script>--}}
+    {{--    <link rel="stylesheet" href="/build/assets/[].css" />--}}
+
     @inertiaHead
 </head>
 

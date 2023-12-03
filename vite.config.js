@@ -21,6 +21,12 @@ export default defineConfig({
                     new URL("./resources/js", import.meta.url),
                 ),
             },
+            {
+                find: "@images",
+                replacement: fileURLToPath(
+                    new URL("./resources/images", import.meta.url),
+                ),
+            },
         ],
     },
 });

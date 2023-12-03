@@ -16,7 +16,7 @@ const props = defineProps<{
             <Link :href="route('home')">
                 <img
                     class="mx-auto h-10 w-auto"
-                    src="../../../images/logo-b.png"
+                    src="@images/logo-b.png"
                     alt="StudyMate"
                 />
             </Link>
