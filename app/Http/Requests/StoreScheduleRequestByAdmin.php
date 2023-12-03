@@ -29,7 +29,7 @@ class StoreScheduleRequestByAdmin extends FormRequest
             "day" => "required_if:type,class",
             "date" => "required_if:type,activity",
             "time_start" => "required",
-            "time_end" => "required|after:time_start",
+            "time_end" => "nullable|after:time_start",
             "remind" => "required",
         ];
     }

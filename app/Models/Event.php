@@ -49,7 +49,7 @@ class Event extends Model
         $day = $schedule->day;
         $date = $schedule->date;
         $time_start = $schedule->time_start;
-        $time_end = $schedule->time_end;
+        $time_end = $schedule->time_end ?? '';
 
         if ($template) {
             return str_replace(["{title}", "{description}", "{day}", "{date}", "{time_start}", "time_end"],

@@ -18,8 +18,9 @@ type Details = {
     day: string;
     date: string;
     time_start: string;
-    time_end: string;
+    time_end?: string;
     remind: boolean;
+    type?: unknown;
 };
 
 const props = defineProps<{
@@ -115,7 +116,7 @@ const { form, type } = toRefs(props);
                     id="time_end"
                     :model="form"
                     :error="form?.errors?.time_end"
-                    label="Time End"
+                    label="Time End (Optional)"
                     type="time"
                 />
             </div>

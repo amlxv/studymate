@@ -98,44 +98,48 @@ const { type, classes, activities, form } = toRefs(props);
                                 <td
                                     class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"
                                 >
-                                    {{ item.title }}
+                                    {{ item?.title }}
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                     v-if="_.has(classes, 'data[0].name')"
                                 >
-                                    {{ item.name }}
+                                    {{ item?.name }}
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                     v-if="_.has(classes, 'data[0].email')"
                                 >
-                                    {{ item.email }}
+                                    {{ item?.email }}
                                 </td>
                                 <td class="px-3 py-4 text-sm text-gray-500">
                                     {{
-                                        item.description.toString().slice(0, 35)
+                                        item?.description
+                                            ?.toString()
+                                            .slice(0, 35)
                                     }}
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                 >
-                                    {{ _.capitalize(item.day) }}
+                                    {{ _.capitalize(item?.day) }}
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                 >
-                                    {{ item.time_start.toString().slice(0, 5) }}
+                                    {{
+                                        item?.time_start?.toString().slice(0, 5)
+                                    }}
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                 >
-                                    {{ item.time_end.toString().slice(0, 5) }}
+                                    {{ item?.time_end?.toString().slice(0, 5) }}
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                 >
-                                    {{ item.remind ? "Yes" : "No" }}
+                                    {{ item?.remind ? "Yes" : "No" }}
                                 </td>
 
                                 <td
@@ -148,14 +152,14 @@ const { type, classes, activities, form } = toRefs(props);
                                                     'admin'
                                                     ? 'schedule.edit'
                                                     : 'admin.schedule.edit',
-                                                item.id,
+                                                item?.id,
                                             )
                                         "
                                         class="text-indigo-600 hover:text-indigo-900"
                                     >
                                         <PencilSquareIcon class="h-5 w-5" />
                                         <span class="sr-only"
-                                            >, {{ item.id }}</span
+                                            >, {{ item?.id }}</span
                                         ></Link
                                     >
                                 </td>
@@ -169,24 +173,28 @@ const { type, classes, activities, form } = toRefs(props);
                                 <td
                                     class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"
                                 >
-                                    {{ item.title }}
+                                    {{ item?.title }}
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                     v-if="_.has(classes, 'data[0].name')"
                                 >
-                                    {{ item.name }}
+                                    {{ item?.name }}
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                     v-if="_.has(classes, 'data[0].email')"
                                 >
-                                    {{ item.email }}
+                                    {{ item?.email }}
                                 </td>
                                 <td class="px-3 py-4 text-sm text-gray-500">
-                                    {{ item.description.toString().slice(0, 35)
+                                    {{
+                                        item?.description
+                                            ?.toString()
+                                            .slice(0, 35)
                                     }}{{
-                                        item.description.toString().length >= 35
+                                        item?.description?.toString().length >=
+                                        35
                                             ? "..."
                                             : ""
                                     }}
@@ -194,22 +202,24 @@ const { type, classes, activities, form } = toRefs(props);
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                 >
-                                    {{ moment(item.date).format("DD MMM Y") }}
+                                    {{ moment(item?.date).format("DD MMM Y") }}
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                 >
-                                    {{ item.time_start.toString().slice(0, 5) }}
+                                    {{
+                                        item?.time_start?.toString().slice(0, 5)
+                                    }}
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                 >
-                                    {{ item.time_end.toString().slice(0, 5) }}
+                                    {{ item?.time_end?.toString().slice(0, 5) }}
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                 >
-                                    {{ item.remind ? "Yes" : "No" }}
+                                    {{ item?.remind ? "Yes" : "No" }}
                                 </td>
 
                                 <td
@@ -222,14 +232,14 @@ const { type, classes, activities, form } = toRefs(props);
                                                     'admin'
                                                     ? 'schedule.edit'
                                                     : 'admin.schedule.edit',
-                                                item.id,
+                                                item?.id,
                                             )
                                         "
                                         class="text-indigo-600 hover:text-indigo-900"
                                     >
                                         <PencilSquareIcon class="h-5 w-5" />
                                         <span class="sr-only"
-                                            >, {{ item.id }}</span
+                                            >, {{ item?.id }}</span
                                         ></Link
                                     >
                                 </td>

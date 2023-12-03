@@ -15,8 +15,8 @@ const form = useForm({
     title: "",
     description: "",
     date: moment().format("YYYY-MM-DD"),
-    time_start: moment().format("HH:00"),
-    time_end: moment().add(1, "hour").format("HH:00"),
+    time_start: moment().add(1, "hour").format("HH:00"),
+    time_end: null,
     day: moment().format("dddd").toLowerCase(),
     remind: false,
 });

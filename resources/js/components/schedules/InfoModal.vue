@@ -147,11 +147,14 @@ const { open, event } = toRefs(props);
                                     </div>
                                 </div>
 
-                                <p class="mt-4 block text-xs text-gray-400">
+                                <p
+                                    v-if="event?.['time_end']"
+                                    class="mt-4 block text-xs text-gray-400"
+                                >
                                     This event will be ended at
                                     {{
                                         event?.["time_end"]
-                                            .toString()
+                                            ?.toString()
                                             .slice(0, 5)
                                     }}
                                 </p>

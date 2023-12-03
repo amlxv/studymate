@@ -276,8 +276,9 @@ watch(isEditingMode, () => {
                                                             class="rounded bg-gray-200 p-1 text-gray-700"
                                                             >{time_end}</span
                                                         >
-                                                        — The schedule end time
-                                                        that has been set.
+                                                        — If exist, The schedule
+                                                        end time that has been
+                                                        set.
                                                     </li>
                                                 </ul>
                                             </DisclosurePanel>

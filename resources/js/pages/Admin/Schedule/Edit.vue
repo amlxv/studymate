@@ -18,7 +18,7 @@ const form = useForm({
     description: schedule?.description,
     date: schedule?.date ?? moment().format("YYYY-MM-DD"),
     time_start: schedule?.time_start ?? moment().format("HH:00"),
-    time_end: schedule?.time_end ?? moment().add(1, "hour").format("HH:00"),
+    time_end: schedule?.time_end ?? null,
     day: schedule?.day ?? moment().format("dddd").toLowerCase(),
     remind: !!schedule?.remind,
 });

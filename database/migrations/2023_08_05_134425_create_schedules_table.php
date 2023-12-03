@@ -29,7 +29,7 @@ return new class extends Migration {
             $table->enum('day', ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'])->nullable();
             $table->date('date')->nullable();
             $table->time('time_start');
-            $table->time('time_end');
+            $table->time('time_end')->nullable();
             $table->enum('type', ['class', 'activity']);
             $table->boolean('remind');
             $table->timestamps();

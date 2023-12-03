@@ -59,7 +59,7 @@ export type Class = {
     description: string;
     id: number;
     remind: number;
-    time_end: string;
+    time_end?: string;
     time_start: string;
     title: string;
     type: string;
@@ -73,7 +73,7 @@ export type Activity = {
     description: string;
     id: number;
     remind: number;
-    time_end: string;
+    time_end?: string;
     time_start: string;
     title: string;
     type: string;
