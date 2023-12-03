@@ -88,7 +88,7 @@ const handleDelete = (path: string) => {
 
         <SectionHeading
             title="Courses"
-            description="The section where you can manage the courses."
+            description="Manage the courses in this section."
         >
             <button
                 @click="
@@ -101,6 +101,45 @@ const handleDelete = (path: string) => {
             >
                 Create
             </button>
+
+            <template v-slot:disclosureTitle
+                >Click to learn more about the courses section here.
+            </template>
+
+            <template v-slot:disclosureContent>
+                <div class="mb-3.5">
+                    <div>StudyMate will use information such:</div>
+
+                    <ul class="ml-8 mt-2 list-disc">
+                        <li>Student ID</li>
+                        <li>Campus</li>
+                        <li>Faculty</li>
+                        <li>Program</li>
+                        <li>Course Information</li>
+                        <li>Group</li>
+                        <li>Telegram (if reminder enabled)</li>
+                    </ul>
+                </div>
+
+                <div>To retrieve the timetable from UiTM's websites:</div>
+
+                <ul class="ml-8 mt-2 list-disc">
+                    <li>
+                        <a
+                            class="text-blue-600"
+                            href="https://simsweb4.uitm.edu.my/estudent/class_timetable/index.htm"
+                            >iCress</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            class="text-blue-600"
+                            href="https://mystudent.uitm.edu.my/timetable"
+                            >MyStudent</a
+                        >
+                    </li>
+                </ul>
+            </template>
         </SectionHeading>
 
         <div
