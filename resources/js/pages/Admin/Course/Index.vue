@@ -9,6 +9,8 @@ import SlideOverForm from "@/composables/slide-overs/SlideOverForm.vue";
 import IndexTable from "@/components/courses/IndexTable.vue";
 import DeleteConfirmation from "@/composables/modals/DeleteConfirmation.vue";
 import { getRoute } from "@/composables/etc/utils";
+import EmptyState from "@/composables/notifications/EmptyState.vue";
+import { PlusIcon } from "@heroicons/vue/20/solid";
 
 const selectedItem = ref(null);
 const slideOverFormOpen = ref(false);
@@ -153,7 +155,10 @@ const handleDelete = (path: string) => {
         >
             <div class="mt-8 flow-root">
                 <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="inline-block min-w-full py-2 align-middle">
+                    <div
+                        v-if="$page.props.courses.length != 0"
+                        class="inline-block min-w-full py-2 align-middle"
+                    >
                         <IndexTable
                             :courses="$page.props.courses as Course[]"
                             :on-edit="(course) => handleEdit(course)"
@@ -164,6 +169,36 @@ const handleDelete = (path: string) => {
                                 }
                             "
                         />
+                    </div>
+                    <div
+                        v-else
+                        class="flex h-[50vh] items-center justify-center"
+                    >
+                        <EmptyState>
+                            <template v-slot:description>
+                                No students have created a course yet. <br />
+                                Let's help them access the timetable by adding a
+                                course now!
+                            </template>
+
+                            <template v-slot:fallback>
+                                <button
+                                    @click="
+                                        selectedItem = null;
+                                        slideOverFormOpen = true;
+                                        slideOverFormMode = 'create';
+                                    "
+                                    type="button"
+                                    class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                >
+                                    <PlusIcon
+                                        class="-ml-0.5 mr-1.5 h-5 w-5"
+                                        aria-hidden="true"
+                                    />
+                                    New Course
+                                </button>
+                            </template>
+                        </EmptyState>
                     </div>
                 </div>
             </div>

@@ -41,7 +41,12 @@ const { form } = toRefs(props);
             placeholder="e.g., amlxv"
             :icon="AtSymbolIcon"
             disabled="disabled"
+            class-list="bg-gray-200"
         />
+
+        <p class="mt-2 text-xs text-gray-600 transition-all duration-300">
+            Only the account owner can modify this information.
+        </p>
     </div>
     <div class="sm:col-span-4">
         <InputText
@@ -62,8 +67,8 @@ const { form } = toRefs(props);
             id="custom_message"
             :model="form"
             label="Custom Message"
-            description="e.g., Customize how the notification will looks like."
-            placeholder="Hi, [name]! [title] will be start soon."
+            description="Customize how the notification will looks like."
+            placeholder="e.g., Hi, there! {title} will start soon."
         />
     </div>
 </template>

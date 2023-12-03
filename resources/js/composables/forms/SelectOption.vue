@@ -13,10 +13,20 @@ const props = defineProps<{
     classList?: string;
     options: Array<string>;
     selected?: string;
+    handleClickOnDisabled?: Function;
 }>();
 
-const { id, label, model, error, disabled, readonly, classList, options } =
-    toRefs(props);
+const {
+    id,
+    label,
+    model,
+    error,
+    disabled,
+    readonly,
+    classList,
+    options,
+    handleClickOnDisabled,
+} = toRefs(props);
 
 const getClassList = () => {
     const baseClassList =
@@ -25,9 +35,13 @@ const getClassList = () => {
         "text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500";
     const notErrorClass =
         "text-gray-900 ring-gray-300 placeholder:text-gray-400 focus:ring-indigo-60";
+    const disabledClass = " pointer-events-none";
 
     let result =
-        baseClassList + " " + (error.value ? errorClass : notErrorClass);
+        baseClassList +
+        (disabled.value ? disabledClass : "") +
+        " " +
+        (error.value ? errorClass : notErrorClass);
 
     if (classList.value) result = result + " " + classList.value;
 
@@ -36,7 +50,7 @@ const getClassList = () => {
 </script>
 
 <template>
-    <div>
+    <div @click="disabled ? handleClickOnDisabled(id) : ''">
         <label
             v-if="!label"
             :for="id"

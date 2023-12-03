@@ -31,6 +31,7 @@ const props = defineProps<{
     classList?: string;
     min?: string | number;
     max?: string | number;
+    handleClickOnDisabled?: Function;
 }>();
 
 const {
@@ -46,6 +47,7 @@ const {
     classList,
     min,
     max,
+    handleClickOnDisabled,
 } = toRefs(props);
 
 const commonInputs: CommonInput[] = [
@@ -102,9 +104,13 @@ const getClassList = () => {
         "text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500";
     const notErrorClass =
         "text-gray-900 ring-gray-300 placeholder:text-gray-400 focus:ring-indigo-60";
+    const disabledClass = " pointer-events-none";
 
     let result =
-        baseClassList + " " + (error.value ? errorClass : notErrorClass);
+        baseClassList +
+        (disabled.value ? disabledClass : "") +
+        " " +
+        (error.value ? errorClass : notErrorClass);
 
     if (getInputIcon()) result = result + " " + "pl-10";
     if (classList.value) result = result + " " + classList.value;
@@ -114,7 +120,7 @@ const getClassList = () => {
 </script>
 
 <template>
-    <div>
+    <div @click="disabled ? handleClickOnDisabled(id) : ''">
         <label
             v-if="!!getInputLabel()"
             :for="id"

@@ -44,6 +44,8 @@ class Schedule extends Model
                     if (!static::addEvent($eventData)) {
                         throw new \Exception("Error adding event to schedule. Please try again.");
                     }
+                } else {
+                    throw new \Exception("Error when processing your request. Please try again.");
                 }
             }
         });
@@ -68,6 +70,8 @@ class Schedule extends Model
                     if (!$event && !static::addEvent($eventData)) {
                         throw new \Exception("Error adding event to schedule. Please try again.");
                     }
+                } else {
+                    throw new \Exception("Error when processing your request. Please try again.");
                 }
             }
 

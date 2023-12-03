@@ -34,9 +34,12 @@ class TelegramController extends Controller
         if ($telegram) {
 
             $preference = Preference::query()->where("user_id", "=", $userId)->first();
+            $preference?->update(["telegram_id" => $telegram->id]);
 
-            if (!$preference) {
-                Preference::query()->create(["user_id" => $userId, "telegram_id" => $telegram->id]);
+            if (!$preference && !Preference::query()->create(["user_id" => $userId, "telegram_id" => $telegram->id])) {
+                return redirect()->route('setting.index')->with(["status" => [
+                    "error" => "Something went wrong when creating the preference for your account."
+                ]]);
             }
 
             $message = "Hi, there! Your account has been successfully connected. " .

@@ -5,7 +5,8 @@ import Layout from "@/layouts/Layout.vue";
 import SectionHeading from "@/composables/heading/SectionHeading.vue";
 import { PlusIcon } from "@heroicons/vue/20/solid";
 import { BellAlertIcon, BellSlashIcon } from "@heroicons/vue/24/solid";
-import { CalendarIcon, ClockIcon } from "@heroicons/vue/24/outline";
+import { ClockIcon } from "@heroicons/vue/24/outline";
+import EmptyState from "@/composables/notifications/EmptyState.vue";
 
 const page = usePage();
 </script>
@@ -104,17 +105,14 @@ const page = usePage();
                     </li>
                 </ol>
             </div>
-            <div v-else class="mt-20 py-16">
-                <div class="text-center">
-                    <CalendarIcon class="mx-auto h-14 w-14 text-gray-400" />
+            <div v-else class="flex h-[50vh] items-center justify-center">
+                <EmptyState>
+                    <template v-slot:description>
+                        You have completed your tasks for today. <br />
+                        Let's schedule what you want to accomplish tomorrow!
+                    </template>
 
-                    <h3 class="mt-2 text-sm font-semibold text-gray-900">
-                        Nothing here
-                    </h3>
-                    <p class="mt-1 text-sm text-gray-500">
-                        You have no tasks anymore for today. Have a good day!
-                    </p>
-                    <div class="mt-6">
+                    <template v-slot:fallback>
                         <Link :href="route('schedule.create')">
                             <button
                                 type="button"
@@ -127,8 +125,8 @@ const page = usePage();
                                 New Schedule
                             </button>
                         </Link>
-                    </div>
-                </div>
+                    </template>
+                </EmptyState>
             </div>
         </div>
     </Layout>

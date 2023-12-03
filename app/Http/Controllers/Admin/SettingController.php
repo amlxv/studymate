@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\StoreSettingRequestByAdmin;
 use App\Http\Requests\UpdateSettingRequestByAdmin;
 use App\Models\Preference;
+use App\Models\Telegram;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,7 +18,7 @@ class SettingController extends AdminController
     public function index(Request $request)
     {
         $settings = Preference::query()
-            ->leftJoin('telegrams', 'telegrams.id', '=', 'preferences.id')
+            ->leftJoin('telegrams', 'telegrams.user_id', '=', 'preferences.user_id')
             ->leftJoin('users', 'users.id', '=', 'preferences.user_id')
             ->select('preferences.*', 'telegrams.username', 'users.name', 'users.email')
             ->get();
@@ -46,10 +47,19 @@ class SettingController extends AdminController
             ]]);
         }
 
+        if (Preference::query()->where("user_id", "=", $user->id)->count()) {
+            return back()->with(["status" => [
+                "error" => "The user's settings already exist. Please update them instead."
+            ]]);
+        }
+
+        $telegram = Telegram::query()->where("user_id", "=", $user->id)->first();
+
         $preference = Preference::create([
             "user_id" => $user->id,
             "time_before" => $request['time_before'],
-            "custom_message" => $request['custom_message']
+            "custom_message" => $request['custom_message'],
+            "telegram_id" => $telegram->id ?? null,
         ]);
 
         if ($preference) {
@@ -111,12 +121,21 @@ class SettingController extends AdminController
     {
         $setting = Preference::query()->find($id);
 
-        if ($setting && $setting->delete()) {
+        try {
+            $setting->delete();
             return back()->with(["status" => "Successfully deleted the settings!"]);
-        }
 
-        return back()->with(["status" => [
-            "error" => "Something went wrong when deleting the settings."
-        ]]);
+        } catch (\Exception $error) {
+            if ($error->getCode() == 23000) {
+                return back()->with(["status" => [
+                    "error" => "The users have an active event today.
+                    We cannot delete the user's settings until there are no ongoing events."
+                ]]);
+            }
+
+            return back()->with(["status" => [
+                "error" => "Something went wrong when deleting the settings."
+            ]]);
+        }
     }
 }

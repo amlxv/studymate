@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import _ from "lodash";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import queryString from "query-string";
 import { useForm, usePage } from "@inertiajs/vue3";
 import Layout from "@/layouts/Layout.vue";
@@ -62,6 +62,18 @@ onMounted(() => {
         );
     }
 });
+
+const handleOnClickOnDisabledInputEvent = (id) => {
+    form.clearErrors();
+    form.setError(
+        id,
+        'Please toggle "Enable Edit" to change this information.',
+    );
+};
+
+watch(isEditingMode, () => {
+    form.clearErrors();
+});
 </script>
 
 <template>
@@ -107,6 +119,12 @@ onMounted(() => {
                                     :error="form?.errors?.avatar"
                                     :disabled="!isEditingMode"
                                     icon-class="h-32 w-32"
+                                    :handle-click-on-disabled="
+                                        (id) =>
+                                            handleOnClickOnDisabledInputEvent(
+                                                id,
+                                            )
+                                    "
                                 />
                             </div>
 
@@ -119,6 +137,12 @@ onMounted(() => {
                                     type="text"
                                     placeholder="e.g., amlxv"
                                     :disabled="!isEditingMode"
+                                    :handle-click-on-disabled="
+                                        (id) =>
+                                            handleOnClickOnDisabledInputEvent(
+                                                id,
+                                            )
+                                    "
                                 />
                             </div>
 
@@ -131,16 +155,11 @@ onMounted(() => {
                                     type="email"
                                     placeholder="e.g., studymate@amlxv.com"
                                     disabled="disabled"
+                                    class-list="bg-gray-200"
                                 />
 
-                                <p
-                                    class="mt-2 text-xs text-gray-600 transition-all duration-300"
-                                    :class="{
-                                        '-mb-6 opacity-0': !isEditingMode,
-                                        'opacity-100': isEditingMode,
-                                    }"
-                                >
-                                    The email address cannot be change.
+                                <p class="mt-2 text-xs text-gray-600">
+                                    The email address cannot be changed.
                                 </p>
                             </div>
 
@@ -154,6 +173,12 @@ onMounted(() => {
                                     :icon="DevicePhoneMobileIcon"
                                     placeholder="e.g., +60168000782"
                                     :disabled="!isEditingMode"
+                                    :handle-click-on-disabled="
+                                        (id) =>
+                                            handleOnClickOnDisabledInputEvent(
+                                                id,
+                                            )
+                                    "
                                 />
                             </div>
 
@@ -172,6 +197,12 @@ onMounted(() => {
                                         :options="['male', 'female']"
                                         :selected="form?.gender"
                                         :disabled="!isEditingMode"
+                                        :handle-click-on-disabled="
+                                            (id) =>
+                                                handleOnClickOnDisabledInputEvent(
+                                                    id,
+                                                )
+                                        "
                                     />
                                 </div>
                             </div>
@@ -189,6 +220,12 @@ onMounted(() => {
                                     :icon="HomeIcon"
                                     placeholder="e.g., Kota Bharu, Kelantan"
                                     :disabled="!isEditingMode"
+                                    :handle-click-on-disabled="
+                                        (id) =>
+                                            handleOnClickOnDisabledInputEvent(
+                                                id,
+                                            )
+                                    "
                                 />
                             </div>
                         </div>
@@ -225,6 +262,12 @@ onMounted(() => {
                                     placeholder="e.g., 2022988117"
                                     :icon="IdentificationIcon"
                                     :disabled="!isEditingMode"
+                                    :handle-click-on-disabled="
+                                        (id) =>
+                                            handleOnClickOnDisabledInputEvent(
+                                                id,
+                                            )
+                                    "
                                 />
                             </div>
 
@@ -238,6 +281,12 @@ onMounted(() => {
                                     placeholder="e.g., Universiti Teknologi MARA"
                                     :icon="AcademicCapIcon"
                                     :disabled="!isEditingMode"
+                                    :handle-click-on-disabled="
+                                        (id) =>
+                                            handleOnClickOnDisabledInputEvent(
+                                                id,
+                                            )
+                                    "
                                 />
                             </div>
 
@@ -259,6 +308,13 @@ onMounted(() => {
                                             },
                                         )?.name ??
                                         'Select the campus name'
+                                    "
+                                    :error="form?.errors?.campus"
+                                    :handle-click-on-disabled="
+                                        (id) =>
+                                            handleOnClickOnDisabledInputEvent(
+                                                id,
+                                            )
                                     "
                                 />
                             </div>
@@ -287,6 +343,13 @@ onMounted(() => {
                                         )?.name ??
                                         'Select the faculty name'
                                     "
+                                    :error="form?.errors?.faculty"
+                                    :handle-click-on-disabled="
+                                        (id) =>
+                                            handleOnClickOnDisabledInputEvent(
+                                                id,
+                                            )
+                                    "
                                 />
                             </div>
 
@@ -300,6 +363,12 @@ onMounted(() => {
                                     placeholder="e.g., CS251"
                                     :icon="BookOpenIcon"
                                     :disabled="!isEditingMode"
+                                    :handle-click-on-disabled="
+                                        (id) =>
+                                            handleOnClickOnDisabledInputEvent(
+                                                id,
+                                            )
+                                    "
                                 />
                             </div>
                         </div>

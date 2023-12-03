@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import { useElementSize } from "@vueuse/core";
 import Layout from "@/layouts/Layout.vue";
@@ -25,6 +25,18 @@ const form = useForm({
     username: page.props?.settings?.username,
     time_before: page.props?.settings?.time_before,
     custom_message: page.props?.settings?.custom_message,
+});
+
+const handleOnClickOnDisabledInputEvent = (id) => {
+    form.clearErrors();
+    form.setError(
+        id,
+        'Please toggle "Enable Edit" to change this information.',
+    );
+};
+
+watch(isEditingMode, () => {
+    form.clearErrors();
 });
 </script>
 
@@ -82,7 +94,16 @@ const form = useForm({
                                     placeholder="e.g., amlxv"
                                     :icon="AtSymbolIcon"
                                     disabled="disabled"
+                                    class-list="bg-gray-200"
                                 />
+
+                                <p
+                                    class="mt-2 text-sm text-gray-600 transition-all duration-300"
+                                >
+                                    The account cannot be manually changed.
+                                    Click the Telegram button to re-link the
+                                    account to Telegram.
+                                </p>
                             </div>
 
                             <div
@@ -93,10 +114,7 @@ const form = useForm({
                                 }"
                                 :style="{ width: socialButtonWidth + 'px' }"
                             >
-                                <div
-                                    class="absolute bottom-0"
-                                    ref="socialButton"
-                                >
+                                <div class="absolute top-3" ref="socialButton">
                                     <SocialButton
                                         id="telegram"
                                         href="#"
@@ -109,7 +127,7 @@ const form = useForm({
                                 </div>
 
                                 <div
-                                    class="absolute bottom-0 overflow-hidden opacity-0"
+                                    class="absolute top-3 overflow-hidden opacity-0"
                                     :style="{ width: socialButtonWidth + 'px' }"
                                 >
                                     <component
@@ -138,6 +156,12 @@ const form = useForm({
                                     max="60"
                                     :icon="ClockIcon"
                                     :disabled="!isEditingMode"
+                                    :handle-click-on-disabled="
+                                        (id) =>
+                                            handleOnClickOnDisabledInputEvent(
+                                                id,
+                                            )
+                                    "
                                 />
 
                                 <p
@@ -155,7 +179,14 @@ const form = useForm({
                                     label="Custom Message"
                                     description="Customize how the notification will looks like."
                                     placeholder="e.g., Hi, there! {title} will start soon."
+                                    :error="form?.errors?.custom_message"
                                     :disabled="!isEditingMode"
+                                    :handle-click-on-disabled="
+                                        (id) =>
+                                            handleOnClickOnDisabledInputEvent(
+                                                id,
+                                            )
+                                    "
                                 />
 
                                 <div class="mt-4" v-if="isEditingMode">
@@ -177,68 +208,80 @@ const form = useForm({
                                                 class="h-5 w-5 text-purple-500"
                                             />
                                         </DisclosureButton>
-                                        <DisclosurePanel
-                                            class="px-4 pb-2 pt-4 text-sm text-gray-500"
-                                        >
-                                            There are several keywords with a
-                                            unique pattern that have been
-                                            reserved for mentioning schedule
-                                            information. When you use those
-                                            keywords, they will be replaced with
-                                            the actual schedule details before
-                                            the reminder is sent to you.
 
-                                            <ul class="ml-4 mt-3 list-disc">
-                                                <li class="mb-2.5">
-                                                    <span
-                                                        class="rounded bg-gray-200 p-1 text-gray-700"
-                                                        >{title}</span
-                                                    >
-                                                    — The schedule title that
-                                                    has been set.
-                                                </li>
-                                                <li class="mb-2.5">
-                                                    <span
-                                                        class="rounded bg-gray-200 p-1 text-gray-700"
-                                                        >{description}</span
-                                                    >
-                                                    — The schedule description
-                                                    that has been set.
-                                                </li>
-                                                <li class="mb-2.5">
-                                                    <span
-                                                        class="rounded bg-gray-200 p-1 text-gray-700"
-                                                        >{day}</span
-                                                    >
-                                                    — If exist, the schedule day
-                                                    that has been set.
-                                                </li>
-                                                <li class="mb-2.5">
-                                                    <span
-                                                        class="rounded bg-gray-200 p-1 text-gray-700"
-                                                        >{date}</span
-                                                    >
-                                                    — If exist, the schedule
-                                                    date that has been set.
-                                                </li>
-                                                <li class="mb-2.5">
-                                                    <span
-                                                        class="rounded bg-gray-200 p-1 text-gray-700"
-                                                        >{time_start}</span
-                                                    >
-                                                    — The schedule start time
-                                                    that has been set.
-                                                </li>
-                                                <li class="mb-2.5">
-                                                    <span
-                                                        class="rounded bg-gray-200 p-1 text-gray-700"
-                                                        >{time_end}</span
-                                                    >
-                                                    — The schedule end time that
-                                                    has been set.
-                                                </li>
-                                            </ul>
-                                        </DisclosurePanel>
+                                        <transition
+                                            enter-active-class="transition duration-200 ease-in-out"
+                                            enter-from-class="transform -translate-y-5 opacity-0"
+                                            enter-to-class="transform translate-y-0 opacity-100"
+                                            leave-active-class="transition duration-200 ease-in-out"
+                                            leave-from-class="transform translate-y-0 opacity-100"
+                                            leave-to-class="transform -translate-y-5 opacity-0"
+                                        >
+                                            <DisclosurePanel
+                                                class="px-4 pb-2 pt-4 text-sm text-gray-500"
+                                            >
+                                                There are several keywords with
+                                                a unique pattern that have been
+                                                reserved for mentioning schedule
+                                                information. When you use those
+                                                keywords, they will be replaced
+                                                with the actual schedule details
+                                                before the reminder is sent to
+                                                you.
+
+                                                <ul class="ml-4 mt-4 list-disc">
+                                                    <li class="mb-2.5">
+                                                        <span
+                                                            class="rounded bg-gray-200 p-1 text-gray-700"
+                                                            >{title}</span
+                                                        >
+                                                        — The schedule title
+                                                        that has been set.
+                                                    </li>
+                                                    <li class="mb-2.5">
+                                                        <span
+                                                            class="rounded bg-gray-200 p-1 text-gray-700"
+                                                            >{description}</span
+                                                        >
+                                                        — The schedule
+                                                        description that has
+                                                        been set.
+                                                    </li>
+                                                    <li class="mb-2.5">
+                                                        <span
+                                                            class="rounded bg-gray-200 p-1 text-gray-700"
+                                                            >{day}</span
+                                                        >
+                                                        — If exist, the schedule
+                                                        day that has been set.
+                                                    </li>
+                                                    <li class="mb-2.5">
+                                                        <span
+                                                            class="rounded bg-gray-200 p-1 text-gray-700"
+                                                            >{date}</span
+                                                        >
+                                                        — If exist, the schedule
+                                                        date that has been set.
+                                                    </li>
+                                                    <li class="mb-2.5">
+                                                        <span
+                                                            class="rounded bg-gray-200 p-1 text-gray-700"
+                                                            >{time_start}</span
+                                                        >
+                                                        — The schedule start
+                                                        time that has been set.
+                                                    </li>
+                                                    <li class="mb-2.5">
+                                                        <span
+                                                            class="rounded bg-gray-200 p-1 text-gray-700"
+                                                            >{time_end}</span
+                                                        >
+                                                        — The schedule end time
+                                                        that has been set.
+                                                    </li>
+                                                </ul>
+                                            </DisclosurePanel>
+                                        </transition>
                                     </Disclosure>
                                 </div>
                             </div>
