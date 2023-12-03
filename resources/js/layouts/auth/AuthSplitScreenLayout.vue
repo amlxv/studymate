@@ -26,7 +26,7 @@ const props = defineProps<{
                     <Link href="/">
                         <img
                             class="h-10 w-auto"
-                            src="/assets/images/logo-b.png"
+                            src="../../../images/logo-b.png"
                             alt="StudyMate"
                         />
                     </Link>
@@ -101,7 +101,7 @@ const props = defineProps<{
         <div class="relative hidden w-0 flex-1 lg:block">
             <img
                 class="absolute inset-0 h-full w-full object-cover"
-                :src="image ?? '/assets/images/workdesk.png'"
+                :src="image ?? '../../../images/workdesk.png'"
                 alt="An image for illustration"
             />
         </div>

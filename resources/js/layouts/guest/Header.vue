@@ -24,7 +24,7 @@ const navigations = [
                     <span class="sr-only">StudyMate</span>
                     <img
                         class="h-8 w-auto"
-                        src="/assets/images/logo-b.png"
+                        src="../../../images/logo-b.png"
                         alt="StudyMate Icon"
                     />
                 </Link>
@@ -71,7 +71,7 @@ const navigations = [
                         <span class="sr-only">StudyMate</span>
                         <img
                             class="h-8 w-auto"
-                            src="/assets/images/logo.png"
+                            src="../../../images/logo.png"
                             alt="StudyMate Icon"
                         />
                     </Link>

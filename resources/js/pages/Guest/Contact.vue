@@ -125,7 +125,7 @@ const handleSendEmail = () => {
                     <div class="lg:mt-6 lg:w-80 lg:flex-none">
                         <img
                             class="h-12 w-auto"
-                            src="/assets/images/logo-b.png"
+                            src="../../../images/logo-b.png"
                             alt=""
                         />
                         <figure class="mt-10">
