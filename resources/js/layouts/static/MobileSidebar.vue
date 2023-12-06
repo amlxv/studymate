@@ -9,6 +9,8 @@ import {
 } from "@headlessui/vue";
 import { Cog6ToothIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { Navigation } from "@/types/layout";
+import StudyMateLogo from "@images/logo.png";
+import UiTMLogo from "@images/uitm.png";
 
 const props = defineProps<{
     sidebarOpen: boolean;
@@ -78,14 +80,23 @@ const { sidebarOpen, navigations } = toRefs(props);
                         <div
                             class="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-700 px-6 pb-4"
                         >
-                            <div class="flex h-16 shrink-0 items-center">
-                                <Link :href="route('home')">
+                            <div class="mt-5 flex h-16 shrink-0 items-center">
+                                <Link
+                                    :href="route('home')"
+                                    class="flex w-full items-center justify-center space-x-2"
+                                >
                                     <img
                                         class="h-8 w-auto"
-                                        :src="
-                                            route('home') +
-                                            '/assets/images/logo.png'
-                                        "
+                                        :src="StudyMateLogo"
+                                        alt="StudyMate"
+                                    />
+                                    <span
+                                        class="rotate-1 transform text-xs font-light text-white brightness-75"
+                                        >x</span
+                                    >
+                                    <img
+                                        class="h-16 w-auto"
+                                        :src="UiTMLogo"
                                         alt="StudyMate"
                                     />
                                 </Link>

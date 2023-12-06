@@ -3,6 +3,8 @@ import { Link } from "@inertiajs/vue3";
 import { defineProps, toRef } from "vue";
 import { Cog6ToothIcon } from "@heroicons/vue/24/outline";
 import { Navigation } from "@/types/layout";
+import StudyMateLogo from "@images/logo.png";
+import UiTMLogo from "@images/uitm.png";
 
 const props = defineProps<{
     navigations: Navigation[];
@@ -20,13 +22,21 @@ const navigations = toRef(props.navigations);
             data-step="2"
             data-intro="To help you easily access all areas of our site, we've provided this handy navigation sidebar. You'll find links to all main pages here."
         >
-            <div class="flex h-16 shrink-0 items-center">
-                <Link :href="route('home')">
+            <div class="mt-4 flex h-16 shrink-0 items-center">
+                <Link
+                    :href="route('home')"
+                    class="flex w-full items-center justify-center space-x-2"
+                >
                     <img
                         class="h-8 w-auto"
-                        :src="route('home') + '/assets/images/logo.png'"
+                        :src="StudyMateLogo"
                         alt="StudyMate"
                     />
+                    <span
+                        class="rotate-1 transform text-xs font-light text-white brightness-75"
+                        >x</span
+                    >
+                    <img class="h-16 w-auto" :src="UiTMLogo" alt="StudyMate" />
                 </Link>
             </div>
             <nav class="flex flex-1 flex-col">

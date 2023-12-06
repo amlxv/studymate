@@ -5,6 +5,7 @@ import { createPinia } from "pinia";
 import { createInertiaApp } from "@inertiajs/vue3";
 import { ZiggyVue } from "ziggy-js/dist/vue";
 import { Ziggy } from "./ziggy.js";
+import { useFavicon } from "@vueuse/core";
 
 const pinia = createPinia();
 
@@ -22,3 +23,5 @@ createInertiaApp({
         app.mount(el);
     },
 });
+
+useFavicon().value = import("@images/logo-b.png");
