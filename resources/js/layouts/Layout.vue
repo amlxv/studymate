@@ -2,8 +2,9 @@
 import introJs from "intro.js";
 import queryString from "query-string";
 import { onMounted, ref, toRef } from "vue";
-import { usePage } from "@inertiajs/vue3";
-import { useTimeoutFn } from "@vueuse/core";
+import { Ziggy } from "@/ziggy";
+import { useForm, usePage } from "@inertiajs/vue3";
+import { useTimeoutFn, useWindowSize } from "@vueuse/core";
 import { Navigation, UserNavigation } from "@/types/layout";
 import DesktopSidebar from "@/layouts/static/DesktopSidebar.vue";
 import MobileSidebar from "@/layouts/static/MobileSidebar.vue";
@@ -103,7 +104,25 @@ const isCanSearch = () => {
 };
 
 onMounted(() => {
-    useTimeoutFn(() => introJs().start(), 500);
+    if (
+        useWindowSize().width.value >= 1024 &&
+        page.props.auth.user?.intro &&
+        page.props.auth.user?.role === "student"
+    ) {
+        useTimeoutFn(() => introJs().start(), 500);
+
+        const form = useForm({
+            _method: "put",
+            intro: false,
+        });
+
+        form.post(
+            Ziggy.routes["profile.update"].uri.replace(
+                /{.+}/,
+                page.props.auth.user?.id,
+            ),
+        );
+    }
 });
 </script>
 <template>

@@ -79,6 +79,10 @@ class ProfileController extends Controller
             ]]);
         }
 
+        if ($request->has("intro")) {
+            $user->update(["intro" => $request->get("intro")]);
+        }
+
         $userData = collect($request)
             ->only("avatar", "name", "phone_number")
             ->filter(fn($request) => $request != null);
@@ -88,7 +92,7 @@ class ProfileController extends Controller
             ->filter(fn($request) => $request != null)
             ->map(fn($data) => is_array($data) ? $data['id'] : $data)
             ->toArray();
-        
+
         if ($userData->has('avatar')) {
             $path = $request->file('avatar')->store('images');
             if ($path) $userData->put('avatar', $path);

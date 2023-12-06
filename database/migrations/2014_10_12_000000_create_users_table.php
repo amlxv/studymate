@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('phone_number')->nullable();
             $table->string('avatar')->nullable();
             $table->enum('role', ['student', 'admin'])->default('student');
+            $table->boolean('intro')->nullable()->default(true);
             $table->rememberToken();
             $table->timestamps();
         });
