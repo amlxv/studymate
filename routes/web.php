@@ -62,10 +62,3 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('setting', AdminSettingController::class);
     });
 });
-
-/**
- * Temporarily for testing purpose.
- */
-Route::get("test", function () {
-    dd("test");
-});

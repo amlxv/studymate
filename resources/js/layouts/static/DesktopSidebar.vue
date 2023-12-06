@@ -17,6 +17,8 @@ const navigations = toRef(props.navigations);
     >
         <div
             class="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-700 px-6 pb-4"
+            data-step="2"
+            data-intro="To help you easily access all areas of our site, we've provided this handy navigation sidebar. You'll find links to all main pages here."
         >
             <div class="flex h-16 shrink-0 items-center">
                 <Link :href="route('home')">
@@ -33,6 +35,8 @@ const navigations = toRef(props.navigations);
                         <ul role="list" class="-mx-2 space-y-1">
                             <li v-for="item in navigations" :key="item.name">
                                 <Link
+                                    :data-intro="item?.dataIntro"
+                                    :data-step="item?.dataStep"
                                     :href="route(item.href)"
                                     :class="[
                                         item.current
@@ -64,6 +68,8 @@ const navigations = toRef(props.navigations);
 
                     <li class="mt-auto">
                         <Link
+                            data-intro="Customize your account preferences and notifications. Link your Telegram, set customized messaging, and configure time before send for reminder."
+                            data-step="7"
                             :href="
                                 route(
                                     $page.props.auth.user.role != 'admin'

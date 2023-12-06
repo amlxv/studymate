@@ -19,7 +19,11 @@ const { disclosureTitle, disclosureContent } = useSlots();
 </script>
 
 <template>
-    <div class="border-b border-gray-200 pb-4 transition-all">
+    <div
+        class="border-b border-gray-200 pb-4 transition-all"
+        data-intro="Welcome to StudyMate!<br/><br/>I'll guide you through the site. This dynamic section displays helpful details for each page. The title and content change as you browse, showing relevant information."
+        data-step="1"
+    >
         <div class="pb-4 sm:flex sm:items-center sm:justify-between">
             <div class="flex-1">
                 <h2 class="text-base font-semibold leading-7 text-gray-900">

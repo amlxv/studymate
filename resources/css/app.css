@@ -1,3 +1,6 @@
+@import url("intro.js/introjs.css");
+@import url("intro.js/themes/introjs-modern.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,4 +9,14 @@ html, body, #app {
     @apply h-full;
 }
 
+.introjs-helperLayer {
+    box-shadow: rgba(33, 33, 33, 0.8) 0 0 1px 2px, rgba(33, 33, 33, 0.8) 0 0 0 5000px !important;
+}
 
+.introjs-tooltipReferenceLayer * {
+    font-family: "Inter var", sans-serif !important;
+}
+
+.introjs-tooltip {
+    border-radius: 12px;
+}

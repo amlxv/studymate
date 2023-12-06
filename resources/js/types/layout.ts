@@ -6,6 +6,8 @@ export interface Navigation {
     icon: FunctionalComponent;
     current: boolean;
     role?: "student" | "admin";
+    dataIntro?: string;
+    dataStep?: number;
 }
 
 export interface UserNavigation {

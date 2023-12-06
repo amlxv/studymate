@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref, toRef } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import introJs from "intro.js";
 import queryString from "query-string";
+import { onMounted, ref, toRef } from "vue";
+import { usePage } from "@inertiajs/vue3";
+import { useTimeoutFn } from "@vueuse/core";
 import { Navigation, UserNavigation } from "@/types/layout";
 import DesktopSidebar from "@/layouts/static/DesktopSidebar.vue";
 import MobileSidebar from "@/layouts/static/MobileSidebar.vue";
@@ -31,6 +33,9 @@ const navigations: Navigation[] = [
         href: "home",
         icon: HomeIcon,
         current: page.url === "/",
+        dataIntro:
+            "Quickly access your personal dashboard page. Catch up on account stats, recent activity, and the latest updates.",
+        dataStep: 3,
     },
     {
         name: "Upcoming",
@@ -38,6 +43,9 @@ const navigations: Navigation[] = [
         icon: ClockIcon,
         current: page.url.startsWith("/upcoming"),
         role: "student",
+        dataIntro:
+            "See details of any upcoming events, performances, or programs on your schedule. Check dates, times, locations, and other event information.",
+        dataStep: 4,
     },
     {
         name: "Schedules",
@@ -45,6 +53,9 @@ const navigations: Navigation[] = [
         icon: CalendarIcon,
         current: page.url.startsWith("/schedule"),
         role: "student",
+        dataIntro:
+            "View and organize your personal schedule. Add upcoming schedule, set reminders, dates, times, and manage all your events.",
+        dataStep: 5,
     },
     {
         name: "Schedules",
@@ -59,6 +70,9 @@ const navigations: Navigation[] = [
         icon: AcademicCapIcon,
         current: page.url.startsWith("/course"),
         role: "student",
+        dataIntro:
+            "Input your courses to automatically populate your timetable. The system will scrape available class times and sync your schedule.",
+        dataStep: 6,
     },
     {
         name: "Courses",
@@ -87,6 +101,10 @@ const isCanSearch = () => {
         page.url.startsWith("/schedules")
     );
 };
+
+onMounted(() => {
+    useTimeoutFn(() => introJs().start(), 500);
+});
 </script>
 <template>
     <Toast />
@@ -120,7 +138,11 @@ const isCanSearch = () => {
                 />
 
                 <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-                    <form class="relative flex flex-1">
+                    <form
+                        class="relative flex flex-1"
+                        data-intro="Search only available on selected pages. When present, use this to easily find what you need in that particular section or dataset. The search bar will appear on pages where looking up specific information is most useful."
+                        data-step="8"
+                    >
                         <div v-if="isCanSearch()">
                             <label for="search-field" class="sr-only"
                                 >Search</label
@@ -171,7 +193,11 @@ const isCanSearch = () => {
                         />
 
                         <!-- Profile dropdown -->
-                        <ProfileDropdown :user-navigations="userNavigations" />
+                        <ProfileDropdown
+                            :user-navigations="userNavigations"
+                            data-intro="Click the profile section to access account management options and to securely log out.<br/><br/>That's all! Thank you."
+                            data-step="9"
+                        />
                     </div>
                 </div>
             </div>
