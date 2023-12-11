@@ -15,6 +15,7 @@ import SocialButton from "@/composables/buttons/SocialButton.vue";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 
 const page = usePage();
+const { origin } = new URL(window.location.toString());
 
 const isEditingMode = ref(false);
 const socialButton = ref(null);
@@ -138,7 +139,7 @@ watch(isEditingMode, () => {
                                         data-size="large"
                                         data-radius="14"
                                         data-userpic="false"
-                                        data-auth-url="http://127.0.0.1/setting/telegram/callback"
+                                        :data-auth-url="`${origin}/setting/telegram/callback`"
                                         data-request-access="write"
                                     ></component>
                                 </div>
