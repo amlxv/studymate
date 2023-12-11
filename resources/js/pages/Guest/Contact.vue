@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reactive } from "vue";
+import amlxvLogo from "@images/amlxv.png";
 
 const email = reactive({ subject: null, body: null });
 
@@ -142,7 +143,7 @@ const handleSendEmail = () => {
                                 @click="handleVisitProfile"
                             >
                                 <img
-                                    src="https://avatars.githubusercontent.com/u/34534953?v=4"
+                                    :src="amlxvLogo"
                                     alt=""
                                     class="h-12 w-12 flex-none rounded-full bg-gray-50"
                                 />
