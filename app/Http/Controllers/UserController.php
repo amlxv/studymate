@@ -123,6 +123,7 @@ class UserController extends Controller
             return Str::lower($m->format('M'));
         }, $months);
 
+        /** Initialize the array[key] value to 0 */
         collect($months)
             ->each(function ($month)
             use (
@@ -141,10 +142,14 @@ class UserController extends Controller
                 $currentYear, $months, $classes,
                 &$classesCountByMonth, &$classesWithReminderCountByMonth
             ) {
+                /** Month in number. e.g, Jan: 1, Feb:2, etc.. */
                 $currentMonth = array_keys($months, $month)[0] + 1;
-                $currentEndOfMonth = Carbon::parse($month)->endOfMonth()->format('d');
-                $template = $currentYear . '-' . $currentMonth . '-';
 
+                /** Last day (number) in that current month */
+                $currentEndOfMonth = Carbon::parse($month)->endOfMonth()->format('d');
+
+                /** Getting the first & last day in current month */
+                $template = $currentYear . '-' . $currentMonth . '-';
                 $firstDayOfMonth = $template . '01';
                 $lastDayOfMonth = $template . $currentEndOfMonth;
 

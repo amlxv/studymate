@@ -36,7 +36,7 @@ const navigations = toRef(props.navigations);
                         class="rotate-1 transform text-xs font-light text-white brightness-75"
                         >x</span
                     >
-                    <img class="h-16 w-auto" :src="UiTMLogo" alt="StudyMate" />
+                    <img class="h-16 w-auto" :src="UiTMLogo" alt="UiTM Logo" />
                 </Link>
             </div>
             <nav class="flex flex-1 flex-col">

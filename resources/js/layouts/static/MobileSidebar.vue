@@ -97,7 +97,7 @@ const { sidebarOpen, navigations } = toRefs(props);
                                     <img
                                         class="h-16 w-auto"
                                         :src="UiTMLogo"
-                                        alt="StudyMate"
+                                        alt="UiTM Logo"
                                     />
                                 </Link>
                             </div>

@@ -60,7 +60,7 @@ const chartData = ref({
             pointBackgroundColor: "rgba(67, 56, 202, 0.8)",
         },
         {
-            label: "Class (Remind)",
+            label: "Class Reminder",
             data: _.map(
                 months,
                 (month) => props?.schedulesStatistics?.classesRemind[month],
@@ -71,7 +71,7 @@ const chartData = ref({
             pointBackgroundColor: "rgba(14, 162, 135, 0.8)",
         },
         {
-            label: "Activity (Remind)",
+            label: "Activity Reminder",
             data: _.map(
                 months,
                 (month) => props?.schedulesStatistics?.activitiesRemind[month],

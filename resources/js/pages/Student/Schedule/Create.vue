@@ -45,6 +45,50 @@ const type = computed({
                         <Link :href="route('schedule.index')">
                             <CommonButton type="warning" label="Cancel" />
                         </Link>
+
+                        <template v-slot:disclosureTitle
+                            >Click to learn more about creating a new schedule
+                            here.
+                        </template>
+
+                        <template v-slot:disclosureContent>
+                            <div class="mb-3.5">
+                                <div class="mb-3.5">
+                                    The schedule is split into two types: class
+                                    timetables and activities. Select the type
+                                    of schedule that is most suitable for your
+                                    needs. <br />
+                                    Below is a quick overview of the key
+                                    differences between the two schedule types:
+                                </div>
+
+                                <div>Class Timetable</div>
+
+                                <ul class="ml-8 mt-2 list-disc">
+                                    <li>
+                                        The schedule that repeats on a weekly
+                                        basis.
+                                    </li>
+                                    <li>
+                                        The schedule that does not contain
+                                        specific dates.
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div>Activities</div>
+
+                            <ul class="ml-8 mt-2 list-disc">
+                                <li>
+                                    The schedule that happens on a single,
+                                    non-recurring occasion.
+                                </li>
+                                <li>
+                                    The schedule that does contain specific
+                                    dates.
+                                </li>
+                            </ul>
+                        </template>
                     </SectionHeading>
 
                     <TypeTabs

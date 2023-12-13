@@ -7,6 +7,8 @@ import SocialButton from "@/composables/buttons/SocialButton.vue";
 import BaseIcon from "@/composables/BaseIcon.vue";
 import Toast from "@/composables/notifications/Toast.vue";
 import WorkDesk from "@images/workdesk.png";
+import StudyMateLogo from "@images/logo-b.png";
+import UiTMLogo from "@images/uitm-b.png";
 
 const props = defineProps<{
     label: string;
@@ -24,11 +26,23 @@ const props = defineProps<{
         >
             <div class="mx-auto w-full max-w-sm lg:w-96">
                 <div>
-                    <Link href="/">
+                    <Link
+                        :href="route('home')"
+                        class="flex w-full items-center justify-center space-x-4"
+                    >
                         <img
                             class="h-10 w-auto"
-                            src="@images/logo-b.png"
+                            :src="StudyMateLogo"
                             alt="StudyMate"
+                        />
+                        <span
+                            class="rotate-1 transform text-xs font-light text-gray-900 brightness-75"
+                            >x</span
+                        >
+                        <img
+                            class="h-12 w-auto"
+                            :src="UiTMLogo"
+                            alt="UiTM Logo"
                         />
                     </Link>
                     <h2

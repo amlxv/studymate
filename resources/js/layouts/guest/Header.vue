@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { Dialog, DialogPanel } from "@headlessui/vue";
-import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { Link } from "@inertiajs/vue3";
 import { ref } from "vue";
+import { Dialog, DialogPanel } from "@headlessui/vue";
+import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
+import StudyMateLogo from "@images/logo-b.png";
+import UiTMLogo from "@images/uitm-b.png";
 
 const mobileMenuOpen = ref(false);
 
@@ -20,13 +22,20 @@ const navigations = [
             aria-label="Global"
         >
             <div class="flex lg:flex-1">
-                <Link :href="route('home')" class="-m-1.5 p-1.5">
-                    <span class="sr-only">StudyMate</span>
+                <Link
+                    :href="route('home')"
+                    class="-m-1.5 flex items-center justify-center space-x-4 p-1.5"
+                >
                     <img
                         class="h-8 w-auto"
-                        src="@images/logo-b.png"
-                        alt="StudyMate Icon"
+                        :src="StudyMateLogo"
+                        alt="StudyMate"
                     />
+                    <span
+                        class="rotate-1 transform text-xs font-light text-gray-900 brightness-75"
+                        >x</span
+                    >
+                    <img class="h-10 w-auto" :src="UiTMLogo" alt="UiTM Logo" />
                 </Link>
             </div>
             <div class="flex lg:hidden">
