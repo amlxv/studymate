@@ -19,8 +19,8 @@ class SettingController extends Controller
     {
         $user_id = Auth::id();
         $user = User::query()->where("id", "=", $user_id)->first();
-        $telegram = $user->telegram ? $user->telegram->first()->toArray() : [];
-        $preferences = $user->preference ? $user->preference->first()->toArray() : [];
+        $telegram = $user->telegram ? $user->telegram->toArray() : [];
+        $preferences = $user->preference ? $user->preference->toArray() : [];
 
         return Inertia::render('Student/Setting/Index', [
             "settings" => array_merge($telegram, $preferences)
