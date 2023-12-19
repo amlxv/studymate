@@ -3,6 +3,7 @@ import laravel from "laravel-vite-plugin";
 import { defineConfig } from "vite";
 import { fileURLToPath, URL } from "url";
 import svgLoader from "vite-svg-loader";
+import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 
 export default defineConfig({
     plugins: [
@@ -12,6 +13,7 @@ export default defineConfig({
         }),
         vue(),
         svgLoader(),
+        ViteImageOptimizer(),
     ],
     resolve: {
         alias: [
