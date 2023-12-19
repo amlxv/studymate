@@ -34,6 +34,43 @@ const { form, type } = toRefs(props);
 <template>
     <div class="border-b border-gray-900/10 pb-12">
         <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div class="text-sm text-gray-700 sm:col-span-4">
+                <div class="-mt-4 rounded-lg bg-indigo-50 px-5 py-6 shadow">
+                    <div v-if="type == 'class'">
+                        <div>What is the "Class Timetable"?</div>
+                        <ul class="ml-8 mt-2 list-disc">
+                            <li>
+                                The schedule that repeats on a weekly basis.
+                            </li>
+                            <li>
+                                The schedule that does not contain a specific
+                                date.
+                            </li>
+                            <li>
+                                You can only choose the day for when the event
+                                will occur.
+                            </li>
+                        </ul>
+                    </div>
+                    <div v-if="type == 'activity'">
+                        <div>What is the "Activities"?</div>
+
+                        <ul class="ml-8 mt-2 list-disc">
+                            <li>
+                                The schedule that happens on a single,
+                                non-recurring occasion.
+                            </li>
+                            <li>
+                                The schedule that does contain a specific date.
+                            </li>
+                            <li>
+                                You can only choose the date for when the event
+                                will occur.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div
                 class="sm:col-span-4"
                 v-if="$page.url.startsWith('/admin/schedule/create')"

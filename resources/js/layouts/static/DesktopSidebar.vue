@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { Link } from "@inertiajs/vue3";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { defineProps, toRef } from "vue";
-import { Cog6ToothIcon } from "@heroicons/vue/24/outline";
+import { Ziggy } from "@/ziggy";
+import {
+    Cog6ToothIcon,
+    QuestionMarkCircleIcon,
+} from "@heroicons/vue/24/outline";
 import { Navigation } from "@/types/layout";
 import StudyMateLogo from "@images/logo.png";
 import UiTMLogo from "@images/uitm.png";
@@ -11,6 +15,22 @@ const props = defineProps<{
 }>();
 
 const navigations = toRef(props.navigations);
+const page = usePage();
+
+const resetGuide = () => {
+    const form = useForm({
+        _method: "put",
+        intro: true,
+    });
+
+    form.post(
+        Ziggy.routes["profile.update"].uri.replace(
+            /{.+}/,
+            page.props.auth.user?.id,
+        ),
+        { onSuccess: () => location.reload() },
+    );
+};
 </script>
 
 <template>
@@ -72,6 +92,23 @@ const navigations = toRef(props.navigations);
                                     />
                                     {{ item.name }}
                                 </Link>
+                            </li>
+
+                            <!-- Add an option to show the guide again -->
+                            <li
+                                data-intro="Click here if you want to see this guide again.<br/><br/>That's all! Thank you."
+                                data-step="10"
+                            >
+                                <div
+                                    @click="resetGuide"
+                                    class="group flex cursor-pointer gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 transition-all hover:bg-indigo-600 hover:text-white"
+                                >
+                                    <QuestionMarkCircleIcon
+                                        class="h-6 w-6 shrink-0 text-white transition-all"
+                                    />
+
+                                    Guide
+                                </div>
                             </li>
                         </ul>
                     </li>

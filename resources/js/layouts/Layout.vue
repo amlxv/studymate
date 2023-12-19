@@ -214,7 +214,7 @@ onMounted(() => {
                         <!-- Profile dropdown -->
                         <ProfileDropdown
                             :user-navigations="userNavigations"
-                            data-intro="Click the profile section to access account management options and to securely log out.<br/><br/>That's all! Thank you."
+                            data-intro="Click the profile section to access account management options and to securely log out."
                             data-step="9"
                         />
                     </div>

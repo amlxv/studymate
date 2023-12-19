@@ -112,8 +112,11 @@ class ProfileController extends Controller
                     "failed" => "Operation stopped. Something went wrong when updating student information."
                 ]]);
             }
+        }
 
-            // TODO: If student id exist, then fetch the student information
+        // Prevent from returning message
+        if ($request->has("intro")) {
+            return back();
         }
 
         return back()->with(["status" => [

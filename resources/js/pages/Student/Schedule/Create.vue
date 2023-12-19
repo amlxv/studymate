@@ -53,41 +53,33 @@ const type = computed({
 
                         <template v-slot:disclosureContent>
                             <div class="mb-3.5">
-                                <div class="mb-3.5">
-                                    The schedule is split into two types: class
-                                    timetables and activities. Select the type
-                                    of schedule that is most suitable for your
-                                    needs. <br />
-                                    Below is a quick overview of the key
-                                    differences between the two schedule types:
-                                </div>
-
-                                <div>Class Timetable</div>
-
-                                <ul class="ml-8 mt-2 list-disc">
+                                <ul class="ml-5 list-disc">
                                     <li>
-                                        The schedule that repeats on a weekly
-                                        basis.
+                                        The "Time End" is made optional. Some
+                                        events does not have the end time.
                                     </li>
                                     <li>
-                                        The schedule that does not contain
-                                        specific dates.
+                                        The Telegram account integration is
+                                        required to enable the reminder options.
+                                    </li>
+                                    <li>
+                                        Enabling the reminder will make the
+                                        system send the reminder before the
+                                        event starts.
+                                    </li>
+                                    <li>
+                                        To save time, you can just add which
+                                        courses you're taking
+                                        <Link
+                                            :href="route('course.index')"
+                                            class="text-blue-500"
+                                            >here
+                                        </Link>
+                                        . We'll automatically collect your data
+                                        from iCress and MyStudent.
                                     </li>
                                 </ul>
                             </div>
-
-                            <div>Activities</div>
-
-                            <ul class="ml-8 mt-2 list-disc">
-                                <li>
-                                    The schedule that happens on a single,
-                                    non-recurring occasion.
-                                </li>
-                                <li>
-                                    The schedule that does contain specific
-                                    dates.
-                                </li>
-                            </ul>
                         </template>
                     </SectionHeading>
 
