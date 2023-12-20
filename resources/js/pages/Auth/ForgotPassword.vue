@@ -32,13 +32,8 @@ const form = useForm({
         </template>
 
         <template v-slot:details>
-            If you cannot find the reset link email in your
-            <a
-                target="_blank"
-                href="#"
-                class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-                >inbox</a
-            >, it is worth checking in your spam or junk mail section.
+            If you cannot find the reset link email in your inbox, it is worth
+            checking in your spam or junk mail section.
         </template>
     </AuthSimpleLayout>
 </template>

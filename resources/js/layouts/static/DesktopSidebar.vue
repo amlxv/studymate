@@ -96,6 +96,7 @@ const resetGuide = () => {
 
                             <!-- Add an option to show the guide again -->
                             <li
+                                v-if="$page.props.auth.user.role != 'admin'"
                                 data-intro="Click here if you want to see this guide again.<br/><br/>That's all! Thank you."
                                 data-step="10"
                             >
