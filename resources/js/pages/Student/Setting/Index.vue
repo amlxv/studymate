@@ -15,7 +15,7 @@ import SocialButton from "@/composables/buttons/SocialButton.vue";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 
 const page = usePage();
-const { origin } = new URL(window.location.toString());
+const { origin, hostname } = new URL(window.location.toString());
 
 const isEditingMode = ref(false);
 const socialButton = ref(null);
@@ -135,7 +135,11 @@ watch(isEditingMode, () => {
                                         is="script"
                                         async
                                         src="https://telegram.org/js/telegram-widget.js?22"
-                                        data-telegram-login="studymate_amlxv_bot"
+                                        :data-telegram-login="
+                                            hostname == '127.0.0.1'
+                                                ? 'studymate_dev_amlxv_bot'
+                                                : 'studymate_amlxv_bot'
+                                        "
                                         data-size="large"
                                         data-radius="14"
                                         data-userpic="false"
