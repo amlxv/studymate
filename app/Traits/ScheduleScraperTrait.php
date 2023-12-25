@@ -42,13 +42,13 @@ trait ScheduleScraperTrait
                 redirect()
                     ->back()
                     ->with(["status" => [
-                        "warning" => "Some of the required student information is missing. Please complete it to continue."
+                        "warning" => "The student information is missing. Please complete them to continue."
                     ]])
                 :
                 redirect()
                     ->route("profile.index", ["error" => "missing-student-information"])
                     ->with(["status" => [
-                        "warning" => "Some of the required student information is missing. Please complete it to continue."
+                        "warning" => "The student information is missing. Please complete them to continue."
                     ]]);
         }
 
@@ -86,12 +86,9 @@ trait ScheduleScraperTrait
                 $day = $timetable['day'];
                 $time_start = $timetable['time_start'];
                 $time_end = $timetable['time_end'];
-                $description = $request['code'] .
-                    " - " . $request['name'] . "\n\n" .
-                    "Venue: " . (collect($timetable)->has('venue') ? $timetable['venue'] : '-') . "\n" .
-                    "Start: " . $timetable['time_start'] . "\n" .
-                    "End: " . $timetable['time_end'] . "\n\n" .
-                    "Lecturer: " . (collect($timetable)->has('lecturer') ? $timetable['lecturer'] : '-');
+                $description = $this->createDescription(
+                    $request['code'], $request['name'], $timetable['venue'],
+                    $timetable['time_start'], $timetable['time_end'], $timetable['lecturer']);
 
                 $data = [
                     "course_id" => $course->id,
@@ -123,4 +120,28 @@ trait ScheduleScraperTrait
             "error" => "Something went wrong when adding the schedule for this course."
         ]]);
     }
+
+    /**
+     * Generate the description for schedule
+     * added by creating the course.
+     *
+     * @param $courseCode
+     * @param $courseName
+     * @param $venue
+     * @param $timeStart
+     * @param $timeEnd
+     * @param $lecturer
+     * @return string
+     */
+    public function createDescription($courseCode = null, $courseName = null, $venue = null, $timeStart = null, $timeEnd = null, $lecturer = null): string
+    {
+        return $courseCode .
+            " - " . $courseName . "\n\n" .
+            "Venue: " . ($venue ?? '-') . "\n" .
+            "Start: " . $timeStart . "\n" .
+            "End: " . ($timeEnd ?? '-') . "\n\n" .
+            "Lecturer: " . ($lecturer ?? '-');
+    }
 }
+
+

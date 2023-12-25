@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { router, useForm } from "@inertiajs/vue3";
+import { router, useForm, Link } from "@inertiajs/vue3";
 import { Ziggy } from "@/ziggy";
 import { Course } from "@/types/common";
 import Layout from "@/layouts/Layout.vue";
@@ -9,7 +9,7 @@ import InputForm from "@/components/courses/InputForm.vue";
 import SlideOverForm from "@/composables/slide-overs/SlideOverForm.vue";
 import IndexTable from "@/components/courses/IndexTable.vue";
 import DeleteConfirmation from "@/composables/modals/DeleteConfirmation.vue";
-import { PlusIcon } from "@heroicons/vue/20/solid";
+import { PlusIcon, SparklesIcon } from "@heroicons/vue/20/solid";
 import EmptyState from "@/composables/notifications/EmptyState.vue";
 
 const selectedItem = ref(null);
@@ -92,6 +92,16 @@ const handleDelete = (path: string) => {
             title="Courses"
             description="Manage the courses in this section."
         >
+            <Link
+                :href="route('course.magic')"
+                type="button"
+                class="mr-2 inline-flex items-center rounded-md border border-indigo-500 bg-indigo-50 px-3 py-2 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+                <SparklesIcon class="mr-1.5 h-5 w-5" aria-hidden="true" />
+
+                One-click Retrieve
+            </Link>
+
             <button
                 @click="
                     selectedItem = null;

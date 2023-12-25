@@ -8,25 +8,26 @@ use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
 use App\Models\Campus;
 use App\Models\Faculty;
+use Illuminate\Support\Arr;
 
 class UiTMController extends Controller
 {
     public static string $iCressBaseUrl = "https://simsweb4.uitm.edu.my/estudent/class_timetable/";
     public static string $myStudentBaseUrl = "https://cdn.uitm.edu.my/jadual/baru/{studentId}.json";
     protected string $studentId;
-    protected string $courseCode;
-    protected string $group;
     protected string $campusCode;
+    protected string|null $courseCode;
+    protected string|null $group;
     protected string|null $facultyCode;
 
     /**
      * @param string $studentId
-     * @param string $courseCode
-     * @param string $group
      * @param string $campusCode
+     * @param string|null $courseCode
      * @param string|null $facultyCode
+     * @param string|null $group
      */
-    public function __construct(string $studentId, string $courseCode, string $group, string $campusCode, string $facultyCode = null)
+    public function __construct(string $studentId, string $campusCode, string $courseCode = null, string $facultyCode = null, string $group = null)
     {
         $this->studentId = $studentId;
         $this->courseCode = $courseCode;
@@ -125,7 +126,7 @@ class UiTMController extends Controller
      *
      * @return bool
      */
-    protected function registerMyStudentUri()
+    public function registerMyStudentUri()
     {
         try {
             if (!$this->studentId && !$this->courseCode && !$this->group) {
@@ -201,7 +202,7 @@ class UiTMController extends Controller
      *
      * @return array
      */
-    protected function getTimetablesFromMyStudent()
+    protected function getTimetablesFromMyStudent($all = false)
     {
         try {
             $response = Http::get(self::$myStudentBaseUrl);
@@ -240,7 +241,7 @@ class UiTMController extends Controller
                 });
             });
 
-            return array_values(
+            return $all ? $data : array_values(
                 collect($data)
                     ->filter(fn($item) => $item['group'] == $this->group
                         && $item['course'] == $this->courseCode)
@@ -249,6 +250,35 @@ class UiTMController extends Controller
         } catch (Exception) {
             return [];
         }
+    }
+
+    /**
+     * Get all the course & timetables from
+     * MyStudent.
+     *
+     */
+    public function getAllTimetablesFromMyStudent()
+    {
+        $result = [];
+
+        $timetables = $this->getTimetablesFromMyStudent(true);
+        if (!$timetables) return [];
+
+        collect($timetables)->map(function ($timetable, $key) use (&$result, $timetables) {
+            $courseCode = $timetables[$key]['course'];
+            $courseName = $timetables[$key]['course_name'];
+            $group = $timetables[$key]['group'];
+
+            if (!collect($result)->contains('course_code', $courseCode)) {
+                $result[] = ["course_code" => $courseCode, "course_name" => $courseName, "group" => $group];
+            }
+
+            $currentIndex = collect($result)->where("course_code", "=", $courseCode)->keys()[0];
+            $result[$currentIndex]['timetables'][] = Arr::except($timetable, ['course', 'course_name', 'group']);
+
+        });
+
+        return $result;
     }
 
     /**

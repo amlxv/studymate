@@ -33,7 +33,7 @@ const { disclosureTitle, disclosureContent } = useSlots();
                     {{ description }}
                 </p>
             </div>
-            <div class="mt-3 sm:ml-4 sm:mt-0">
+            <div class="mt-3 flex items-center sm:ml-4 sm:mt-0">
                 <slot />
             </div>
         </div>

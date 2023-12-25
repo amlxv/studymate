@@ -38,6 +38,10 @@ Route::prefix('/auth/{provider}/')->name('social-provider.')->group(function () 
 
 /** Core */
 Route::middleware(['auth', 'verified'])->group(function () {
+
+    /** One-click retrieve the courses & schedules */
+    Route::get('course/magic', [CourseController::class, 'magicCourse'])->name('course.magic');
+
     Route::resource('course', CourseController::class);
     Route::resource('profile', ProfileController::class);
     Route::resource('student', StudentController::class);
