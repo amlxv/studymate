@@ -12,6 +12,26 @@ import {
 } from "@/composables/etc/utils";
 import DeleteConfirmation from "@/composables/modals/DeleteConfirmation.vue";
 import { TrashIcon } from "@heroicons/vue/24/outline";
+import TailwindColor from "@videsk/tailwind-random-color/dist/index.esm";
+
+const options = {
+    colors: [
+        "blue",
+        "indigo",
+        "red",
+        "purple",
+        "yellow",
+        "orange",
+        "amber",
+        "lime",
+        "teal",
+        "cyan",
+        "rose",
+        "violet",
+    ],
+    range: [2, 3],
+    prefix: "bg",
+};
 
 const page = usePage();
 const selectedDay = ref();
@@ -114,7 +134,12 @@ const handleDeleteConfirmationModal = () => {
                             <div
                                 v-for="schedule in schedules"
                                 :key="schedule['date']"
-                                class="relative bg-white px-3 py-2 transition-colors hover:bg-gray-50"
+                                class="relative px-3 py-2 transition-colors duration-300 hover:bg-gray-50"
+                                :class="{
+                                    'border border-indigo-300 bg-indigo-100 hover:border-indigo-400 hover:bg-indigo-50':
+                                        schedule['isToday'],
+                                    'bg-white': !schedule['isToday'],
+                                }"
                             >
                                 <time
                                     :datetime="schedule['date']"
@@ -142,11 +167,16 @@ const handleDeleteConfirmationModal = () => {
                                         :key="event.id"
                                     >
                                         <div
-                                            class="group flex cursor-pointer"
+                                            class="group mb-1 flex cursor-pointer rounded px-2"
+                                            :class="
+                                                new TailwindColor(
+                                                    options,
+                                                ).pick()
+                                            "
                                             @click="handleInfoModal(event)"
                                         >
                                             <p
-                                                class="group flex-auto -translate-x-3 truncate font-medium text-gray-900 transition-all hover:translate-x-0 group-hover:text-indigo-600"
+                                                class="group flex-auto -translate-x-3 truncate font-medium text-gray-900 transition-all hover:translate-x-0 group-hover:text-indigo-900"
                                             >
                                                 <span
                                                     class="opacity-0 transition-all group-hover:opacity-100"

@@ -28,6 +28,7 @@
         "@headlessui/vue": "^1.7.16",
         "@heroicons/vue": "^2.0.18",
         "@inertiajs/vue3": "^1.0.9",
+        "@videsk/tailwind-random-color": "^0.2.0-beta",
         "@vueuse/core": "^10.3.0",
         "animate.css": "^4.1.1",
         "chart.js": "^4.4.0",

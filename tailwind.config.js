@@ -20,4 +20,10 @@ export default {
         require("@tailwindcss/aspect-ratio"),
         require("@tailwindcss/typography"),
     ],
+    safelist: [
+        {
+            pattern:
+                /bg-(red|green|blue|indigo|purple|yellow|orange|amber|lime|teal|cyan|rose|violet)-(200|300)/,
+        },
+    ],
 };
