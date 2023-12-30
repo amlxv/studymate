@@ -102,9 +102,7 @@ const handleDeleteConfirmationModal = () => {
 
         <div class="mt-10">
             <div class="lg:flex lg:h-full lg:flex-col">
-                <div
-                    class="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col"
-                >
+                <div class="lg:flex lg:flex-auto lg:flex-col">
                     <div
                         class="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-200 text-center text-xs font-semibold leading-6 text-gray-700 lg:flex-none"
                     >
@@ -116,10 +114,10 @@ const handleDeleteConfirmationModal = () => {
                         </div>
                     </div>
                     <div
-                        class="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto"
+                        class="flex text-xs leading-6 text-gray-700 lg:flex-auto"
                     >
                         <div
-                            class="hidden min-h-[65vh] w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px"
+                            class="hidden min-h-[65vh] w-full lg:grid lg:grid-cols-7 lg:grid-rows-6"
                         >
                             <div
                                 v-for="index in calculateDaysDifferenceByDayName(
@@ -129,16 +127,17 @@ const handleDeleteConfirmationModal = () => {
                                 )"
                                 :key="index"
                                 v-if="schedules.day !== 'monday'"
-                                class="group relative bg-slate-50 px-3 py-2"
+                                class="group relative border border-gray-200 bg-slate-50 px-3 py-2"
                             />
                             <div
                                 v-for="schedule in schedules"
                                 :key="schedule['date']"
                                 class="relative px-3 py-2 transition-colors duration-300 hover:bg-gray-50"
                                 :class="{
-                                    'border border-indigo-300 bg-indigo-100 hover:border-indigo-400 hover:bg-indigo-50':
+                                    'rounded border border-indigo-300 bg-indigo-100 hover:border-indigo-400 hover:bg-indigo-50':
                                         schedule['isToday'],
-                                    'bg-white': !schedule['isToday'],
+                                    'border border-gray-100 bg-white':
+                                        !schedule['isToday'],
                                 }"
                             >
                                 <time
