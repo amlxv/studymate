@@ -58,7 +58,7 @@ trait ScheduleScraperTrait
         $faculty = Faculty::query()->find($student->faculty);
         $facultyCode = $faculty ? $faculty['code'] : '';
 
-        $timetableInstance = new UiTMController($student->student_id, $request['code'], $request['group'], $campusCode, $facultyCode);
+        $timetableInstance = new UiTMController($student->student_id, $campusCode, $request['code'], $facultyCode, $request['group']);
         $timetables = $timetableInstance->getTimetables();
 
         if (!$timetables) {
