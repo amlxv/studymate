@@ -192,7 +192,7 @@ class CourseController extends Controller
                         $timetable['time_end'],
                         $timetable['lecturer']),
                     'day' => $timetable['day'],
-                    'time_start' => $timetable['time_end'],
+                    'time_start' => $timetable['time_start'],
                     'time_end' => $timetable['time_end'],
                     'type' => 'class',
                     'remind' => 1,

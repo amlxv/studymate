@@ -82,7 +82,7 @@ trait ScheduleScraperTrait
     {
         try {
             $schedules = collect($timetables)->each(function ($timetable) use ($request, $user, $course) {
-                $title = $request['name'];
+                $title = $request['code'];
                 $day = $timetable['day'];
                 $time_start = $timetable['time_start'];
                 $time_end = $timetable['time_end'];
