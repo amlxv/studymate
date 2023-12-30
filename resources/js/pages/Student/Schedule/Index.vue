@@ -62,6 +62,10 @@ const handleDeleteConfirmationModal = () => {
     isInfoModalOpen.value = false;
     isDeleteConfirmationModalOpen.value = true;
 };
+
+const getRandomColor = () => {
+    return new TailwindColor(options).pick();
+};
 </script>
 
 <template>
@@ -167,11 +171,7 @@ const handleDeleteConfirmationModal = () => {
                                     >
                                         <div
                                             class="group mb-1 flex cursor-pointer rounded px-2"
-                                            :class="
-                                                new TailwindColor(
-                                                    options,
-                                                ).pick()
-                                            "
+                                            :class="getRandomColor()"
                                             @click="handleInfoModal(event)"
                                         >
                                             <p
