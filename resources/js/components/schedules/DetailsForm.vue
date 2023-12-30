@@ -160,7 +160,7 @@ const { form, type } = toRefs(props);
 
             <div class="col-span-full mt-5">
                 <SwitchGroup as="div" class="flex items-center justify-between">
-                    <span class="flex flex-grow flex-col">
+                    <span class="mr-6 flex flex-grow flex-col md:mr-auto">
                         <SwitchLabel
                             as="span"
                             class="text-sm font-medium leading-6 text-gray-900"
