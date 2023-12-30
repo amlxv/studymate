@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import { useElementSize } from "@vueuse/core";
 import Layout from "@/layouts/Layout.vue";
@@ -38,6 +38,15 @@ const handleOnClickOnDisabledInputEvent = (id) => {
 
 watch(isEditingMode, () => {
     form.clearErrors();
+});
+
+onMounted(() => {
+    if (
+        page.props?.flash?.status &&
+        page.props?.flash?.status.toString().toLowerCase().includes("success")
+    ) {
+        isEditingMode.value = true;
+    }
 });
 </script>
 
@@ -108,7 +117,7 @@ watch(isEditingMode, () => {
                             </div>
 
                             <div
-                                class="relative mt-5 -translate-x-1/4 opacity-0 transition-all sm:col-span-3"
+                                class="relative -mt-5 -translate-x-1/4 opacity-0 transition-all sm:col-span-3 sm:mt-5"
                                 :class="{
                                     'translate-x-0 opacity-100': isEditingMode,
                                     'pointer-events-none': !isEditingMode,
@@ -149,7 +158,14 @@ watch(isEditingMode, () => {
                                 </div>
                             </div>
 
-                            <div class="sm:col-span-3 sm:col-start-1">
+                            <div
+                                class="mt-5 transition sm:col-span-3 sm:col-start-1 sm:mt-auto"
+                                :class="{
+                                    'translate-y-0': isEditingMode,
+                                    '-translate-y-14 sm:translate-y-0':
+                                        !isEditingMode,
+                                }"
+                            >
                                 <InputText
                                     id="time_before"
                                     :model="form"
@@ -177,7 +193,14 @@ watch(isEditingMode, () => {
                                 </p>
                             </div>
 
-                            <div class="sm:col-span-3 sm:col-start-1">
+                            <div
+                                class="transition sm:col-span-3 sm:col-start-1"
+                                :class="{
+                                    'translate-y-0': isEditingMode,
+                                    '-translate-y-14 sm:translate-y-0':
+                                        !isEditingMode,
+                                }"
+                            >
                                 <TextArea
                                     id="custom_message"
                                     :model="form"
