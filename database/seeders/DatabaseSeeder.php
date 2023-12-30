@@ -28,10 +28,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'asrol.arshad@gmail.com',
         ]);
 
-        \App\Models\User::factory(10)->create();
+//        \App\Models\User::factory(10)->create();
 
-        $this->call([
-            ScheduleSeeder::class,
-        ]);
+//        $this->call([
+//            ScheduleSeeder::class,
+//        ]);
     }
 }
