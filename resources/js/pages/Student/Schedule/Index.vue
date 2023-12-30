@@ -175,7 +175,7 @@ const getRandomColor = () => {
                                             @click="handleInfoModal(event)"
                                         >
                                             <p
-                                                class="group flex-auto -translate-x-3 truncate font-medium text-gray-900 transition-all hover:translate-x-0 group-hover:text-indigo-900"
+                                                class="group flex-auto -translate-x-3 truncate font-medium text-gray-900 transition-all group-hover:translate-x-0 group-hover:text-indigo-900"
                                             >
                                                 <span
                                                     class="opacity-0 transition-all group-hover:opacity-100"
@@ -185,7 +185,7 @@ const getRandomColor = () => {
                                             </p>
                                             <time
                                                 :datetime="event['time_start']"
-                                                class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block"
+                                                class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-900 xl:block"
                                             >
                                                 {{
                                                     event["time_start"]
