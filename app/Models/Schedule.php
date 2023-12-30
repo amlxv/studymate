@@ -121,6 +121,15 @@ class Schedule extends Model
         return $query;
     }
 
+    function scopeOfDate(Builder $query, Request $request): Builder
+    {
+        if ($request->has('date')) {
+            $query->whereDate("date", "=", $request->get('date'));
+        }
+
+        return $query;
+    }
+
     public function scopeSearch(Builder $query, Request $request): Builder
     {
         if ($request->has('search')) {

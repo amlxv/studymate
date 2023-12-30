@@ -200,8 +200,18 @@ const getRandomColor = () => {
                                         v-if="schedule['events'].length > 2"
                                         class="cursor-pointer text-gray-500"
                                     >
-                                        + {{ schedule["events"].length - 2 }}
-                                        more
+                                        <Link
+                                            :href="
+                                                route('schedule.all', {
+                                                    day: schedule['day'],
+                                                    date: schedule['date'],
+                                                })
+                                            "
+                                        >
+                                            +
+                                            {{ schedule["events"].length - 2 }}
+                                            more
+                                        </Link>
                                     </li>
                                 </ol>
                             </div>
@@ -233,7 +243,7 @@ const getRandomColor = () => {
                                 :key="index"
                                 v-if="schedules[0].day !== 'monday'"
                                 type="button"
-                                class="flex h-14 cursor-default flex-col bg-slate-50 px-3 py-2 focus:z-10"
+                                class="flex h-16 cursor-default flex-col bg-slate-50 px-3 py-2 focus:z-10"
                             />
                             <button
                                 v-for="schedule in schedules"
@@ -251,7 +261,7 @@ const getRandomColor = () => {
                                     !schedule['events'] == selectedDay &&
                                         !schedule['isToday'] &&
                                         'text-gray-900',
-                                    'flex h-14 flex-col bg-white px-3 py-2 hover:bg-gray-100 focus:z-10',
+                                    'flex h-16 flex-col bg-white px-3 py-2 hover:bg-gray-100 focus:z-10',
                                 ]"
                                 @click="selectedDay = schedule['events']"
                             >
@@ -266,7 +276,7 @@ const getRandomColor = () => {
                                         schedule['events'] == selectedDay &&
                                             !schedule['isToday'] &&
                                             'bg-gray-900',
-                                        'ml-auto',
+                                        'mb-2 ml-auto',
                                     ]"
                                 >
                                     {{

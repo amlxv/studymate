@@ -190,6 +190,7 @@ class ScheduleController extends Controller
             ->ofType("activity")
             ->ofMonth($request)
             ->search($request)
+            ->ofDate($request)
             ->thatBelongsTo($userId)
             ->paginate(15);
 
