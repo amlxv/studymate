@@ -27,6 +27,12 @@ const { type, classes, activities, form } = toRefs(props);
                                     scope="col"
                                     class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8"
                                 >
+                                    ID
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                >
                                     Title
                                 </th>
                                 <th
@@ -98,6 +104,11 @@ const { type, classes, activities, form } = toRefs(props);
                                 <td
                                     class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"
                                 >
+                                    {{ item?.id }}
+                                </td>
+                                <td
+                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                                >
                                     {{ item?.title }}
                                 </td>
                                 <td
@@ -134,7 +145,11 @@ const { type, classes, activities, form } = toRefs(props);
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                 >
-                                    {{ item?.time_end?.toString().slice(0, 5) }}
+                                    {{
+                                        item?.time_end
+                                            ?.toString()
+                                            .slice(0, 5) ?? "-"
+                                    }}
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
@@ -172,6 +187,11 @@ const { type, classes, activities, form } = toRefs(props);
                             >
                                 <td
                                     class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"
+                                >
+                                    {{ item?.id }}
+                                </td>
+                                <td
+                                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                 >
                                     {{ item?.title }}
                                 </td>
@@ -214,7 +234,11 @@ const { type, classes, activities, form } = toRefs(props);
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                 >
-                                    {{ item?.time_end?.toString().slice(0, 5) }}
+                                    {{
+                                        item?.time_end
+                                            ?.toString()
+                                            .slice(0, 5) ?? "-"
+                                    }}
                                 </td>
                                 <td
                                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
