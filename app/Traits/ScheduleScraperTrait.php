@@ -87,8 +87,10 @@ trait ScheduleScraperTrait
                 $time_start = $timetable['time_start'];
                 $time_end = $timetable['time_end'];
                 $description = $this->createDescription(
-                    $request['code'], $request['name'], $timetable['venue'],
-                    $timetable['time_start'], $timetable['time_end'], $timetable['lecturer']);
+                    $request['code'], $request['name'], ($timetable['venue'] ?? ''),
+                    ($timetable['time_start'] ?? ''), ($timetable['time_end'] ?? ''),
+                    ($timetable['lecturer'] ?? '')
+                );
 
                 $data = [
                     "course_id" => $course->id,
