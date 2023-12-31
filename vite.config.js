@@ -3,7 +3,7 @@ import laravel from "laravel-vite-plugin";
 import { defineConfig } from "vite";
 import { fileURLToPath, URL } from "url";
 import svgLoader from "vite-svg-loader";
-import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
+import { imagetools } from "vite-imagetools";
 
 export default defineConfig({
     plugins: [
@@ -13,7 +13,10 @@ export default defineConfig({
         }),
         vue(),
         svgLoader(),
-        ViteImageOptimizer(),
+        imagetools({
+            defaultDirectives: () => new URLSearchParams({ format: "webp" }), // Apply 'format=webp' to all matching images
+            include: ["resources/images/*.png"], // Only process PNG images
+        }),
     ],
     resolve: {
         alias: [
