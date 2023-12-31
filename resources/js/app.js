@@ -9,9 +9,9 @@ import { Ziggy } from "./ziggy.js";
 const pinia = createPinia();
 
 createInertiaApp({
-    resolve: (name) => {
-        const pages = import.meta.glob("./pages/**/*.vue", { eager: true });
-        return pages[`./pages/${name}.vue`];
+    resolve: async (name) => {
+        const pages = import.meta.glob("./pages/**/*.vue");
+        return (await pages[`./pages/${name}.vue`]()).default;
     },
     setup({ el, App, props, plugin }) {
         const app = createApp({ render: () => h(App, props) })
