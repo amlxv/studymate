@@ -108,7 +108,7 @@ const resetGuide = () => {
                                         class="h-6 w-6 shrink-0 text-white transition-all"
                                     />
 
-                                    Guide
+                                    Quick Tour
                                 </div>
                             </li>
                         </ul>
