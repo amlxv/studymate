@@ -18,7 +18,7 @@ export default defineConfig({
             ...imagetools({
                 defaultDirectives: () =>
                     new URLSearchParams({ format: "webp" }), // Apply 'format=webp' to all matching images
-                include: ["resources/images/*.png"], // Only process PNG images
+                include: ["resources/images/**/*.png"], // Only process PNG images
             }),
         },
     ],
