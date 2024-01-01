@@ -56,10 +56,14 @@ const { form } = toRefs(props);
             label="Time Before"
             type="number"
             placeholder="e.g., 10"
-            min="10"
+            min="1"
             max="60"
             :icon="ClockIcon"
         />
+
+        <p class="mt-2 text-xs text-gray-600 transition-all duration-300">
+            Leave it blank to reset.
+        </p>
     </div>
 
     <div class="sm:col-span-4">

@@ -194,7 +194,7 @@ onMounted(() => {
                                     label="Time Before"
                                     type="number"
                                     placeholder="e.g., 10"
-                                    min="10"
+                                    min="1"
                                     max="60"
                                     :icon="ClockIcon"
                                     :disabled="!isEditingMode"
@@ -210,7 +210,8 @@ onMounted(() => {
                                     class="mt-2 text-sm text-gray-600 transition-all duration-300"
                                 >
                                     In minutes, set how long the notification
-                                    should be sent ahead of time.
+                                    should be sent ahead of time. Leave it blank
+                                    to reset.
                                 </p>
                             </div>
 

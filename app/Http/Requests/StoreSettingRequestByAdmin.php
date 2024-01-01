@@ -24,7 +24,7 @@ class StoreSettingRequestByAdmin extends FormRequest
         return [
             "email" => "email|required",
             "username" => "nullable",
-            "time_before" => "nullable|numeric|min:10|max:60",
+            "time_before" => "nullable|numeric|min:1|max:60",
             "custom_message" => "nullable"
         ];
     }

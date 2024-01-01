@@ -23,7 +23,7 @@ class StoreSettingRequest extends FormRequest
     {
         return [
             "username" => "required",
-            "time_before" => "nullable|numeric|min:10|max:60",
+            "time_before" => "nullable|numeric|min:1|max:60",
             "custom_message" => "nullable"
         ];
     }
