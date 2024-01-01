@@ -162,7 +162,7 @@ onMounted(() => {
                         data-intro="Search only available on selected pages. When present, use this to easily find what you need in that particular section or dataset. The search bar will appear on pages where looking up specific information is most useful."
                         data-step="8"
                     >
-                        <div v-if="isCanSearch()">
+                        <div v-if="isCanSearch()" class="w-full">
                             <label for="search-field" class="sr-only"
                                 >Search</label
                             >

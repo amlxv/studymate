@@ -99,7 +99,7 @@ const handleDelete = (path: string) => {
             >
                 <SparklesIcon class="mr-1.5 h-5 w-5" aria-hidden="true" />
 
-                One-click Retrieve
+                Surprise Me!
             </Link>
 
             <button
