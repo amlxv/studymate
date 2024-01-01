@@ -11,11 +11,15 @@ import IndexTable from "@/components/courses/IndexTable.vue";
 import DeleteConfirmation from "@/composables/modals/DeleteConfirmation.vue";
 import { PlusIcon, SparklesIcon } from "@heroicons/vue/20/solid";
 import EmptyState from "@/composables/notifications/EmptyState.vue";
+import { QuestionMarkCircleIcon } from "@heroicons/vue/24/outline";
+import QuickGuide from "@/composables/modals/QuickGuide.vue";
+import CourseGuide from "@/components/guides/CourseGuide.vue";
 
 const selectedItem = ref(null);
 const slideOverFormOpen = ref(false);
 const slideOverFormMode = ref(null);
 const isDeleteConfirmationModalOpen = ref(false);
+const isQuickGuideModalOpen = ref(false);
 
 const form = useForm({
     id: null,
@@ -113,6 +117,21 @@ const handleDelete = (path: string) => {
             >
                 Create
             </button>
+
+            <template v-slot:helpButton>
+                <QuickGuide
+                    :open="isQuickGuideModalOpen"
+                    @close="isQuickGuideModalOpen = false"
+                    title="Courses"
+                >
+                    <CourseGuide />
+                </QuickGuide>
+                <button @click="isQuickGuideModalOpen = true" type="button">
+                    <QuestionMarkCircleIcon
+                        class="animate__animated animate__rubberBand h-5 w-5 opacity-70"
+                    />
+                </button>
+            </template>
 
             <template v-slot:disclosureTitle
                 >Click to learn more about the courses section here.

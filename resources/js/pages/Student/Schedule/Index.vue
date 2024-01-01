@@ -13,6 +13,9 @@ import {
 import DeleteConfirmation from "@/composables/modals/DeleteConfirmation.vue";
 import { TrashIcon } from "@heroicons/vue/24/outline";
 import TailwindColor from "@videsk/tailwind-random-color/dist/index.esm";
+import { QuestionMarkCircleIcon } from "@heroicons/vue/24/outline";
+import QuickGuide from "@/composables/modals/QuickGuide.vue";
+import ScheduleGuide from "@/components/guides/ScheduleGuide.vue";
 
 const options = {
     colors: [
@@ -41,6 +44,7 @@ const schedules = computed(() => page.props.schedules);
 
 const isInfoModalOpen = ref(false);
 const isDeleteConfirmationModalOpen = ref(false);
+const isQuickGuideModalOpen = ref(false);
 
 onMounted(() => {
     selectedDay.value = schedules.value.find(
@@ -85,6 +89,21 @@ const getRandomColor = () => {
             title="Schedules"
             description="Where all the schedules within month are being managed."
         >
+            <template v-slot:helpButton>
+                <QuickGuide
+                    :open="isQuickGuideModalOpen"
+                    @close="isQuickGuideModalOpen = false"
+                    title="Schedules"
+                >
+                    <ScheduleGuide />
+                </QuickGuide>
+                <button @click="isQuickGuideModalOpen = true" type="button">
+                    <QuestionMarkCircleIcon
+                        class="animate__animated animate__rubberBand h-5 w-5 opacity-70"
+                    />
+                </button>
+            </template>
+
             <Link :href="route('schedule.all')">
                 <button
                     type="button"

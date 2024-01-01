@@ -26,9 +26,12 @@ const { disclosureTitle, disclosureContent } = useSlots();
     >
         <div class="pb-4 sm:flex sm:items-center sm:justify-between">
             <div class="flex-1">
-                <h2 class="text-base font-semibold leading-7 text-gray-900">
-                    {{ title }}
-                </h2>
+                <div class="flex items-center gap-2">
+                    <h2 class="text-base font-semibold leading-7 text-gray-900">
+                        {{ title }}
+                    </h2>
+                    <slot name="helpButton" />
+                </div>
                 <p class="mt-1 text-sm leading-6 text-gray-600">
                     {{ description }}
                 </p>

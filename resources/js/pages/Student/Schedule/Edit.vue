@@ -8,9 +8,14 @@ import SectionHeading from "@/composables/heading/SectionHeading.vue";
 import DetailsForm from "@/components/schedules/DetailsForm.vue";
 import TypeTabs from "@/components/schedules/TypeTabs.vue";
 import CommonButton from "@/composables/buttons/CommonButton.vue";
+import { QuestionMarkCircleIcon } from "@heroicons/vue/24/outline";
+import QuickGuide from "@/composables/modals/QuickGuide.vue";
+import ScheduleEditGuide from "@/components/guides/ScheduleEditGuide.vue";
+import { ref } from "vue";
 
 const page = usePage();
 const schedule = page.props.schedule;
+const isQuickGuideModalOpen = ref(false);
 
 const form = useForm({
     type: schedule?.type,
@@ -69,6 +74,24 @@ const type = computed({
                                 <CommonButton type="warning" label="Cancel" />
                             </Link>
                         </div>
+
+                        <template v-slot:helpButton>
+                            <QuickGuide
+                                :open="isQuickGuideModalOpen"
+                                @close="isQuickGuideModalOpen = false"
+                                title="Edit Schedule"
+                            >
+                                <ScheduleEditGuide />
+                            </QuickGuide>
+                            <button
+                                @click="isQuickGuideModalOpen = true"
+                                type="button"
+                            >
+                                <QuestionMarkCircleIcon
+                                    class="animate__animated animate__rubberBand h-5 w-5 opacity-70"
+                                />
+                            </button>
+                        </template>
                     </SectionHeading>
 
                     <TypeTabs

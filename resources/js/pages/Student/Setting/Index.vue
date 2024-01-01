@@ -13,6 +13,9 @@ import { ClockIcon } from "@heroicons/vue/24/outline";
 import BaseIcon from "@/composables/BaseIcon.vue";
 import SocialButton from "@/composables/buttons/SocialButton.vue";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
+import { QuestionMarkCircleIcon } from "@heroicons/vue/24/outline";
+import QuickGuide from "@/composables/modals/QuickGuide.vue";
+import SettingGuide from "@/components/guides/SettingGuide.vue";
 
 const page = usePage();
 const { origin, hostname } = new URL(window.location.toString());
@@ -20,6 +23,7 @@ const { origin, hostname } = new URL(window.location.toString());
 const isEditingMode = ref(false);
 const socialButton = ref(null);
 const { width: socialButtonWidth } = useElementSize(socialButton);
+const isQuickGuideModalOpen = ref(false);
 
 const form = useForm({
     _method: "put",
@@ -82,6 +86,23 @@ onMounted(() => {
                                 : null
                         "
                     />
+                    <template v-slot:helpButton>
+                        <QuickGuide
+                            :open="isQuickGuideModalOpen"
+                            @close="isQuickGuideModalOpen = false"
+                            title="Settings"
+                        >
+                            <SettingGuide />
+                        </QuickGuide>
+                        <button
+                            @click="isQuickGuideModalOpen = true"
+                            type="button"
+                        >
+                            <QuestionMarkCircleIcon
+                                class="animate__animated animate__rubberBand h-5 w-5 opacity-70"
+                            />
+                        </button>
+                    </template>
                 </SectionHeading>
 
                 <div class="space-y-12">

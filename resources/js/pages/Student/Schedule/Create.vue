@@ -8,6 +8,10 @@ import SectionHeading from "@/composables/heading/SectionHeading.vue";
 import DetailsForm from "@/components/schedules/DetailsForm.vue";
 import TypeTabs from "@/components/schedules/TypeTabs.vue";
 import CommonButton from "@/composables/buttons/CommonButton.vue";
+import { QuestionMarkCircleIcon } from "@heroicons/vue/24/outline";
+import QuickGuide from "@/composables/modals/QuickGuide.vue";
+import ScheduleCreateGuide from "@/components/guides/ScheduleCreateGuide.vue";
+import { ref } from "vue";
 
 const form = useForm({
     type: "class",
@@ -19,6 +23,8 @@ const form = useForm({
     day: moment().format("dddd").toLowerCase(),
     remind: false,
 });
+
+const isQuickGuideModalOpen = ref(false);
 
 const type = computed({
     get: () => form.type,
@@ -45,6 +51,24 @@ const type = computed({
                         <Link :href="route('schedule.index')">
                             <CommonButton type="warning" label="Cancel" />
                         </Link>
+
+                        <template v-slot:helpButton>
+                            <QuickGuide
+                                :open="isQuickGuideModalOpen"
+                                @close="isQuickGuideModalOpen = false"
+                                title="New Schedule"
+                            >
+                                <ScheduleCreateGuide />
+                            </QuickGuide>
+                            <button
+                                @click="isQuickGuideModalOpen = true"
+                                type="button"
+                            >
+                                <QuestionMarkCircleIcon
+                                    class="animate__animated animate__rubberBand h-5 w-5 opacity-70"
+                                />
+                            </button>
+                        </template>
 
                         <template v-slot:disclosureTitle
                             >Click to learn more about creating a new schedule

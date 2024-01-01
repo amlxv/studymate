@@ -17,8 +17,12 @@ import {
     DevicePhoneMobileIcon,
     IdentificationIcon,
 } from "@heroicons/vue/20/solid";
+import { QuestionMarkCircleIcon } from "@heroicons/vue/24/outline";
+import QuickGuide from "@/composables/modals/QuickGuide.vue";
+import ProfileGuide from "@/components/guides/ProfileGuide.vue";
 
 const isEditingMode = ref(false);
+const isQuickGuideModalOpen = ref(false);
 
 const page = usePage();
 const props = page?.props;
@@ -105,6 +109,24 @@ watch(isEditingMode, () => {
                                 : null
                         "
                     />
+
+                    <template v-slot:helpButton>
+                        <QuickGuide
+                            :open="isQuickGuideModalOpen"
+                            @close="isQuickGuideModalOpen = false"
+                            title="Profile"
+                        >
+                            <ProfileGuide />
+                        </QuickGuide>
+                        <button
+                            @click="isQuickGuideModalOpen = true"
+                            type="button"
+                        >
+                            <QuestionMarkCircleIcon
+                                class="animate__animated animate__rubberBand h-5 w-5 opacity-70"
+                            />
+                        </button>
+                    </template>
                 </SectionHeading>
 
                 <div class="space-y-12">

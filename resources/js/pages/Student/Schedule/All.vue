@@ -11,10 +11,14 @@ import CommonButton from "@/composables/buttons/CommonButton.vue";
 import SelectOption from "@/composables/forms/SelectOption.vue";
 import Paginator from "@/composables/nav/Paginator.vue";
 import { months, days } from "@/composables/etc/schedules";
+import { QuestionMarkCircleIcon } from "@heroicons/vue/24/outline";
+import QuickGuide from "@/composables/modals/QuickGuide.vue";
+import SchedulesGuide from "@/components/guides/SchedulesGuide.vue";
 
 const page = usePage();
 const scheduleType = ref("class");
 const { classes, activities } = toRefs(page.props);
+const isQuickGuideModalOpen = ref(false);
 
 const { search } = new URL(window.location.toString());
 const params = queryString.parse(search);
@@ -149,6 +153,24 @@ onMounted(() => {
                         <Link :href="route('schedule.index')">
                             <CommonButton type="warning" label="Back" />
                         </Link>
+
+                        <template v-slot:helpButton>
+                            <QuickGuide
+                                :open="isQuickGuideModalOpen"
+                                @close="isQuickGuideModalOpen = false"
+                                title="All Schedules"
+                            >
+                                <SchedulesGuide />
+                            </QuickGuide>
+                            <button
+                                @click="isQuickGuideModalOpen = true"
+                                type="button"
+                            >
+                                <QuestionMarkCircleIcon
+                                    class="animate__animated animate__rubberBand h-5 w-5 opacity-70"
+                                />
+                            </button>
+                        </template>
                     </SectionHeading>
 
                     <div class="flex items-center justify-between align-middle">
