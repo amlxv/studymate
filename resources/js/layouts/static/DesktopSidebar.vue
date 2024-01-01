@@ -128,18 +128,17 @@ const resetGuide = () => {
                             class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-indigo-700 hover:text-white"
                             :class="{
                                 'bg-indigo-800 text-white hover:bg-indigo-800':
-                                    $page.url.startsWith(
-                                        '/setting' && '/admin/setting',
-                                    ),
+                                    $page.url.startsWith('/setting') ||
+                                    $page.url.startsWith('/admin/setting'),
                             }"
                         >
                             <Cog6ToothIcon
                                 class="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
                                 aria-hidden="true"
                                 :class="{
-                                    'text-white': $page.url.startsWith(
-                                        '/setting' && '/admin/setting',
-                                    ),
+                                    'text-white':
+                                        $page.url.startsWith('/setting') ||
+                                        $page.url.startsWith('/admin/setting'),
                                 }"
                             />
                             Settings
