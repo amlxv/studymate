@@ -93,6 +93,12 @@ class ProfileController extends Controller
             ->map(fn($data) => is_array($data) ? $data['id'] : $data)
             ->toArray();
 
+        if ($user->student && $user->student->student_id) {
+            $studentData = collect($studentData)
+                ->except("student_id")
+                ->toArray();
+        }
+
         if ($userData->has('avatar')) {
             $path = $request->file('avatar')->store('images');
             if ($path) $userData->put('avatar', $path);

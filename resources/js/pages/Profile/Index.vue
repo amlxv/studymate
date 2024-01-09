@@ -283,14 +283,28 @@ watch(isEditingMode, () => {
                                     type="text"
                                     placeholder="e.g., 2022988117"
                                     :icon="IdentificationIcon"
-                                    :disabled="!isEditingMode"
+                                    :disabled="
+                                        !isEditingMode ||
+                                        $page?.props?.student?.student_id
+                                    "
                                     :handle-click-on-disabled="
                                         (id) =>
-                                            handleOnClickOnDisabledInputEvent(
-                                                id,
-                                            )
+                                            !$page?.props?.student?.student_id
+                                                ? handleOnClickOnDisabledInputEvent(
+                                                      id,
+                                                  )
+                                                : ''
+                                    "
+                                    :class-list="
+                                        $page?.props?.student?.student_id
+                                            ? 'bg-gray-200'
+                                            : ''
                                     "
                                 />
+                                <p class="mt-2 text-xs text-gray-600">
+                                    You can only set the student ID once. To
+                                    change it, kindly contact the admin.
+                                </p>
                             </div>
 
                             <div class="hidden sm:col-span-4">
