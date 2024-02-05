@@ -83,7 +83,7 @@ const handleSendEmail = () => {
                                         id="subject"
                                         autocomplete="subject"
                                         class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        placeholder="Donation from Tesla, Inc."
+                                        placeholder="e.g., Collaboration Opportunity Inquiry"
                                     />
                                 </div>
                             </div>
@@ -101,7 +101,7 @@ const handleSendEmail = () => {
                                         name="body"
                                         rows="8"
                                         class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        placeholder="We sincerely appreciate your idea and this effort, so we've donated $1.3 million to help you keep it going."
+                                        placeholder="e.g., Your system seems impressive. Would you be open to the idea of collaborating?"
                                     />
                                 </div>
                             </div>
