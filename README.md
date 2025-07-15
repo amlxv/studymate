@@ -1,66 +1,111 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# StudyMate 🎓
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A comprehensive student management and scheduling system built with Laravel and Vue.js, designed to help students organize their academic life efficiently.
 
-## About Laravel
+> **Final Year Project** - This project was developed as part of my final year degree requirements at Universiti Teknologi MARA (UiTM). It features exclusive functionality tailored specifically for UiTM students and academic workflows.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+[![Laravel](https://img.shields.io/badge/Laravel-10.x-red.svg)](https://laravel.com)
+[![Vue.js](https://img.shields.io/badge/Vue.js-3.x-green.svg)](https://vuejs.org)
+[![PHP](https://img.shields.io/badge/PHP-8.1+-blue.svg)](https://php.net)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC.svg)](https://tailwindcss.com)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 🎯 Student Management
+- **Profile Management**: Complete student profiles with campus, faculty, and program information
+- **Course Management**: Track and manage enrolled courses
+- **Academic Statistics**: Visual analytics and progress tracking
+- **UiTM Integration**: Exclusive features for UiTM students including campus-specific workflows and faculty management
 
-## Learning Laravel
+### 📅 Smart Scheduling
+- **Class Scheduling**: Organize classes, activities, and events
+- **Calendar Integration**: View schedules by day, week, or month
+- **Reminder System**: Telegram integration for smart notifications
+- **Search & Filter**: Find schedules quickly with advanced search
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 🔔 Notification System
+- **Telegram Integration**: Real-time notifications via Telegram bot
+- **Smart Reminders**: Automated reminders for upcoming events
+- **Customizable Alerts**: Configure notification preferences
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 👨‍💼 Admin Panel
+- **Student Management**: Admin tools for managing student accounts
+- **Course Administration**: Create and manage course offerings
+- **System Settings**: Configure application-wide settings
+- **Analytics Dashboard**: Monitor system usage and statistics
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 🔐 Authentication & Security
+- **Social Login**: Google, Facebook, and other OAuth providers
+- **Multi-factor Authentication**: Enhanced security with 2FA
+- **Role-based Access**: Separate interfaces for students and admins
+- **Secure API**: RESTful API with proper authentication
 
-## Laravel Sponsors
+## 🛠️ Tech Stack
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Backend
+- **Laravel 10.x** - PHP framework for robust backend development
+- **MySQL/PostgreSQL** - Reliable database management
+- **Laravel Sanctum** - API authentication
+- **Laravel Socialite** - Social media authentication
+- **Laravel Telescope** - Application debugging and monitoring
 
-### Premium Partners
+### Frontend
+- **Vue.js 3** - Progressive JavaScript framework
+- **Inertia.js** - Modern monolith approach
+- **Tailwind CSS** - Utility-first CSS framework
+- **Headless UI** - Accessible UI components
+- **Heroicons** - Beautiful SVG icons
+- **Chart.js** - Interactive charts and analytics
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### Development Tools
+- **Vite** - Fast build tool and dev server
+- **Laravel Pint** - PHP code style fixer
+- **Prettier** - Code formatting
+- **PHPUnit** - Testing framework
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+## 🏗️ Project Structure
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+studymate/
+├── app/
+│   ├── Http/Controllers/     # Application controllers
+│   ├── Models/              # Eloquent models
+│   ├── Actions/             # Business logic actions
+│   └── Jobs/                # Background jobs
+├── resources/
+│   ├── js/
+│   │   ├── components/      # Vue components
+│   │   ├── pages/          # Inertia pages
+│   │   ├── layouts/        # Page layouts
+│   │   └── composables/    # Vue composables
+│   └── views/              # Blade templates
+├── routes/                 # Application routes
+├── database/
+│   ├── migrations/         # Database migrations
+│   └── seeders/           # Database seeders
+└── tests/                 # Application tests
+```
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+## 🙏 Acknowledgments
+
+- [Laravel](https://laravel.com) - The PHP framework for web artisans
+- [Vue.js](https://vuejs.org) - The Progressive JavaScript Framework
+- [Tailwind CSS](https://tailwindcss.com) - A utility-first CSS framework
+- [Inertia.js](https://inertiajs.com) - Modern monoliths
+
+## 📞 Contact
+
+For any questions or inquiries, please email me at [me@amlxv.com](mailto:me@amlxv.com)
+
+---
+
+**StudyMate** - Empowering students to achieve their academic goals with smart scheduling and organization tools. 🎯
