@@ -39,6 +39,6 @@
         "query-string": "^8.1.0",
         "vue": "^3.3.4",
         "vue-chartjs": "^5.2.0",
-        "ziggy-js": "^1.8.0"
+        "ziggy-js": "^2.6.0"
     }
 }
